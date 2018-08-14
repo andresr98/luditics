@@ -30,55 +30,10 @@
   <div id="buttons" style="margin: 50px;">
     <ion-grid>
       <ion-row>
-        <ion-col>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-        </ion-col>
-        <ion-col>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-        </ion-col>
-        <ion-col>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-        </ion-col>
-        <ion-col>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-        </ion-col>
-        <ion-col>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
-          <button ion-button>Default</button>
+        <ion-col *ngFor="let filas of lista">
+          <button ion-button *ngFor="let estudiante of filas">
+            {{estudiante.nombre}}
+          </button>
         </ion-col>
       </ion-row>
     </ion-grid>
