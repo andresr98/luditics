@@ -1,13 +1,26 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Checkboxes
+      {{idEstudianet}}
     </ion-title>
   </ion-navbar>
+  <ion-toolbar no-border-top>
+      <ion-segment [(ngModel)]="type.esto">
+        <ion-segment-button value="Comportamiento">
+          Comportamiento
+        </ion-segment-button>
+        <ion-segment-button value="Cognitivo">
+          Cognitivo
+        </ion-segment-button>
+        <ion-segment-button value="Otra cosa">
+          Otra cosa
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <!--
   <ion-list>
     <ion-list-header>
       Characters
@@ -72,8 +85,34 @@
       <ion-label>Bronn</ion-label>
       <ion-checkbox color="royal"></ion-checkbox>
     </ion-item>
-
-
   </ion-list>
+  -->
+
+  <div [ngSwitch]="type.esto">
+      <ion-list *ngSwitchCase="'Comportamiento'">
+          <ion-item>
+            <h2>Mostre algo del Comportamiento</h2>
+          </ion-item>
+          <ion-item>
+            <h2>Otro item</h2>
+          </ion-item>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'Cognitivo'">
+          <ion-item>
+            <h2>Mostre algo del Cognitivo</h2>
+          </ion-item>
+          <ion-item>
+            <h2>Así sucesivamente</h2>
+          </ion-item>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'Otra cosa'">
+          <ion-item>
+            <h2>Solo soy uno :(</h2>
+          </ion-item>
+      </ion-list>
+  </div>
+
 
 </ion-content>

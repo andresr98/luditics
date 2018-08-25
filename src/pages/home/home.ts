@@ -61,7 +61,10 @@ export class HomePage {
   ];
   constructor(public navCtrl: NavController) {}
 
-  getValores() {
-    this.navCtrl.push(ValoresPage);
+  getValores(id) {
+    console.log(id)
+    this.navCtrl.push(ValoresPage, {
+      idEstudiante :id
+    });
   }
 }

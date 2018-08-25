@@ -15,11 +15,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ValoresPage {
 
+  idEstudianet : String;
+  type : any = {
+    esto : String,
+    id : String
+  };
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.idEstudianet = navParams.get("idEstudiante")
+    this.type.esto = "Comportamiento";
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ValoresPage');
+    console.log(this.idEstudianet);
   }
 
 }
