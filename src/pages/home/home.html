@@ -29,9 +29,9 @@
   </div>
   <div id="buttons" style="margin: 50px;">
     <ion-grid>
-      <ion-row>
-        <ion-col *ngFor="let filas of lista">
-          <button ion-button *ngFor="let estudiante of filas" ion-button (click)="getValores(estudiante.apellido)">
+      <ion-row class="row" *ngFor="let filas of lista">
+        <ion-col class="col-3">
+          <button ion-button *ngFor="let estudiante of filas" ion-button (click)="getValores(estudiante)">
             {{estudiante.nombre}}
           </button>
         </ion-col>

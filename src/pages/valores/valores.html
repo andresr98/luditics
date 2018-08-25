@@ -1,22 +1,9 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      {{idEstudianet}}
+      <h3>Información de {{this.estudiante.nombre}} {{this.estudiante.apellido}}</h3>
     </ion-title>
   </ion-navbar>
-  <ion-toolbar no-border-top>
-      <ion-segment [(ngModel)]="type.esto">
-        <ion-segment-button value="Comportamiento">
-          Comportamiento
-        </ion-segment-button>
-        <ion-segment-button value="Cognitivo">
-          Cognitivo
-        </ion-segment-button>
-        <ion-segment-button value="Otra cosa">
-          Otra cosa
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -88,13 +75,37 @@
   </ion-list>
   -->
 
+  <ion-toolbar no-border-top>
+      <ion-segment [(ngModel)]="type.esto">
+        <ion-segment-button  value="Comportamiento">
+          Comportamiento
+        </ion-segment-button>
+        <ion-segment-button value="Cognitivo">
+          Cognitivo
+        </ion-segment-button>
+        <ion-segment-button value="Otra cosa">
+          Otra cosa
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+
   <div [ngSwitch]="type.esto">
       <ion-list *ngSwitchCase="'Comportamiento'">
           <ion-item>
-            <h2>Mostre algo del Comportamiento</h2>
+            <h2>Impulsividad</h2>
+            <h3>Repeticiones {{this.estudiante.impulsividad}}</h3>
           </ion-item>
           <ion-item>
-            <h2>Otro item</h2>
+            <h2>Frustración</h2>
+          </ion-item>
+          <ion-item>
+              <h2>Aislamiento</h2>
+          </ion-item>
+          <ion-item>
+              <h2>Solidaridad</h2>
+          </ion-item>
+          <ion-item>
+              <h2>Armonioso</h2>
           </ion-item>
       </ion-list>
 
