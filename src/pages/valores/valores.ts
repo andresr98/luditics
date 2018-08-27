@@ -30,8 +30,8 @@ export class ValoresPage {
     aislamiento : Number, 
     solidaridad : Number, 
     armonioso : Number
-
   };
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.estudiante = navParams.get("estudiante");
     this.type.esto = "Comportamiento";

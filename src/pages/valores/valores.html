@@ -7,74 +7,6 @@
 </ion-header>
 
 <ion-content>
-  <!--
-  <ion-list>
-    <ion-list-header>
-      Characters
-    </ion-list-header>
-
-    <ion-item>
-      <ion-label>Jon Snow</ion-label>
-      <ion-checkbox checked="true"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Daenerys Targaryen</ion-label>
-      <ion-checkbox color="dark" checked="true"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Arya Stark</ion-label>
-      <ion-checkbox value="cherry" disabled="true"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Tyrion Lannister</ion-label>
-      <ion-checkbox color="secondary"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Sansa Stark</ion-label>
-      <ion-checkbox color="danger" checked="true"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Khal Drogo</ion-label>
-      <ion-checkbox></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Cersei Lannister</ion-label>
-      <ion-checkbox color="energized" checked="true" color="dark"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Stannis Baratheon</ion-label>
-      <ion-checkbox color="royal" checked="true"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Petyr Baelish</ion-label>
-      <ion-checkbox disabled="true"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Hodor</ion-label>
-      <ion-checkbox color="dark" checked="true"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Catelyn Stark</ion-label>
-      <ion-checkbox color="secondary" checked="true"></ion-checkbox>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Bronn</ion-label>
-      <ion-checkbox color="royal"></ion-checkbox>
-    </ion-item>
-  </ion-list>
-  -->
-
   <ion-toolbar no-border-top>
       <ion-segment [(ngModel)]="type.esto">
         <ion-segment-button  value="Comportamiento">
@@ -90,24 +22,33 @@
     </ion-toolbar>
 
   <div [ngSwitch]="type.esto">
-      <ion-list *ngSwitchCase="'Comportamiento'">
-          <ion-item>
-            <h2>Impulsividad</h2>
-            <h3>Repeticiones {{this.estudiante.impulsividad}}</h3>
+      <ion-list  *ngSwitchCase="'Comportamiento'">
+          <ion-item item-start>
+            <ion-icon name="sunny" color = "amarillo">
+            </ion-icon>
+            Impulsividad Repeticiones {{this.estudiante.impulsividad}}
+
+            <button ion-button item-end icon-only clear >
+                <ion-icon name="add-circle" color="secondary" ></ion-icon> 
+            </button>
+
+            <button ion-button item-end  icon-only clear >
+                <ion-icon name="remove-circle" color="danger" ></ion-icon>
+            </button>
           </ion-item>
+
           <ion-item>
             <h2>Frustración</h2>
           </ion-item>
           <ion-item>
               <h2>Aislamiento</h2>
           </ion-item>
+
           <ion-item>
               <h2>Solidaridad</h2>
           </ion-item>
-          <ion-item>
-              <h2>Armonioso</h2>
-          </ion-item>
       </ion-list>
+
 
       <ion-list *ngSwitchCase="'Cognitivo'">
           <ion-item>
@@ -119,11 +60,19 @@
       </ion-list>
 
       <ion-list *ngSwitchCase="'Otra cosa'">
-          <ion-item>
-            <h2>Solo soy uno :(</h2>
-          </ion-item>
+          <ion-item-sliding >
+            <ion-item>
+              Item
+            </ion-item>
+            <ion-item-options side="left">
+              <button ion-button >Favorite</button>
+              <button ion-button color="danger">Share</button>
+            </ion-item-options>
+        
+            <ion-item-options side="right">
+              <button ion-button>Unread</button>
+            </ion-item-options>
+          </ion-item-sliding>
       </ion-list>
   </div>
-
-
 </ion-content>
