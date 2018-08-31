@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
-import { ValoresPage } from "../valores/valores";
+import {SeguimientosPage} from "../seguimientos/seguimientos"
 
 @Component({
   selector: "page-home",
@@ -47,7 +47,7 @@ export class HomePage {
   constructor(public navCtrl: NavController) {}
 
   getValores(est) {
-    this.navCtrl.push(ValoresPage, {
+    this.navCtrl.push(SeguimientosPage, {
       estudiante: est,
     });
   }

@@ -4,20 +4,12 @@ import { Estudiante } from '../../models/Estudiante';
 import { Categoria } from "../../models/Categoria"
 import { DatosComportamental } from '../../models/DatosComportamental';
 
-/**
- * Generated class for the ValoresPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
-  selector: 'page-valores',
-  templateUrl: 'valores.html',
+  selector: 'page-seguimientos',
+  templateUrl: 'seguimientos.html',
 })
-export class ValoresPage {
-
+export class SeguimientosPage {
   type: Categoria = {firstL : "",secondL :""};
   datos : any[]
   dato : DatosComportamental = {categoria :"", repeticiones : 0, icono : ""};
@@ -54,29 +46,13 @@ export class ValoresPage {
     //Aquí se llama al servicio para sumarle uno
     switch(this.dato.categoria)
     {
-      case "Aislamiento" :
-      {
-        this.estudiante.aislamiento = this.dato.repeticiones;
-      }
-      case "Frustración" : 
-      {
-        this.estudiante.frustracion = this.dato.repeticiones;
-      }
-      case "Impulsividad" : 
-      {
-        this.estudiante.impulsividad = this.dato.repeticiones;
-      }
-      case "Solidaridad" : 
-      {
-        this.estudiante.solidaridad = this.dato.repeticiones;
-      }
-      case "Armonioso" : 
-      {
-        this.estudiante.armonioso = this.dato.repeticiones;
-      }
+      case "Aislamiento" : this.estudiante.aislamiento = this.dato.repeticiones; break;
+      case "Frustración" : this.estudiante.frustracion = this.dato.repeticiones; break;
+      case "Impulsividad" : this.estudiante.impulsividad = this.dato.repeticiones; break;
+      case "Solidaridad" : this.estudiante.solidaridad = this.dato.repeticiones; break;
+      case "Armonioso" : this.estudiante.armonioso = this.dato.repeticiones; break;
     }
   }
-
   private restarCategoria(dato)
   {
     this.dato = dato;
@@ -88,26 +64,11 @@ export class ValoresPage {
     }
     switch(this.dato.categoria)
     {
-      case "Aislamiento" :
-      {
-        this.estudiante.aislamiento = this.dato.repeticiones;
-      }
-      case "Frustración" : 
-      {
-        this.estudiante.frustracion = this.dato.repeticiones;
-      }
-      case "Impulsividad" : 
-      {
-        this.estudiante.impulsividad = this.dato.repeticiones;
-      }
-      case "Solidaridad" : 
-      {
-        this.estudiante.solidaridad = this.dato.repeticiones;
-      }
-      case "Armonioso" : 
-      {
-        this.estudiante.armonioso = this.dato.repeticiones;
-      }
+      case "Aislamiento" : this.estudiante.aislamiento = this.dato.repeticiones; break;
+      case "Frustración" : this.estudiante.frustracion = this.dato.repeticiones; break;
+      case "Impulsividad" : this.estudiante.impulsividad = this.dato.repeticiones; break;
+      case "Solidaridad" :  this.estudiante.solidaridad = this.dato.repeticiones; break;
+      case "Armonioso" : this.estudiante.armonioso = this.dato.repeticiones; break;
     }
   }
 }

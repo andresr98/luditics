@@ -10,7 +10,7 @@
   <ion-toolbar no-border-top>
       <ion-segment [(ngModel)]="type.firstL">
         <ion-segment-button  value="Comportamiento">
-          Comportamiento
+         Comportamental
         </ion-segment-button>
         <ion-segment-button value="Cognitivo">
           Cognitivo
@@ -38,10 +38,10 @@
             <img src="{{dato.icono}}">
         </ion-avatar>
             {{dato.categoria}} {{dato.repeticiones}}
-            <button ion-button item-end icon-only clear (click) = "sumarCategoria(dato)">
+            <button ion-button item-end icon-only large clear (click) = "sumarCategoria(dato)">
                 <ion-icon name="add-circle" color="secondary" ></ion-icon> 
             </button>
-            <button ion-button item-end  icon-only clear (click) = "restarCategoria(dato)" >
+            <button ion-button item-end  icon-only large clear (click) = "restarCategoria(dato)" >
                 <ion-icon name="remove-circle" color="danger" ></ion-icon>
             </button>
         </ion-item>
