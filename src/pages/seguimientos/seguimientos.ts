@@ -11,7 +11,7 @@ import { DatosComportamental } from '../../models/DatosComportamental';
 })
 export class SeguimientosPage {
   type: Categoria = {firstL : "",secondL :""};
-  datos : any[]
+  datos : DatosComportamental[];
   dato : DatosComportamental = {categoria :"", repeticiones : 0, icono : ""};
   estudiante : Estudiante;
 

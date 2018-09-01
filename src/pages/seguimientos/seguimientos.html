@@ -25,7 +25,6 @@
     todas estas veces las mismas etiquetas-->
 
   <div [ngSwitch]="type.firstL">
-
       <ion-list  *ngSwitchCase="'Comportamiento'">
         <ion-item item-end color="secondary">
             <ion-avatar item-start>
@@ -33,6 +32,7 @@
             </ion-avatar>
           Categoria Repeticiones
         </ion-item>
+
         <ion-item *ngFor="let dato of datos" item-start>
          <ion-avatar item-start>
             <img src="{{dato.icono}}">
@@ -47,14 +47,25 @@
         </ion-item>
       </ion-list>
 
+
+
+
+
       <ion-list *ngSwitchCase="'Cognitivo'">
-          <ion-item>
-            <h2>Mostre algo del Cognitivo</h2>
-          </ion-item>
-          <ion-item>
-            <h2>Así sucesivamente</h2>
-          </ion-item>
+         <ion-item item-start color="secondary">
+            <ion-avatar item-start>
+                <img src="assets/icon/favicon.ico">
+            </ion-avatar>
+            Categoria Repeticiones
+            <h2 item-end> Sí</h2>
+            <h2 item-end> No</h2>
+        </ion-item>
       </ion-list>
+
+
+
+
+
 
       <ion-list *ngSwitchCase="'Otra cosa'">
           <ion-item-sliding >
