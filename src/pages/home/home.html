@@ -8,21 +8,17 @@
   <div id="scroll">
     <ion-grid>
       <ion-row>
-        <ion-col>Columna 1</ion-col>
-        <ion-col>Columna 2</ion-col>
-        <ion-col>Columna 3</ion-col>
-        <ion-col>Columna 4</ion-col>
-        <ion-col>Columna 5</ion-col>
+        <ion-col>Seguimiento</ion-col>
       </ion-row>
     </ion-grid>
   </div>
 
-  <div id="buttons" style="margin: 50px;">
+  <div id="buttons" style="margin: 20px;">
     <ion-grid>
-      <ion-row class="row" *ngFor="let filas of lista">
-        <ion-col class="col-3">
-          <button ion-button *ngFor="let estudiante of filas" ion-button (click)="getValores(estudiante)">
-            {{estudiante.nombre}}
+      <ion-row  *ngFor="let filas of lista" > 
+        <ion-col col-5 col-sm *ngFor="let estudiante of filas" align-items: baseline justify-content: space-around>
+          <button class="largeButton" ion-button (click)="getValores(estudiante)" >
+            {{estudiante.nombre}} {{estudiante.apellido}}
           </button>
         </ion-col>
       </ion-row>
