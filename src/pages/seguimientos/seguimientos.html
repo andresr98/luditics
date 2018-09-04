@@ -21,8 +21,7 @@
       </ion-segment>
     </ion-toolbar>
 
-    <!-- Mirar si después se pueden meter los datos a un vector y no tener que crear
-    todas estas veces las mismas etiquetas-->
+    <!-- Aquí se encuentra la programación del segmento Comportamental-->
 
   <div [ngSwitch]="type.firstL">
       <ion-list  *ngSwitchCase="'Comportamiento'">
@@ -48,8 +47,7 @@
       </ion-list>
 
 
-
-
+ <!-- Aquí se encuentra la programación del segmento Cognitivo-->
 
       <ion-list *ngSwitchCase="'Cognitivo'">
          <ion-item item-start color="secondary">

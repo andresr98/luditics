@@ -1,5 +1,13 @@
 page-home {
  .largeButton{
-     width: 172px;
+     width: 90px;
+     height: 40px;
+     //padding: auto;
+     display: flex;
+     white-space: normal;
+ }
+
+ .largeButton:empty{
+    height: 0px;
  }
 }
