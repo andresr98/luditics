@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
-import {SeguimientosPage} from "../seguimientos/seguimientos"
+import {SeguimientosPage} from "../seguimientos/seguimientos";
+import {ScreenOrientation} from "@ionic-native/screen-orientation";
 
 @Component({
   selector: "page-home",
@@ -117,7 +118,10 @@ export class HomePage {
       aislamiento : 8, solidaridad :8, armonioso : 8 }
     ]
   ];
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, private screenO : ScreenOrientation) {
+    //Activar cuando se pase a producción
+    //this.screenO.lock('landscape');
+  }
 
   getValores(est) {
     this.navCtrl.push(SeguimientosPage, {
