@@ -8,77 +8,124 @@
 
 <ion-content>
   <ion-toolbar no-border-top>
-      <ion-segment [(ngModel)]="type.firstL">
-        <ion-segment-button  value="Comportamiento">
-         Comportamental
-        </ion-segment-button>
-        <ion-segment-button value="Cognitivo">
-          Cognitivo
-        </ion-segment-button>
-        <ion-segment-button value="Otra cosa">
-          Otra cosa
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
+    <ion-segment [(ngModel)]="type.firstL">
+      <ion-segment-button value="Comportamiento">
+        Comportamental
+      </ion-segment-button>
+      <ion-segment-button value="Cognitivo">
+        Cognitivo
+      </ion-segment-button>
+      <ion-segment-button value="Otra cosa">
+        Otra cosa
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
-    <!-- Aquí se encuentra la programación del segmento Comportamental-->
+  <!-- Aquí se encuentra la programación del segmento Comportamental-->
 
   <div [ngSwitch]="type.firstL">
-      <ion-list  *ngSwitchCase="'Comportamiento'">
-        <ion-item item-end color="secondary">
-            <ion-avatar item-start>
-                <img src="assets/icon/favicon.ico">
-            </ion-avatar>
-          Categoria Repeticiones
-        </ion-item>
-
-        <ion-item *ngFor="let dato of datos" item-start>
-         <ion-avatar item-start>
-            <img src="{{dato.icono}}">
+    <ion-list *ngSwitchCase="'Comportamiento'">
+      <ion-item item-end color="secondary">
+        <ion-avatar item-start>
+          <img src="assets/icon/favicon.ico">
         </ion-avatar>
-            {{dato.categoria}} {{dato.repeticiones}}
-            <button ion-button item-end icon-only large clear (click) = "sumarCategoria(dato)">
-                <ion-icon name="add-circle" color="secondary" ></ion-icon> 
-            </button>
-            <button ion-button item-end  icon-only large clear (click) = "restarCategoria(dato)" >
-                <ion-icon name="remove-circle" color="danger" ></ion-icon>
-            </button>
+        <h2 class="tabulacion">
+          Categoria
+        </h2>
+        <h4 class="tabulacion">
+          Repeticiones
+        </h4>
+      </ion-item>
+
+      <!--Se llenan los datos según información del Estudiante-->
+      <ion-item *ngFor="let dato of datos" item-start>
+        <ion-avatar item-start>
+          <img src="{{dato.icono}}">
+        </ion-avatar>
+
+        <h2 class="tabulacion">
+          {{dato.categoria}}
+        </h2>
+        <h2 class="tabulacion">
+          {{dato.repeticiones}}
+        </h2>
+        <button ion-button item-end icon-only large clear (click)="sumarCategoria(dato)">
+          <ion-icon name="add-circle" color="secondary"></ion-icon>
+        </button>
+        <button ion-button item-end icon-only large clear (click)="restarCategoria(dato)">
+          <ion-icon name="remove-circle" color="danger"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+
+
+    <!-- Aquí se encuentra la programación del segmento Cognitivo-->
+
+    <ion-list *ngSwitchCase="'Cognitivo'">
+      <ion-item item-start color="secondary">
+        <ion-avatar item-start>
+          <img src="assets/icon/favicon.ico">
+        </ion-avatar>
+        <h2 class="tabulacion">
+          Categoria
+        </h2>
+        <h4 class="tabulacion">
+          Repeticiones
+        </h4>
+      </ion-item>
+
+       <!--Se llenan los datos según información del Estudiante de las categorias-->
+
+       <ion-item *ngFor="let dato of datos">
+         <ion-avatar item-start>
+           <img src="{{dato.icono}}"/>
+         </ion-avatar>
+
+         <h2 class="tabulacion">{{dato.categoria}}</h2>
+         <h2 class="tabulacion">{{dato.repeticiones}}</h2>
+         <button ion-button item-end icon-only large clear (click)="sumarCategoria(dato)">
+            <ion-icon name="add-circle" color="secondary"></ion-icon>
+          </button>
+  
+          <button ion-button item-end icon-only large clear (click)="restarCategoria(dato)">
+            <ion-icon name="remove-circle" color="danger"></ion-icon>
+          </button>
+       </ion-item>
+
+       <!--Se llenan las subcategorias-->
+       <ion-item>
+         <ion-list>
+           <ion-item item-start *ngFor="let dato of datos">
+             <h2 class="tabulacionDoble">{{dato.categoria}}</h2>
+             <h2 class="tabulacionDoble">{{dato.repeticiones}}</h2>
+
+             <button ion-button item-end icon-only large clear (click)="sumarCategoria(dato)">
+                <ion-icon name="add-circle" color="secondary"></ion-icon>
+              </button>
+      
+              <button ion-button item-end icon-only large clear (click)="restarCategoria(dato)">
+                <ion-icon name="remove-circle" color="danger"></ion-icon>
+              </button>
+           </ion-item>
+         </ion-list>
+       </ion-item>
+    </ion-list>
+
+
+    <ion-list *ngSwitchCase="'Otra cosa'">
+      <ion-item-sliding>
+        <ion-item>
+          Item
         </ion-item>
-      </ion-list>
+        <ion-item-options side="left">
+          <button ion-button>Favorite</button>
+          <button ion-button color="danger">Share</button>
+        </ion-item-options>
 
-
- <!-- Aquí se encuentra la programación del segmento Cognitivo-->
-
-      <ion-list *ngSwitchCase="'Cognitivo'">
-         <ion-item item-start color="secondary">
-            <ion-avatar item-start>
-                <img src="assets/icon/favicon.ico">
-            </ion-avatar>
-            Categoria Repeticiones
-            <h2 item-end> Sí</h2>
-            <h2 item-end> No</h2>
-        </ion-item>
-      </ion-list>
-
-
-
-
-
-
-      <ion-list *ngSwitchCase="'Otra cosa'">
-          <ion-item-sliding >
-            <ion-item>
-              Item
-            </ion-item>
-            <ion-item-options side="left">
-              <button ion-button >Favorite</button>
-              <button ion-button color="danger">Share</button>
-            </ion-item-options>
-        
-            <ion-item-options side="right">
-              <button ion-button>Unread</button>
-            </ion-item-options>
-          </ion-item-sliding>
-      </ion-list>
+        <ion-item-options side="right">
+          <button ion-button>Unread</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
   </div>
 </ion-content>
