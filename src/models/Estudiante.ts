@@ -1,10 +1,8 @@
 export interface Estudiante{
-    nombre : String,
-    apellido : String,
-    id : number,
-    impulsividad : number, 
-    frustracion : number,
-    aislamiento : number, 
-    solidaridad : number, 
-    armonioso : number
+  id: number;
+  nombre: string;
+  apellido: string;
+  posicion: [number, number];
+  sexo_biologico: number;
+  descripcion: string;
 }
