@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Estudiante } from '../../models/Estudiante';
-import { Categoria } from "../../models/Categoria"
-import { DatosComportamental } from '../../models/DatosComportamental';
+import { Student } from '../../models/Student';
+import { FollowUpProvider } from '../../providers/follow-up/follow-up'
+import { BehavioralData } from '../../models/BehavioralData';
 
 @IonicPage()
 @Component({
@@ -10,40 +10,38 @@ import { DatosComportamental } from '../../models/DatosComportamental';
   templateUrl: 'seguimientos.html',
 })
 export class SeguimientosPage {
-  type: Categoria = {firstL : "",secondL :""};
-  datos : DatosComportamental[];
-  dato : DatosComportamental = {categoria :"", repeticiones : 0, icono : ""};
-  estudiante : Estudiante;
+  type: string;
+  student: Student;
+  behavioralDatas: Array<BehavioralData>;
+  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.estudiante = navParams.get("estudiante");
-    this.type.firstL = "Comportamiento";
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private followUpProvider: FollowUpProvider) {
 
-    let categorias = ["Aislamiento","Frustración","Impulsividad", "Solidaridad", "Armonioso"];
+    this.student = this.navParams.get("student");
+    this.type = "Comportamiento";
+    let date = new Date().toLocaleDateString().split("/");
+    
+    let formatDate = date[2] + "-" + date[1] + "-" + date[0];
+    this.followUpProvider.getBehavioralFollowUP(this.student.id, 1, formatDate).subscribe(data => {
+      this.behavioralDatas = data.entity
+    })
 
-    let imagenes = ["assets/icon/Aislamiento.png","assets/icon/Frustracion.png","assets/icon/Impulsividad.png",
-                    "assets/icon/Solidaridad.png","assets/icon/Armonioso.png"];
-
-    let repeticiones = [this.estudiante.aislamiento,this.estudiante.frustracion,this.estudiante.impulsividad,
-                        this.estudiante.solidaridad,this.estudiante.armonioso]
-    this.datos = [];
-
-    for(let i=0; i< categorias.length; i++)
-    {
-      this.dato = {categoria :"", repeticiones : 0, icono : ""};
-
-      this.dato.categoria = categorias[i];
-      this.dato.icono = imagenes[i];
-      this.dato.repeticiones = repeticiones[i];
-      this.datos.push(this.dato);
-    }
+    let imagenes = ["assets/icon/Aislamiento.png", "assets/icon/Frustracion.png", "assets/icon/Impulsividad.png",
+    "assets/icon/Solidaridad.png", "assets/icon/Armonioso.png"];
   }
 
-  private sumarCategoria(dato)
-  {
-    this.dato = dato;
-    this.dato.repeticiones++;
+  ionViewWillEnter() {
+  }
+
+
+  getBehavioralFollowUP(student: Student) {
+  }
+
+  private sumarCategoria(dato) {
     //Aquí se llama al servicio para sumarle uno
+    console.log(dato);
+    /*
     switch(this.dato.categoria)
     {
       case "Aislamiento" : this.estudiante.aislamiento = this.dato.repeticiones; break;
@@ -51,17 +49,10 @@ export class SeguimientosPage {
       case "Impulsividad" : this.estudiante.impulsividad = this.dato.repeticiones; break;
       case "Solidaridad" : this.estudiante.solidaridad = this.dato.repeticiones; break;
       case "Armonioso" : this.estudiante.armonioso = this.dato.repeticiones; break;
-    }
+    }*/
   }
-  private restarCategoria(dato)
-  {
-    this.dato = dato;
-    this.dato.repeticiones--;
-
-    if(this.dato.repeticiones < 0)
-    {
-      this.dato.repeticiones = 0
-    }
+  private restarCategoria(dato) {
+    /*
     switch(this.dato.categoria)
     {
       case "Aislamiento" : this.estudiante.aislamiento = this.dato.repeticiones; break;
@@ -69,6 +60,6 @@ export class SeguimientosPage {
       case "Impulsividad" : this.estudiante.impulsividad = this.dato.repeticiones; break;
       case "Solidaridad" :  this.estudiante.solidaridad = this.dato.repeticiones; break;
       case "Armonioso" : this.estudiante.armonioso = this.dato.repeticiones; break;
-    }
+    }*/
   }
 }

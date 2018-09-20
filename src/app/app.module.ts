@@ -10,6 +10,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { SeguimientosPage } from "../pages/seguimientos/seguimientos";
 import { StudentProvider } from "../providers/student/student";
+import { FollowUpProvider } from '../providers/follow-up/follow-up';
 let pages = [MyApp, HomePage, SeguimientosPage];
 @NgModule({
   declarations: pages,
@@ -21,7 +22,8 @@ let pages = [MyApp, HomePage, SeguimientosPage];
     ScreenOrientation,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    StudentProvider
+    StudentProvider,
+    FollowUpProvider
   ]
 })
 export class AppModule {}
