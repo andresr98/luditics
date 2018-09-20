@@ -13,53 +13,59 @@ export class SeguimientosPage {
   type: string;
   student: Student;
   behavioralDatas: Array<BehavioralData>;
-  
+  behavioralData: BehavioralData;
+  formatDate : string;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private followUpProvider: FollowUpProvider) {
 
-    this.student = this.navParams.get("student");
     this.type = "Comportamiento";
-    let date = new Date().toLocaleDateString().split("/");
-    
-    let formatDate = date[2] + "-" + date[1] + "-" + date[0];
-    this.followUpProvider.getBehavioralFollowUP(this.student.id, 1, formatDate).subscribe(data => {
-      this.behavioralDatas = data.entity
-    })
-
     let imagenes = ["assets/icon/Aislamiento.png", "assets/icon/Frustracion.png", "assets/icon/Impulsividad.png",
-    "assets/icon/Solidaridad.png", "assets/icon/Armonioso.png"];
+      "assets/icon/Solidaridad.png", "assets/icon/Armonioso.png"];
   }
 
-  ionViewWillEnter() {
+  ionViewCanEnter() {
+    this.student = this.navParams.get("student");
+    if (this.student === undefined) {
+      return false;
+    }
+    this.getBehavioralFollowUP(this.student);
+    return true;
   }
-
 
   getBehavioralFollowUP(student: Student) {
+    let date = new Date().toLocaleDateString().split("/");
+    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
+
+    this.followUpProvider.getBehavioralFollowUP(this.student.id, 1, this.formatDate).subscribe(data => {
+      this.behavioralDatas = data.entity;
+    })
   }
 
-  private sumarCategoria(dato) {
-    //Aquí se llama al servicio para sumarle uno
-    console.log(dato);
-    /*
-    switch(this.dato.categoria)
-    {
-      case "Aislamiento" : this.estudiante.aislamiento = this.dato.repeticiones; break;
-      case "Frustración" : this.estudiante.frustracion = this.dato.repeticiones; break;
-      case "Impulsividad" : this.estudiante.impulsividad = this.dato.repeticiones; break;
-      case "Solidaridad" : this.estudiante.solidaridad = this.dato.repeticiones; break;
-      case "Armonioso" : this.estudiante.armonioso = this.dato.repeticiones; break;
-    }*/
+  private addAccumulator(data) {
+    this.behavioralData = data;
+
+    this.followUpProvider.updateBehavioralFollowUP(this.student.id,this.behavioralData.categoria__id,
+      this.formatDate, this.behavioralData.acumulador+1).subscribe(data => {
+        let info = data.status;
+
+        if(info == 200){
+          this.behavioralData.acumulador += 1;
+        }
+      });
   }
-  private restarCategoria(dato) {
-    /*
-    switch(this.dato.categoria)
+  private minusAccumulator(data) {
+    this.behavioralData = data;
+
+    if(this.behavioralData.acumulador - 1 >= 0)
     {
-      case "Aislamiento" : this.estudiante.aislamiento = this.dato.repeticiones; break;
-      case "Frustración" : this.estudiante.frustracion = this.dato.repeticiones; break;
-      case "Impulsividad" : this.estudiante.impulsividad = this.dato.repeticiones; break;
-      case "Solidaridad" :  this.estudiante.solidaridad = this.dato.repeticiones; break;
-      case "Armonioso" : this.estudiante.armonioso = this.dato.repeticiones; break;
-    }*/
+      this.followUpProvider.updateBehavioralFollowUP(this.student.id, this.behavioralData.categoria__id,
+        this.formatDate, this.behavioralData.acumulador-1).subscribe(data =>{
+          if(data.status == 200){
+            this.behavioralData.acumulador -=1;
+          }
+        })
+    }
   }
 }

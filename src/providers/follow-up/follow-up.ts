@@ -20,8 +20,16 @@ export class FollowUpProvider {
   }
 
   getBehavioralFollowUP(idStudent: number, typeCategory: number, date: string){
-    return this.http.post<any>(API+"/seguimientos/", {"id_estudiante": idStudent, "tipo_categoria": typeCategory,
-                                                 "fecha": date})//.map(result =>{ return result});
+    return this.http.post<any>(API+"/seguimientos/", {"id_estudiante": idStudent, 
+                                                      "tipo_categoria": typeCategory,
+                                                      "fecha": date});
   } 
+
+  updateBehavioralFollowUP(idStudent: number, idCategory: number, date:string, accumulator: number){
+    return this.http.put<any>(API + "/seguimientos/", { "id_estudiante": idStudent,
+                                                        "id_categoria": idCategory,
+                                                        "fecha": date,
+                                                        "acumulador": accumulator});
+  }
 
 }
