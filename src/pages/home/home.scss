@@ -1,13 +1,16 @@
 page-home {
- .largeButton{
-     width: 90px;
-     height: 40px;
-     //padding: auto;
-     display: flex;
-     white-space: normal;
- }
+  .largeButton {
+    width: 90px;
+    //width: calc(20% - 20px);
+    //margin: 0 10px;
 
- .largeButton:empty{
+    height: 40px;
+    //padding: auto;
+    display: flex;
+    white-space: normal;
+  }
+
+  .largeButton:empty {
     height: 0px;
- }
+  }
 }
