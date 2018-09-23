@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Estudiante } from "../../models/Estudiante";
 
 /*
   Generated class for the StudentProvider provider.
@@ -9,14 +8,18 @@ import { Estudiante } from "../../models/Estudiante";
   and Angular DI.
 */
 
-const API: string = "http://andresr.pythonanywhere.com/estudiantes/";
+const API: string = "http://andresr.pythonanywhere.com/";
 @Injectable()
 export class StudentProvider {
   constructor(public http: HttpClient) {
     console.log("Hello StudentProvider Provider");
   }
 
-  obtenerSeguimiento() {
-    return this.http.get<Estudiante[]>(API);
+  getStudents() {
+    return this.http.get<any>(API + "/estudiantes/");
+  }
+  
+  getStudentsByGroup(grupo: number){
+    return this.http.post<any>(API + "/estudiantes/", {"grupo": grupo});
   }
 }

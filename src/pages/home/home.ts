@@ -4,44 +4,50 @@ import { SeguimientosPage } from "../seguimientos/seguimientos";
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { isNil } from "lodash";
 import { StudentProvider } from "../../providers/student/student";
-import { Estudiante } from "../../models/Estudiante";
+import { Student } from "../../models/Student";
 
 @Component({
   selector: "page-home",
   templateUrl: "home.html"
 })
 export class HomePage {
-  lista: Estudiante[][] = [];
+  list: Student[][] = [];
   constructor(
     public navCtrl: NavController,
     private screenO: ScreenOrientation,
-    private student: StudentProvider
-  ) {
+    private studentProvider: StudentProvider
+  ) 
+  {
     //Activar cuando se pase a producción
     //this.screenO.lock('landscape');
-    this.student.obtenerSeguimiento().subscribe(data => {
-      this.lista = this.sortStudentsByIndex(data);
-      console.log(data);
-    });
   }
 
-  sortStudentsByIndex(data: Estudiante[]): Estudiante[][] {
-    return data.reduce<Estudiante[][]>((acum, estudiante, index) => {
-      const fila = Math.floor(index / 5);
-      const columna = index % 5;
+  sortStudentsByIndex(data: Student[]): Student[][] {
+    return data.reduce<Student[][]>((accumulator, student, index) => {
+      const row = Math.floor(index / 5);
+      const column = index % 5;
 
-      if (isNil(acum[fila])) {
-        acum[fila] = [];
+      if (isNil(accumulator[row])) {
+        accumulator[row] = [];
       }
 
-      acum[fila][columna] = estudiante;
-      return acum;
+      accumulator[row][column] = student;
+      return accumulator;
     }, []);
   }
 
-  getValores(est) {
+  sendValues(student) {
     this.navCtrl.push(SeguimientosPage, {
-      estudiante: est
+      student: student
     });
+  }
+
+  ionViewWillEnter(grupo: number){
+    this.studentProvider.getStudentsByGroup(2).subscribe(data => {
+      if(data.status != 200){
+        return false;
+      }
+      this.list = this.sortStudentsByIndex(data.entity);
+    })
   }
 }

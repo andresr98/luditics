@@ -16,10 +16,10 @@
   <!---->
   <div id="buttons" style="margin: 20px;">
     <ion-grid>
-      <ion-row *ngFor="let filas of lista" align-items: baseline justify-content: space-around>
-        <ion-col col-auto col-sm *ngFor="let estudiante of filas">
-          <button class="largeButton" ion-button (click)="getValores(estudiante)">
-            {{estudiante.nombres}} {{estudiante.apellidos}}
+      <ion-row *ngFor="let row of list" align-items: baseline justify-content: space-around>
+        <ion-col col-auto col-sm *ngFor="let student of row">
+          <button class="largeButton" ion-button (click)="sendValues(student)">
+            {{student.nombres}} {{student.apellidos}}
           </button>
         </ion-col>
       </ion-row>
