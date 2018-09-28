@@ -16,8 +16,13 @@ export class SeguimientosPage {
   type: string;
   student: Student;
   behavioralDatas: Array<FollowUp>;
+  cognitiveDatas: Array<FollowUp>;
   followUpData: FollowUp;
   formatDate : string;
+  typeCategory = {
+    "behavioral": 1,
+    "cognitive": 2
+  };
   images : string[] = [];
 
 /*Se inyectan las dependencias de: 
@@ -41,6 +46,7 @@ export class SeguimientosPage {
       return false;
     }
     this.getBehavioralFollowUP(this.student);
+    this.getCognitiveFollowUp(this.student);
     return true;
   }
 
@@ -50,9 +56,23 @@ export class SeguimientosPage {
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
 
-    this.followUpProvider.getBehavioralFollowUP(this.student.id, 1, this.formatDate).subscribe(data => {
+    this.followUpProvider.getBehavioralFollowUP(this.student.id, this.typeCategory.behavioral,
+      this.formatDate).subscribe(data => {
       this.behavioralDatas = data.entity;
       this.behavioralDatas.forEach(element => {
+        element.changed = false;
+      });
+    })
+  }
+
+  getCognitiveFollowUp(student : Student){
+    let date = new Date().toLocaleDateString().split("/");
+    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
+
+    this.followUpProvider.getBehavioralFollowUP(this.student.id, this.typeCategory.cognitive,
+      this.formatDate).subscribe(data => {
+      this.cognitiveDatas = data.entity;
+      this.cognitiveDatas.forEach(element => {
         element.changed = false;
       });
     })

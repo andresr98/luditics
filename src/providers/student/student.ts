@@ -12,7 +12,6 @@ const API: string = "http://andresr.pythonanywhere.com/";
 @Injectable()
 export class StudentProvider {
   constructor(public http: HttpClient) {
-    console.log("Hello StudentProvider Provider");
   }
 
   getStudents() {

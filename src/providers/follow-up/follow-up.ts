@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 
 /*
   Generated class for the FollowUpProvider provider.
@@ -16,7 +14,6 @@ export class FollowUpProvider {
 
   
   constructor(private http: HttpClient) {
-    console.log('Hello FollowUpProvider Provider');
   }
 
   getBehavioralFollowUP(idStudent: number, typeCategory: number, date: string){
