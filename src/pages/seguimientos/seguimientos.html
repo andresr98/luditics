@@ -6,8 +6,10 @@
   </ion-navbar>
 </ion-header>
 
+<!--En esta sección se cargan los segmentos que se utilizaran-->
 <ion-content>
   <ion-toolbar no-border-top>
+    <!--Se binda con una variable para cambiar sus valores-->
     <ion-segment [(ngModel)]="type">
       <ion-segment-button value="Comportamiento">
         Comportamental Y Ético
@@ -20,8 +22,12 @@
 
   <!-- Aquí se encuentra la programación del segmento Comportamental-->
 
+  <!--Se binda a la misma variable que los segmentos-->
   <div [ngSwitch]="type">
+    <!--Se indica el valor al que debe cambiar para mostart los datos al dar
+        click al boton-->
     <ion-list *ngSwitchCase="'Comportamiento'">
+      <!--Se deja el icono por defecto para indicar el orden de la información-->
       <ion-item item-end color="secondary">
         <ion-avatar item-start>
           <img src="assets/icon/favicon.ico">
@@ -35,9 +41,9 @@
       </ion-item>
 
       <!--Se llenan los datos según información del Estudiante-->
-      <ion-item *ngFor="let data of behavioralDatas" item-start>
+      <ion-item *ngFor="let data of behavioralDatas; let i = index;" item-start>
         <ion-avatar item-start>
-          <img src="{{data.categoria__icono}}">
+          <img src="{{images[i]}}">
         </ion-avatar>
 
         <h2 class="tabulacion">

@@ -1,8 +1,10 @@
 page-home {
+    //Esta clase es encargada de dar un tamaño fijo a los botones, al menos de largo.
  .largeButton{
      width: 90px;
      height: 40px;
      //padding: auto;
+     //Centrar la vista y que el tamaño de anchura se adapte al nombre del estudiante.
      display: flex;
      white-space: normal;
  }
