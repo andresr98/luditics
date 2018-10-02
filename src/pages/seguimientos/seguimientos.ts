@@ -109,5 +109,13 @@ export class SeguimientosPage {
           });
       }
     });
+    this.cognitiveDatas.forEach(element => {
+      if(element.changed){
+        this.followUpProvider.updateBehavioralFollowUP(this.student.id, element.categoria__id,
+          this.formatDate, element.acumulador).subscribe(data => {
+            
+          });
+      }
+    });
   }
 }

@@ -6,17 +6,9 @@
 
 <!--En esta sección iran las tabs, es decir los modulos de la apliación-->
 <ion-content padding>
-  <div>
-    <ion-grid>
-      <ion-row>
-        <ion-col>Seguimiento</ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
   <!--Se cargan los estudiantes de la base de datos.
       Se ordenan en cuadricula y se justifican al espacio.-->
-  <div id="buttons" style="margin: 20px;">
+  <div style="margin: 20px;">
     <ion-grid>
       <ion-row *ngFor="let row of list" align-items: baseline justify-content: space-around>
         <ion-col col-auto col-sm *ngFor="let student of row">

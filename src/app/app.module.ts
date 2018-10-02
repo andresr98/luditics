@@ -14,15 +14,21 @@ import { HttpClientModule } from "@angular/common/http";
 //Importación de las paginas.
 import { HomePage } from "../pages/home/home";
 import { SeguimientosPage } from "../pages/seguimientos/seguimientos";
+import {TabsPage} from '../pages/tabs/tabs';
 
 //Importación de servicios.
 import { StudentProvider } from "../providers/student/student";
 import { FollowUpProvider } from '../providers/follow-up/follow-up';
-let pages = [MyApp, HomePage, SeguimientosPage];
+
+let pages = [MyApp, HomePage, SeguimientosPage, TabsPage];
 
 @NgModule({
   declarations: pages,
-  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(MyApp)],
+  imports: [BrowserModule, 
+    HttpClientModule, 
+    IonicModule.forRoot(MyApp, {
+    tabsPlacement: 'top'
+  })],
   bootstrap: [IonicApp],
   entryComponents: pages,
   providers: [
