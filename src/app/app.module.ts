@@ -27,7 +27,7 @@ let pages = [MyApp, HomePage, SeguimientosPage, TabsPage];
   imports: [BrowserModule, 
     HttpClientModule, 
     IonicModule.forRoot(MyApp, {
-    tabsPlacement: 'top'
+    //tabsPlacement: 'top'
   })],
   bootstrap: [IonicApp],
   entryComponents: pages,

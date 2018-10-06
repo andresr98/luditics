@@ -6,6 +6,7 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 import { Student } from '../../models/Student';
 import { FollowUpProvider } from '../../providers/follow-up/follow-up'
 import { FollowUp } from '../../models/FollowUp'
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -89,6 +90,23 @@ export class SeguimientosPage {
       })
   }
 
+  //Se 
+  getCategoryData() {
+    let date = new Date().toLocaleDateString().split("/");
+    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
+
+    this.followUpProvider.getCategoryData(2,
+      this.formatDate).subscribe(data => {
+        if (data.status == 200) {
+          this.loading.present();
+          this.navCtrl.popToRoot();
+          this.showMessageTime("El seguimiento para el día "+date[0]+" - "+date[1]+" - "+date[2]+" se generó correctamente."); 
+          
+          //this.navCtrl.pop();
+          //this.appCtrl.goBack();
+        }
+      });
+  }
   /**
    * Se obtiene el dato enviado y se actuliza su valor en la vista 
    * No se envian datos negativos.
@@ -122,33 +140,43 @@ export class SeguimientosPage {
           this.followUpProvider.updateFollowUP(this.student.id, element.categoria__id,
             this.formatDate, element.acumulador).subscribe(data => {
             },
-            error => {
-              this.showMessage("Verifique su conexión a internet. No se puede actualizar la información comportamental");
-            });
+              error => {
+                this.showMessage("Verifique su conexión a internet. No se puede actualizar la información comportamental");
+              });
         }
       });
     }
 
-    if(this.cognitiveDatas != undefined){
+    if (this.cognitiveDatas != undefined) {
       this.cognitiveDatas.forEach(element => {
         if (element.changed) {
           this.followUpProvider.updateFollowUP(this.student.id, element.categoria__id,
             this.formatDate, element.acumulador).subscribe(data => {
             },
-            error => {
-              this.showMessage("Verifique su conexión a internet. No se puede actualizar la información cognitiva");
-            });
+              error => {
+                this.showMessage("Verifique su conexión a internet. No se puede actualizar la información cognitiva");
+              });
         }
       });
     }
   }
 
   //Mostrar mensaje en estilo toast
-  showMessage(message : string){
+  showMessage(message: string) {
     let toast = this.toastCtrl.create({
       message: message,
       showCloseButton: true,
       closeButtonText: "OK"
+    });
+    toast.present();
+  }
+
+  showMessageTime(message: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      //showCloseButton: true,
+      //closeButtonText: "OK",
+      duration: 3000
     });
     toast.present();
   }
