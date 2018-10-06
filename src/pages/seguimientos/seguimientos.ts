@@ -87,7 +87,7 @@ export class SeguimientosPage {
       }, error => {
         this.loading.dismissAll();
 
-        this.showMessage("Verifique su conexión. No se puede acceder al servidor");
+        this.showMessage("Verifique su conexión a internet. No se puede acceder al servidor");
 
       })
   }
