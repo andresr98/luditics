@@ -28,7 +28,7 @@ export class FollowUpProvider {
                                                       "fecha": date})
   }
 
-  updateBehavioralFollowUP(idStudent: number, idCategory: number, date:string, accumulator: number){
+  updateFollowUP(idStudent: number, idCategory: number, date:string, accumulator: number){
     return this.http.put<any>(API + "/seguimientos/", { "id_estudiante": idStudent,
                                                         "id_categoria": idCategory,
                                                         "fecha": date,

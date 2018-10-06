@@ -1,11 +1,11 @@
 //Importación de componentes ionic
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 
 //Importación de modelos y providers.
 import { Student } from '../../models/Student';
 import { FollowUpProvider } from '../../providers/follow-up/follow-up'
-import {FollowUp} from '../../models/FollowUp'
+import { FollowUp } from '../../models/FollowUp'
 
 @IonicPage()
 @Component({
@@ -15,23 +15,26 @@ import {FollowUp} from '../../models/FollowUp'
 export class SeguimientosPage {
   type: string;
   student: Student;
-  behavioralDatas: Array<FollowUp>;
-  cognitiveDatas: Array<FollowUp>;
+  behavioralDatas: Array<FollowUp> = [];
+  cognitiveDatas: Array<FollowUp> = [];
   followUpData: FollowUp;
-  formatDate : string;
+  formatDate: string;
   typeCategory = {
     "behavioral": 1,
     "cognitive": 2
   };
-  images : string[] = [];
+  images: string[] = [];
+  loading: any;
 
-/*Se inyectan las dependencias de: 
-     *Controlador de vistas
-     *Controlador de parametros
-     *Provider para obtener los seguimientos de un estudiante desde el back */
+  /*Se inyectan las dependencias de: 
+       *Controlador de vistas
+       *Controlador de parametros
+       *Provider para obtener los seguimientos de un estudiante desde el back */
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private followUpProvider: FollowUpProvider) {
+    public navParams: NavParams,
+    private followUpProvider: FollowUpProvider,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController) {
 
     //Se deja por defecto el valor de comportamiento para mostrar esta lista en primer lugar.
     this.type = "Comportamiento";
@@ -45,6 +48,8 @@ export class SeguimientosPage {
     if (this.student === undefined) {
       return false;
     }
+    this.loading = this.loadingCtrl.create({ content: "Cargando Información..." });
+    this.loading.present();
     this.getBehavioralFollowUP(this.student);
     this.getCognitiveFollowUp(this.student);
     return true;
@@ -58,64 +63,93 @@ export class SeguimientosPage {
 
     this.followUpProvider.getBehavioralFollowUP(this.student.id, this.typeCategory.behavioral,
       this.formatDate).subscribe(data => {
-      this.behavioralDatas = data.entity;
-      this.behavioralDatas.forEach(element => {
-        element.changed = false;
-      });
-    })
+        this.behavioralDatas = data.entity;
+        this.behavioralDatas.forEach(element => {
+          element.changed = false;
+        });
+      },
+        error => {
+        });
   }
-
-  getCognitiveFollowUp(student : Student){
+  //Se obtiene el seguimeinto cognitivo.
+  getCognitiveFollowUp(student: Student) {
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
 
     this.followUpProvider.getBehavioralFollowUP(this.student.id, this.typeCategory.cognitive,
       this.formatDate).subscribe(data => {
-      this.cognitiveDatas = data.entity;
-      this.cognitiveDatas.forEach(element => {
-        element.changed = false;
-      });
-    })
+        this.cognitiveDatas = data.entity;
+        this.loading.dismissAll();
+        this.cognitiveDatas.forEach(element => {
+          element.changed = false;
+        });
+      }, error => {
+        this.loading.dismissAll();
+        this.showMessage("Verifique su conexión a internet. No se puede acceder al servidor");
+      })
   }
 
   /**
-   * Se obtiene el dato enviado
-   * Se actualiza el valor del campo siempre que el servidor retorne un estado 200 'OK'
-   * updateBehavioralFollowUP(id_estudiante, id_categoria, fecha, valor)
-   * Ej: updateBehavioralFollowUP(1,1, 2018-05-22,5)
-   * 
+   * Se obtiene el dato enviado y se actuliza su valor en la vista 
    * No se envian datos negativos.
    */
-  private addAccumulator(data) {
+  addAccumulator(data) {
     this.followUpData = data;
     this.followUpData.acumulador += 1;
     this.followUpData.changed = true;
   }
-  private minusAccumulator(data) {
+  minusAccumulator(data) {
     this.followUpData = data;
-    let accumulator = this.followUpData.acumulador -1;
-    if(accumulator >= 0)
-    {
-      this.followUpData.acumulador -=1;
+    let accumulator = this.followUpData.acumulador - 1;
+    if (accumulator >= 0) {
+      this.followUpData.acumulador -= 1;
       this.followUpData.changed = true;
     }
   }
 
-  ionViewWillLeave(){
-    this.behavioralDatas.forEach(element => {
-      if(element.changed){
-        this.followUpProvider.updateBehavioralFollowUP(this.student.id, element.categoria__id,
-          this.formatDate, element.acumulador).subscribe(data => {
-          });
-      }
+  ionViewWillLeave() {
+    /**
+     * En caso de modificación en los datos de los estudiantes, se procede a enviar los cambios a la bd
+     * Solo se insertan los datos que han cambiado.
+     * Se envia en el método los parametros de: 
+     * Ej updateFollowUp(1,1,2018-10-4,5)
+     * En este caso se actualiza al estudiante 1 de la categoria 1, en la fecha 4-oct-2018 con valor de 5
+     * El error es para verificar si se perdio conexión a la red.
+     */
+    if (this.behavioralDatas != undefined) {
+      this.behavioralDatas.forEach(element => {
+        if (element.changed) {
+          this.followUpProvider.updateFollowUP(this.student.id, element.categoria__id,
+            this.formatDate, element.acumulador).subscribe(data => {
+            },
+            error => {
+              this.showMessage("Verifique su conexión a internet. No se puede actualizar la información comportamental");
+            });
+        }
+      });
+    }
+
+    if(this.cognitiveDatas != undefined){
+      this.cognitiveDatas.forEach(element => {
+        if (element.changed) {
+          this.followUpProvider.updateFollowUP(this.student.id, element.categoria__id,
+            this.formatDate, element.acumulador).subscribe(data => {
+            },
+            error => {
+              this.showMessage("Verifique su conexión a internet. No se puede actualizar la información cognitiva");
+            });
+        }
+      });
+    }
+  }
+
+  //Mostrar mensaje en estilo toast
+  showMessage(message : string){
+    let toast = this.toastCtrl.create({
+      message: message,
+      showCloseButton: true,
+      closeButtonText: "OK"
     });
-    this.cognitiveDatas.forEach(element => {
-      if(element.changed){
-        this.followUpProvider.updateBehavioralFollowUP(this.student.id, element.categoria__id,
-          this.formatDate, element.acumulador).subscribe(data => {
-            
-          });
-      }
-    });
+    toast.present();
   }
 }

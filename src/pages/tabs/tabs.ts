@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 
 //Importar cada página en para los tabs
 import {HomePage} from '../home/home'
@@ -21,6 +21,6 @@ export class TabsPage {
   //Se asignan a una variable para bindarse a la página
   homePage = HomePage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController) {
   }
 }
