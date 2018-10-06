@@ -6,6 +6,7 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 import { Student } from '../../models/Student';
 import { FollowUpProvider } from '../../providers/follow-up/follow-up'
 import { FollowUp } from '../../models/FollowUp'
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -85,7 +86,7 @@ export class SeguimientosPage {
         });
       }, error => {
         this.loading.dismissAll();
-        this.showMessage("Verifique su conexión a internet. No se puede acceder al servidor");
+        this.showMessage("Verifique su conexión a internet.. No se puede acceder al servidor");
       })
   }
 
@@ -93,14 +94,18 @@ export class SeguimientosPage {
   getCategoryData() {
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
-    this.loading = this.loadingCtrl.create({ content: "Insertando datos en la base de datos" });
-    this.loading.present();
-    this.followUpProvider.getCategoryData(2, this.formatDate).subscribe(data => {
-      if(data.status == 200){
-        this.loading.dismissAll();
-        this.navCtrl.pop();
-      }
-    })
+
+    this.followUpProvider.getCategoryData(2,
+      this.formatDate).subscribe(data => {
+        if (data.status == 200) {
+          this.loading.present();
+          this.navCtrl.popToRoot();
+          this.showMessageTime("El seguimiento para el día "+date[0]+" - "+date[1]+" - "+date[2]+" se generó correctamente."); 
+          
+          //this.navCtrl.pop();
+          //this.appCtrl.goBack();
+        }
+      });
   }
   /**
    * Se obtiene el dato enviado y se actuliza su valor en la vista 
@@ -175,4 +180,6 @@ export class SeguimientosPage {
     });
     toast.present();
   }
+
+  
 }
