@@ -3,11 +3,12 @@
     <ion-title>
       <h3>Seguimiento de {{student.nombres}} {{student.apellidos}}</h3>
     </ion-title>
-      <ion-buttons end>
-        <button *ngIf="behavioralDatas==0 || cognitiveDatas==0" class="largeButton" (click)="getCategoryData()" navPop outline ion-button>
+
+    <ion-buttons end>
+      <button *ngIf="behavioralDatas==0 || cognitiveDatas==0" class="largeButton" (click)="getCategoryData()" outline ion-button>
           Generar seguimiento diario
-        </button>
-      </ion-buttons>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

@@ -6,7 +6,6 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 import { Student } from '../../models/Student';
 import { FollowUpProvider } from '../../providers/follow-up/follow-up'
 import { FollowUp } from '../../models/FollowUp'
-import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -94,18 +93,14 @@ export class SeguimientosPage {
   getCategoryData() {
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
-
-    this.followUpProvider.getCategoryData(2,
-      this.formatDate).subscribe(data => {
-        if (data.status == 200) {
-          this.loading.present();
-          this.navCtrl.popToRoot();
-          this.showMessageTime("El seguimiento para el día "+date[0]+" - "+date[1]+" - "+date[2]+" se generó correctamente."); 
-          
-          //this.navCtrl.pop();
-          //this.appCtrl.goBack();
-        }
-      });
+    this.loading = this.loadingCtrl.create({ content: "Insertando datos en la base de datos" });
+    this.loading.present();
+    this.followUpProvider.getCategoryData(2, this.formatDate).subscribe(data => {
+      if(data.status == 200){
+        this.loading.dismissAll();
+        this.navCtrl.pop();
+      }
+    })
   }
   /**
    * Se obtiene el dato enviado y se actuliza su valor en la vista 
