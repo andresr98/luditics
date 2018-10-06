@@ -2,19 +2,33 @@ import { NgModule, ErrorHandler } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { IonicApp, IonicModule, IonicErrorHandler } from "ionic-angular";
 import { MyApp } from "./app.component";
-import { ScreenOrientation } from "@ionic-native/screen-orientation";
-import { HttpClientModule } from "@angular/common/http";
 
-import { HomePage } from "../pages/home/home";
+//Importación de plugins nativos
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
+
+//Importación de modulo para conectividad http
+import { HttpClientModule } from "@angular/common/http";
+
+//Importación de las paginas.
+import { HomePage } from "../pages/home/home";
 import { SeguimientosPage } from "../pages/seguimientos/seguimientos";
+import {TabsPage} from '../pages/tabs/tabs';
+
+//Importación de servicios.
 import { StudentProvider } from "../providers/student/student";
 import { FollowUpProvider } from '../providers/follow-up/follow-up';
-let pages = [MyApp, HomePage, SeguimientosPage];
+
+let pages = [MyApp, HomePage, SeguimientosPage, TabsPage];
+
 @NgModule({
   declarations: pages,
-  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(MyApp)],
+  imports: [BrowserModule, 
+    HttpClientModule, 
+    IonicModule.forRoot(MyApp, {
+    tabsPlacement: 'top'
+  })],
   bootstrap: [IonicApp],
   entryComponents: pages,
   providers: [

@@ -1,23 +1,18 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Luditics</ion-title>
+    <ion-title>Luditics Administración</ion-title>
   </ion-navbar>
 </ion-header>
 
+<!--En esta sección iran las tabs, es decir los modulos de la apliación-->
 <ion-content padding>
-  <div id="scroll">
-    <ion-grid>
-      <ion-row>
-        <ion-col>Seguimiento</ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
-  <!---->
-  <div id="buttons" style="margin: 20px;">
+  <!--Se cargan los estudiantes de la base de datos.
+      Se ordenan en cuadricula y se justifican al espacio.-->
+  <div style="margin: 20px;">
     <ion-grid>
       <ion-row *ngFor="let row of list" align-items: baseline justify-content: space-around>
         <ion-col col-auto col-sm *ngFor="let student of row">
+          <!--Cada estudiante es representado por un botón, para enviar sus valores de vista a vista-->
           <button class="largeButton" ion-button (click)="sendValues(student)">
             {{student.nombres}} {{student.apellidos}}
           </button>
