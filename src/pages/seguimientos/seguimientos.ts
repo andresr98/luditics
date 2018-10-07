@@ -1,6 +1,7 @@
 //Importación de componentes ionic
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,
+         LoadingController, ToastController } from 'ionic-angular';
 
 //Importación de modelos y providers.
 import { Student } from '../../models/Student';
@@ -48,8 +49,13 @@ export class SeguimientosPage {
     if (this.student === undefined) {
       return false;
     }
+    //Se formatea la fecha a  YYYY-MM-DD, para enviarla a la base de datos
+    let date = new Date().toLocaleDateString().split("/");
+    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
+
     this.loading = this.loadingCtrl.create({ content: "Cargando Información..." });
     this.loading.present();
+
     this.getBehavioralFollowUP(this.student);
     this.getCognitiveFollowUp(this.student);
     return true;
@@ -57,9 +63,9 @@ export class SeguimientosPage {
 
   //Se obtiene el seguimeinto comportamental y ético.
   getBehavioralFollowUP(student: Student) {
-    //Se formatea la fecha a  YYYY-MM-DD, para enviarla a la base de datos
-    let date = new Date().toLocaleDateString().split("/");
-    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
+    
+    /*let date = new Date().toLocaleDateString().split("/");
+    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];*/
 
     this.followUpProvider.getBehavioralFollowUP(this.student.id, this.typeCategory.behavioral,
       this.formatDate).subscribe(data => {
@@ -73,8 +79,8 @@ export class SeguimientosPage {
   }
   //Se obtiene el seguimeinto cognitivo.
   getCognitiveFollowUp(student: Student) {
-    let date = new Date().toLocaleDateString().split("/");
-    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
+    /*let date = new Date().toLocaleDateString().split("/");
+    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];*/
 
     this.followUpProvider.getBehavioralFollowUP(this.student.id, this.typeCategory.cognitive,
       this.formatDate).subscribe(data => {
@@ -85,8 +91,32 @@ export class SeguimientosPage {
         });
       }, error => {
         this.loading.dismissAll();
-        this.showMessage("Verifique su conexión a internet. No se puede acceder al servidor");
+        this.showMessage("Verifique su conexión a internet. No se puede acceder al servidor", true);
+        this.navCtrl.pop();
       })
+  }
+
+  getCategoryData() {
+    let date = new Date().toLocaleDateString().split("/");
+    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
+
+    this.loading = this.loadingCtrl.create({ content: "Insertando datos a la base de datos..." });
+    this.loading.present();
+    this.followUpProvider.getCategoryData(2,
+      this.formatDate).subscribe(
+        data => {
+        if (data.status == 200) {
+          this.loading.dismissAll();
+          this.showMessage("El seguimiento para el día " + date[0] + " - " + date[1] + " - " + date[2] + 
+          " se generó correctamente.");
+
+          this.navCtrl.pop();
+        }
+      },
+      error => {
+        this.loading.dismissAll();
+        this.showMessage("El seguimiento dirario no se puede generar. Verifique su conexión", true);
+      });
   }
 
   /**
@@ -116,40 +146,53 @@ export class SeguimientosPage {
      * En este caso se actualiza al estudiante 1 de la categoria 1, en la fecha 4-oct-2018 con valor de 5
      * El error es para verificar si se perdio conexión a la red.
      */
+
     if (this.behavioralDatas != undefined) {
       this.behavioralDatas.forEach(element => {
         if (element.changed) {
           this.followUpProvider.updateFollowUP(this.student.id, element.categoria__id,
-            this.formatDate, element.acumulador).subscribe(data => {
-            },
-            error => {
-              this.showMessage("Verifique su conexión a internet. No se puede actualizar la información comportamental");
-            });
+            this.formatDate, element.acumulador).subscribe(
+              data => {
+              },
+              error => {
+                this.showMessage("Verifique su conexión a internet. No se puede actualizar la información comportamental de "
+                  + element.categoria__nombre, true);
+              });
         }
       });
     }
-
-    if(this.cognitiveDatas != undefined){
+    if (this.cognitiveDatas != undefined) {
       this.cognitiveDatas.forEach(element => {
         if (element.changed) {
           this.followUpProvider.updateFollowUP(this.student.id, element.categoria__id,
-            this.formatDate, element.acumulador).subscribe(data => {
-            },
-            error => {
-              this.showMessage("Verifique su conexión a internet. No se puede actualizar la información cognitiva");
-            });
+            this.formatDate, element.acumulador).subscribe(
+              data => {
+              },
+              error => {
+                this.showMessage("Verifique su conexión a internet. No se puede actualizar la información cognitiva de "
+                  + element.categoria__nombre, true);
+              });
         }
       });
     }
   }
 
   //Mostrar mensaje en estilo toast
-  showMessage(message : string){
-    let toast = this.toastCtrl.create({
-      message: message,
-      showCloseButton: true,
-      closeButtonText: "OK"
-    });
-    toast.present();
+  showMessage(message: string, showButton: boolean = false) {
+    if (showButton == true) {
+      let toast = this.toastCtrl.create({
+        message: message,
+        showCloseButton: showButton,
+        closeButtonText: "OK"
+      });
+      toast.present();
+    }
+    else {
+      let toast = this.toastCtrl.create({
+        message: message,
+        duration: 3000
+      });
+      toast.present();
+    }
   }
 }
