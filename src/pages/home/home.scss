@@ -1,20 +1,12 @@
 page-home {
-<<<<<<< HEAD
+  .student-container {
+    max-width: 20%;
+  }
+
   .largeButton {
-    width: 90px;
+    width: 100%;
     //width: calc(20% - 20px);
     //margin: 0 10px;
-=======
-    //Esta clase es encargada de dar un tamaño fijo a los botones, al menos de largo.
- .largeButton{
-     width: 90px;
-     height: 40px;
-     //padding: auto;
-     //Centrar la vista y que el tamaño de anchura se adapte al nombre del estudiante.
-     display: flex;
-     white-space: normal;
- }
->>>>>>> a42cf38e6e580f336a134ea3594638bca8b1e208
 
     height: 40px;
     //padding: auto;

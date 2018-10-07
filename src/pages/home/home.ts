@@ -1,5 +1,5 @@
 //Importación de componentes ionic
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { NavController, ToastController, LoadingController } from "ionic-angular";
 import { isNil } from "lodash";
 
@@ -13,9 +13,15 @@ import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { StudentProvider } from "../../providers/student/student";
 import { Student } from "../../models/Student";
 
+enum AssistanceStates {
+  onTime,
+  late,
+  missing,
+}
+
 @Component({
   selector: "page-home",
-  templateUrl: "home.html"
+  templateUrl: "home.html",
 })
 export class HomePage {
   //Se crea la cuadricula de estudiantes.
