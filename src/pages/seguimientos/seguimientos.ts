@@ -101,7 +101,7 @@ export class SeguimientosPage {
       })
   }
 
-  getCategoryData() {
+  insertCategoryData() {
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
 

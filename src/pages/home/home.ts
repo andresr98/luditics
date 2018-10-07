@@ -30,9 +30,6 @@ export class HomePage {
               private toastCtrl : ToastController,
               private loadingCtrl: LoadingController) {
 
-    //Activar cuando se pase a producción
-    //this.screenO.lock('landscape');
-
     //Mostrar información de carga y traer los estudiantes de la base de datos
     var loading = this.loadingCtrl.create({ content: "Cargando Estudiantes..." });
     loading.present();
