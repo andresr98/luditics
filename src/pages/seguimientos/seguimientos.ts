@@ -8,6 +8,9 @@ import { Student } from '../../models/Student';
 import { FollowUpProvider } from '../../providers/follow-up/follow-up'
 import { FollowUp } from '../../models/FollowUp'
 
+//Importación de componentes nativos
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
+
 @IonicPage()
 @Component({
   selector: 'page-seguimientos',
@@ -35,7 +38,8 @@ export class SeguimientosPage {
     public navParams: NavParams,
     private followUpProvider: FollowUpProvider,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private screenO : ScreenOrientation) {
 
     //Se deja por defecto el valor de comportamiento para mostrar esta lista en primer lugar.
     this.type = "Comportamiento";
@@ -49,6 +53,7 @@ export class SeguimientosPage {
     if (this.student === undefined) {
       return false;
     }
+    //this.screenO.lock('landscape');
     //Se formatea la fecha a  YYYY-MM-DD, para enviarla a la base de datos
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];

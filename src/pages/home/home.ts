@@ -58,6 +58,10 @@ export class HomePage {
     });
   }
 
+  ionViewCanEnter(){
+    //this.screenO.lock('landscape');
+  }
+
   //Se ordenan los estudiantes por fila y columnas. Según orden del profesor
   sortStudentsByIndex(data: Student[]): Student[][] {
     return data.reduce<Student[][]>((accumulator, student, index) => {
