@@ -107,7 +107,7 @@ export class SeguimientosPage {
 
     this.loading = this.loadingCtrl.create({ content: "Insertando datos a la base de datos..." });
     this.loading.present();
-    this.followUpProvider.getCategoryData(2,
+    this.followUpProvider.insertCategoryData(2,
       this.formatDate).subscribe(
         data => {
         if (data.status == 200) {
