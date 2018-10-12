@@ -1,39 +1,45 @@
+//Componentes de Ionic
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { isNil } from "lodash";
 
-/**
- * Generated class for the AssistancePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-enum AssistanceStates {
-  onTime,
-  late,
-  missing
-}
+//Importación de provider
+import {AssistanceProvider} from '../../providers/assistance/assistance';
+
+import {Assistance} from '../../models/Assistance';
+
 @IonicPage()
 @Component({
   selector: "page-assistance",
   templateUrl: "assistance.html"
 })
 export class AssistancePage {
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad AssistancePage");
-  }
+  listAssistance : [][] = []
+  constructor(public navCtrl: NavController, public navParams: NavParams, private assistanceProvider : AssistanceProvider) {}
 
   tapEvent(event) {
-    console.log(event.target.classList);
     event.target.classList.toggle("late");
     event.target.classList.remove("miss");
     event.preventDefault();
   }
   pressEvent(event) {
-    console.log(event.target.classList);
     event.target.classList.toggle("miss");
     event.target.classList.remove("late");
     event.preventDefault();
+  }
+
+  sortStudentsByIndex(data: Assistance[]): Assistance[][] {
+    return data.reduce<Assistance[][]>((accumulator, assistance, index) => {
+      const row = Math.floor(index / 5);
+      const column = index % 5;
+
+      if (isNil(accumulator[row])) {
+        accumulator[row] = [];
+      }
+
+      accumulator[row][column] = assistance;
+      return accumulator;
+    }, []);
   }
 }

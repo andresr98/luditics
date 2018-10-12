@@ -19,6 +19,7 @@ import { AssistancePage } from "../pages/assistance/assistance";
 //Importación de servicios.
 import { StudentProvider } from "../providers/student/student";
 import { FollowUpProvider } from "../providers/follow-up/follow-up";
+import { AssistanceProvider } from '../providers/assistance/assistance';
 
 let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage];
 
@@ -33,7 +34,8 @@ let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage];
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     StudentProvider,
-    FollowUpProvider
+    FollowUpProvider,
+    AssistanceProvider
   ]
 })
 export class AppModule {}
