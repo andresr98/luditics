@@ -9,10 +9,12 @@ page-home {
     margin: 0 10px;
 
     height: 60px;
-    //padding: 10px;
+    padding: 10px 5px;
     display: flex;
     white-space: normal;
+    text-transform: none;
     font-weight: bold;
+    font-size: 10pt;
     border-radius: 5px;
   }
 

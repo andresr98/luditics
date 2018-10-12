@@ -1,6 +1,6 @@
 //Componentes de Ionic
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, ToastController, LoadingController} from "ionic-angular";
 import { isNil } from "lodash";
 
 //Importación de provider
@@ -17,11 +17,20 @@ export class AssistancePage {
   list: Assistance[][] = [];
   assistance: Assistance;
   formatDate: string;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private assistanceProvider: AssistanceProvider
+    private assistanceProvider: AssistanceProvider,
+    private loadingCtrl : LoadingController,
+    private toastCtrl : ToastController
   ) {
+
+    var loading = this.loadingCtrl.create({
+      content: "Cargando Asistencia..."
+    });
+    loading.present();
+
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
     this.assistanceProvider.getAssistances(2, this.formatDate).subscribe(
@@ -31,13 +40,16 @@ export class AssistancePage {
           fila.forEach(element => {
             if (element.asistencia == 1) element.asistenciaClass = "onTime";
             else if (element.asistencia == 2) element.asistenciaClass = "late";
-            else element.asistenciaClass = "missing";
+            else element.asistenciaClass = "miss";
           });
         });
-        console.log(this.list);
+        loading.dismissAll();
       },
       error => {
-        console.log("no trajo datos");
+        loading.dismissAll();
+        this.showMessage(
+          "Verifique su conexión a internet. No se puede acceder al servidor"
+        );
       }
     );
   }
@@ -83,5 +95,14 @@ export class AssistancePage {
       accumulator[row][column] = assistance;
       return accumulator;
     }, []);
+  }
+
+  showMessage(message: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      showCloseButton: true,
+      closeButtonText: "OK"
+    });
+    toast.present();
   }
 }
