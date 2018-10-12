@@ -110,7 +110,7 @@ export class SeguimientosPage {
     this.followUpProvider.insertCategoryData(2,
       this.formatDate).subscribe(
         data => {
-        if (data.status == 200) {
+        if (data.status == 201) {
           this.loading.dismissAll();
           this.showMessage("El seguimiento para el día " + date[0] + " - " + date[1] + " - " + date[2] + 
           " se generó correctamente.");
