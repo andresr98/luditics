@@ -1,23 +1,15 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { Student } from "../../models/Student";
 
-/**
- * Generated class for the AssistancePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-enum AssistanceStates {
-  onTime,
-  late,
-  missing
-}
 @IonicPage()
 @Component({
   selector: "page-assistance",
   templateUrl: "assistance.html"
 })
 export class AssistancePage {
+  list: Student[][] = [];
+  
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
