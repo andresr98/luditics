@@ -3,5 +3,7 @@ export interface Assistance {
     grupoxestudiante__estudiante_id__nombres: string,
     grupoxestudiante__estudiante_id__apellidos: string,
     asistencia : number,
-    asistenciaClass : string 
+    asistenciaClass : string
+    changed: boolean
+     
 }

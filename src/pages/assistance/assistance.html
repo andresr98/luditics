@@ -22,3 +22,12 @@
     </ion-grid>
   </div>
 </ion-content>
+
+<ion-footer>
+  <div class="footer" *ngIf="changed">
+    <h6>Enviar actualización asistencia</h6>
+    <ion-buttons end >
+      <button ion-button (click)="updateAssistances()"> Actualizar </button>
+    </ion-buttons>
+  </div>
+</ion-footer>

@@ -17,6 +17,8 @@ export class AssistancePage {
   list: Assistance[][] = [];
   assistance: Assistance;
   formatDate: string;
+  counterTaps : number = 0;
+  changed : boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -25,7 +27,6 @@ export class AssistancePage {
     private loadingCtrl : LoadingController,
     private toastCtrl : ToastController
   ) {
-
     var loading = this.loadingCtrl.create({
       content: "Cargando Asistencia..."
     });
@@ -41,6 +42,8 @@ export class AssistancePage {
             if (element.asistencia == 1) element.asistenciaClass = "onTime";
             else if (element.asistencia == 2) element.asistenciaClass = "late";
             else element.asistenciaClass = "miss";
+
+            element.changed=false;
           });
         });
         loading.dismissAll();
@@ -66,6 +69,8 @@ export class AssistancePage {
       assistance.asistencia = 2;
       assistance.asistenciaClass = "late";
     }
+    this.changed = true;
+    assistance.changed= true;
     event.preventDefault();
   }
   pressEvent(event, assistance: Assistance) {
@@ -80,6 +85,8 @@ export class AssistancePage {
       assistance.asistencia = 3;
       assistance.asistenciaClass = "miss";
     }
+    this.changed = true;
+    assistance.changed = true;
     event.preventDefault();
   }
 
@@ -104,5 +111,28 @@ export class AssistancePage {
       closeButtonText: "OK"
     });
     toast.present();
+  }
+
+  updateAssistances(){
+    var loading = this.loadingCtrl.create({
+      content: "Actualizando la asistencia..."
+    });
+    loading.present();
+    this.list.forEach(row => {
+      row.forEach(element => {
+        if(element.changed){
+          this.assistanceProvider.updateAssistances(2,element.grupoxestudiante__estudiante_id__id,
+            this.formatDate,element.asistencia).subscribe(
+              data=>{
+            },
+            error => {
+              this.showMessage("Verifique su conexión a internet. No se puede actualizar la asistencia");
+              loading.dismissAll();
+            });
+        }
+      }); 
+    });
+    loading.dismiss()
+    this.changed = false;
   }
 }
