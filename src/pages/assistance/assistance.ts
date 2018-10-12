@@ -135,4 +135,8 @@ export class AssistancePage {
     loading.dismiss()
     this.changed = false;
   }
+
+  insertAssistances(){
+    
+  }
 }

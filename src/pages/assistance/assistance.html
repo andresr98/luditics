@@ -1,9 +1,9 @@
 --><ion-header>
   <ion-navbar>
     <ion-title>Luditics Asistencia</ion-title>
-    <ion-buttons *ngIf="">
-      <button>
-
+    <ion-buttons *ngIf="list.length == 0" end>
+      <button ion-button outline (click) = "insertAssistances()">
+        Insertar asistencias
       </button>
     </ion-buttons>
   </ion-navbar>
