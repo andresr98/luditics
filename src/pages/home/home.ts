@@ -50,13 +50,9 @@ export class HomePage {
          * data.entity = es el resultado esperado de la consulta
          * data.error = es un error personalizado para ser mostrado al usuario
          ***/
-        if (data.status != 200) {
-          return false;
-        }
         //Se cierra el mensaje de carga
         loading.dismissAll();
         this.list = this.sortStudentsByIndex(data.entity);
-        return true;
       },
       //En caso de pérdida de conexión a internet
       error => {

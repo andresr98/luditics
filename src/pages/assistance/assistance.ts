@@ -4,9 +4,9 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { isNil } from "lodash";
 
 //Importación de provider
-import {AssistanceProvider} from '../../providers/assistance/assistance';
+import { AssistanceProvider } from "../../providers/assistance/assistance";
 
-import {Assistance} from '../../models/Assistance';
+import { Assistance } from "../../models/Assistance";
 
 @IonicPage()
 @Component({
@@ -14,17 +14,60 @@ import {Assistance} from '../../models/Assistance';
   templateUrl: "assistance.html"
 })
 export class AssistancePage {
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, private assistanceProvider : AssistanceProvider) {}
+  list: Assistance[][] = [];
+  assistance: Assistance;
+  formatDate: string;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private assistanceProvider: AssistanceProvider
+  ) {
+    let date = new Date().toLocaleDateString().split("/");
+    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
+    this.assistanceProvider.getAssistances(2, this.formatDate).subscribe(
+      data => {
+        this.list = this.sortStudentsByIndex(data.entity);
+        this.list.forEach(fila => {
+          fila.forEach(element => {
+            if (element.asistencia == 1) element.asistenciaClass = "onTime";
+            else if (element.asistencia == 2) element.asistenciaClass = "late";
+            else element.asistenciaClass = "missing";
+          });
+        });
+        console.log(this.list);
+      },
+      error => {
+        console.log("no trajo datos");
+      }
+    );
+  }
 
-  tapEvent(event) {
-    event.target.classList.toggle("late");
-    event.target.classList.remove("miss");
+  tapEvent(event, assistance: Assistance) {
+    this.assistance = assistance;
+    if (assistance.asistencia == 1) {
+      assistance.asistencia = 2;
+      assistance.asistenciaClass = "late";
+    } else if (assistance.asistencia == 2) {
+      assistance.asistencia = 1;
+      assistance.asistenciaClass = "onTime";
+    } else {
+      assistance.asistencia = 2;
+      assistance.asistenciaClass = "late";
+    }
     event.preventDefault();
   }
-  pressEvent(event) {
-    event.target.classList.toggle("miss");
-    event.target.classList.remove("late");
+  pressEvent(event, assistance: Assistance) {
+    this.assistance = assistance;
+    if (assistance.asistencia == 1) {
+      assistance.asistencia = 3;
+      assistance.asistenciaClass = "miss";
+    } else if (assistance.asistencia == 3) {
+      assistance.asistencia = 1;
+      assistance.asistenciaClass = "onTime";
+    } else {
+      assistance.asistencia = 3;
+      assistance.asistenciaClass = "miss";
+    }
     event.preventDefault();
   }
 
