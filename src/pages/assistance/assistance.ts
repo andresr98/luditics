@@ -7,6 +7,7 @@ import { isNil } from "lodash";
 import {AssistanceProvider} from '../../providers/assistance/assistance';
 
 import {Assistance} from '../../models/Assistance';
+import {Student} from '../../models/Student'
 
 @IonicPage()
 @Component({
@@ -14,6 +15,8 @@ import {Assistance} from '../../models/Assistance';
   templateUrl: "assistance.html"
 })
 export class AssistancePage {
+  list: Student[][] = [];
+  
 
   listAssistance : [][] = []
   constructor(public navCtrl: NavController, public navParams: NavParams, private assistanceProvider : AssistanceProvider) {}

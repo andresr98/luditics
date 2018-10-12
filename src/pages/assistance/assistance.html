@@ -27,8 +27,8 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row>
-      <ion-col col-auto col-sm>
+    <ion-row *ngFor="let row of list">
+      <ion-col class="student-container" col-auto col-sm *ngFor="let student of row">
         <ion-card class="onTime" (tap)="tapEvent($event)" (press)="pressEvent($event)">
           <ion-card-content>
             andres
