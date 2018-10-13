@@ -1,6 +1,10 @@
 //Importación de componentes ionic
-import { Component } from "@angular/core";
-import { NavController, ToastController, LoadingController } from "ionic-angular";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import {
+  NavController,
+  ToastController,
+  LoadingController
+} from "ionic-angular";
 import { isNil } from "lodash";
 
 //Importación de paginas
@@ -21,7 +25,7 @@ export class HomePage {
   //Se crea la cuadricula de estudiantes.
   list: Student[][] = [];
 
-    /*Se inyectan las dependencias de: Controlador de vistas
+  /*Se inyectan las dependencias de: Controlador de vistas
      *Controlador de orientación de pantalla
      *Provider para obtener los estudiantes desde el back */
   constructor(public navCtrl: NavController,
@@ -31,28 +35,29 @@ export class HomePage {
               private loadingCtrl: LoadingController) {
 
     //Mostrar información de carga y traer los estudiantes de la base de datos
-    var loading = this.loadingCtrl.create({ content: "Cargando Estudiantes..." });
-    loading.present();
-    this.studentProvider.getStudentsByGroup(2).subscribe(data => {
-
-      //Data es una variable que contiene: 
-      /**data.status = es el valor HTTP de respuesta
-       * data.entity = es el resultado esperado de la consulta
-       * data.error = es un error personalizado para ser mostrado al usuario
-       ***/
-      if(data.status != 200){
-        return false;
-      }
-      //Se cierra el mensaje de carga
-      loading.dismissAll()
-      this.list = this.sortStudentsByIndex(data.entity);
-      return true;
-    },
-    //En caso de pérdida de conexión a internet
-    error => {
-      loading.dismissAll();
-      this.showMessage("Verifique su conexión a internet. No se puede acceder al servidor");
+    var loading = this.loadingCtrl.create({
+      content: "Cargando Estudiantes..."
     });
+    loading.present();
+    this.studentProvider.getStudentsByGroup(2).subscribe(
+      data => {
+        //Data es una variable que contiene:
+        /**data.status = es el valor HTTP de respuesta
+         * data.entity = es el resultado esperado de la consulta
+         * data.error = es un error personalizado para ser mostrado al usuario
+         ***/
+        //Se cierra el mensaje de carga
+        loading.dismissAll();
+        this.list = this.sortStudentsByIndex(data.entity);
+      },
+      //En caso de pérdida de conexión a internet
+      error => {
+        loading.dismissAll();
+        this.showMessage(
+          "Verifique su conexión a internet. No se puede acceder al servidor"
+        );
+      }
+    );
   }
 
   ionViewCanEnter(){
@@ -83,7 +88,7 @@ export class HomePage {
   }
 
   //Mensajes mostrados en estilo toast.
-  showMessage(message : string){
+  showMessage(message: string) {
     let toast = this.toastCtrl.create({
       message: message,
       showCloseButton: true,

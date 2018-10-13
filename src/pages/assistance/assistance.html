@@ -1,0 +1,33 @@
+--><ion-header>
+  <ion-navbar>
+    <ion-title>Luditics Asistencia</ion-title>
+    <ion-buttons *ngIf="list.length == 0" end>
+      <button ion-button outline (click) = "insertAssistances()">
+        Insertar asistencias
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div style="margin: 20px;">
+    <ion-grid>
+      <ion-row *ngFor="let row of list">
+        <ion-col class="student-container" col-auto col-sm *ngFor="let student of row">
+          <ion-card class="{{student.asistenciaClass}} itemView" (tap)="tapEvent($event, student)" (press)="pressEvent($event, student)">
+            {{student.grupoxestudiante__estudiante_id__nombres}} {{student.grupoxestudiante__estudiante_id__apellidos}}
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="footer" *ngIf="changed">
+    <h6>Enviar actualización asistencia</h6>
+    <ion-buttons end >
+      <button ion-button (click)="updateAssistances()"> Actualizar </button>
+    </ion-buttons>
+  </div>
+</ion-footer>
