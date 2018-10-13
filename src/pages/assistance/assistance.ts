@@ -27,14 +27,17 @@ export class AssistancePage {
     private loadingCtrl : LoadingController,
     private toastCtrl : ToastController
   ) {
+    let date = new Date().toLocaleDateString().split("/");
+    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
+    this.getAssistances(2, this.formatDate);
+  }
+
+  getAssistances(idGroup : number, date :string){
     var loading = this.loadingCtrl.create({
       content: "Cargando Asistencia..."
     });
     loading.present();
-
-    let date = new Date().toLocaleDateString().split("/");
-    this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
-    this.assistanceProvider.getAssistances(2, this.formatDate).subscribe(
+    this.assistanceProvider.getAssistances(2, date).subscribe(
       data => {
         this.list = this.sortStudentsByIndex(data.entity);
         this.list.forEach(fila => {
@@ -137,6 +140,18 @@ export class AssistancePage {
   }
 
   insertAssistances(){
-    
+    var loading = this.loadingCtrl.create({ content: "Insertando asistencias a la base de datos..." });
+    loading.present();
+
+    this.assistanceProvider.insertAssistances(2,this.formatDate).subscribe(
+      data => {
+        if (data.status == 201) {
+          loading.dismissAll();
+          this.getAssistances(2,this.formatDate);
+      } 
+    },
+    error => {
+      loading.dismissAll();
+    });
   }
 }
