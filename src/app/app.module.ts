@@ -25,7 +25,9 @@ let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage];
 
 @NgModule({
   declarations: pages,
-  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(MyApp)],
+  imports: [BrowserModule, 
+    HttpClientModule, 
+    IonicModule.forRoot(MyApp)],
   bootstrap: [IonicApp],
   entryComponents: pages,
   providers: [
