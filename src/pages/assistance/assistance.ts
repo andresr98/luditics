@@ -5,6 +5,7 @@ import { isNil } from "lodash";
 
 //Importación de provider
 import { AssistanceProvider } from "../../providers/assistance/assistance";
+import { ScreenOrientation } from "@ionic-native/screen-orientation";
 
 import { Assistance } from "../../models/Assistance";
 
@@ -25,13 +26,17 @@ export class AssistancePage {
     public navParams: NavParams,
     private assistanceProvider: AssistanceProvider,
     private loadingCtrl : LoadingController,
-    private toastCtrl : ToastController
+    private toastCtrl : ToastController,
+    private screenO : ScreenOrientation
   ) {
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
     this.getAssistances(2, this.formatDate);
   }
 
+  ionViewCanEnter(){
+    //this.screenO.lock('landscape');
+  }
   getAssistances(idGroup : number, date :string){
     var loading = this.loadingCtrl.create({
       content: "Cargando Asistencia..."
