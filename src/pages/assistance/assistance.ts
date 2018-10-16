@@ -8,6 +8,7 @@ import { AssistanceProvider } from "../../providers/assistance/assistance";
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
 
 import { Assistance } from "../../models/Assistance";
+import { Group } from "../../models/Group";
 
 @IonicPage()
 @Component({
@@ -20,6 +21,7 @@ export class AssistancePage {
   formatDate: string;
   counterTaps : number = 0;
   changed : boolean = false;
+  group : Group;
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +33,8 @@ export class AssistancePage {
   ) {
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
-    this.getAssistances(2, this.formatDate);
+    this.group = this.navParams.data.group;
+    this.getAssistances(this.group.grupo__id, this.formatDate);
   }
 
   ionViewCanEnter(){

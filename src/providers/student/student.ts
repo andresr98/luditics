@@ -12,6 +12,6 @@ export class StudentProvider {
   }
   
   getStudentsByGroup(group: number){
-    return this.http.post<any>(API + "/estudiantes/", {"grupo": group});
+    return this.http.get<any>(API + "/estudiantes?id_grupo=" + group);
   }
 }

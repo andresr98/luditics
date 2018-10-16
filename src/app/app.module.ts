@@ -16,12 +16,15 @@ import { HomePage } from "../pages/home/home";
 import { SeguimientosPage } from "../pages/seguimientos/seguimientos";
 import { TabsPage } from "../pages/tabs/tabs";
 import { AssistancePage } from "../pages/assistance/assistance";
+import {SelectGroupPage} from '../pages/select-group/select-group'
+import {SettingsPage} from '../pages/settings/settings'
 //Importación de servicios.
 import { StudentProvider } from "../providers/student/student";
 import { FollowUpProvider } from "../providers/follow-up/follow-up";
 import { AssistanceProvider } from '../providers/assistance/assistance';
+import { GroupProvider } from '../providers/group/group';
 
-let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage];
+let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage, SelectGroupPage, SettingsPage];
 
 @NgModule({
   declarations: pages,
@@ -37,7 +40,8 @@ let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage];
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     StudentProvider,
     FollowUpProvider,
-    AssistanceProvider
+    AssistanceProvider,
+    GroupProvider
   ]
 })
 export class AppModule {}
