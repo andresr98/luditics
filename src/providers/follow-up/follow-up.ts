@@ -35,4 +35,7 @@ export class FollowUpProvider {
                                                         "acumulador": accumulator});
   }
 
+  insertCategoryData(idGroup:number, date:string){
+    return this.http.post<any>(API+"/seguimientoxestudiante/", {"id_grupo":idGroup,"fecha":date});
+  }
 }

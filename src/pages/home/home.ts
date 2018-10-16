@@ -28,15 +28,11 @@ export class HomePage {
   /*Se inyectan las dependencias de: Controlador de vistas
      *Controlador de orientación de pantalla
      *Provider para obtener los estudiantes desde el back */
-  constructor(
-    public navCtrl: NavController,
-    private screenO: ScreenOrientation,
-    private studentProvider: StudentProvider,
-    private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController
-  ) {
-    //Activar cuando se pase a producción
-    //this.screenO.lock('landscape');
+  constructor(public navCtrl: NavController,
+              private screenO: ScreenOrientation,
+              private studentProvider: StudentProvider,
+              private toastCtrl : ToastController,
+              private loadingCtrl: LoadingController) {
 
     //Mostrar información de carga y traer los estudiantes de la base de datos
     var loading = this.loadingCtrl.create({
@@ -62,6 +58,10 @@ export class HomePage {
         );
       }
     );
+  }
+
+  ionViewCanEnter(){
+    //this.screenO.lock('landscape');
   }
 
   //Se ordenan los estudiantes por fila y columnas. Según orden del profesor
