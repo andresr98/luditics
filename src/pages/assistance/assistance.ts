@@ -45,7 +45,7 @@ export class AssistancePage {
       content: "Cargando Asistencia..."
     });
     loading.present();
-    this.assistanceProvider.getAssistances(2, date).subscribe(
+    this.assistanceProvider.getAssistances(idGroup, date).subscribe(
       data => {
         this.list = this.sortStudentsByIndex(data.entity);
         this.list.forEach(fila => {
@@ -132,7 +132,7 @@ export class AssistancePage {
     this.list.forEach(row => {
       row.forEach(element => {
         if(element.changed){
-          this.assistanceProvider.updateAssistances(2,element.grupoxestudiante__estudiante_id__id,
+          this.assistanceProvider.updateAssistances(this.group.grupo__id,element.grupoxestudiante__estudiante_id__id,
             this.formatDate,element.asistencia).subscribe(
               data=>{
             },
@@ -151,11 +151,11 @@ export class AssistancePage {
     var loading = this.loadingCtrl.create({ content: "Insertando asistencias a la base de datos..." });
     loading.present();
 
-    this.assistanceProvider.insertAssistances(2,this.formatDate).subscribe(
+    this.assistanceProvider.insertAssistances(this.group.grupo__id,this.formatDate).subscribe(
       data => {
         if (data.status == 201) {
           loading.dismissAll();
-          this.getAssistances(2,this.formatDate);
+          this.getAssistances(this.group.grupo__id,this.formatDate);
       } 
     },
     error => {

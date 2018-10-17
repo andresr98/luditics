@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the SettingsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams} from 'ionic-angular';
+import { Group } from '../../models/Group';
 
 @IonicPage()
 @Component({
@@ -15,6 +9,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SettingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  group : Group;
+
+  constructor(public navCtrl: NavController, public navParams : NavParams) {
+    this.navCtrl = this.navParams.data.nav;
+    this.group = this.navParams.data.group;
+  }
+
+  backToSettings(){
+    this.navCtrl.popToRoot();
   }
 }

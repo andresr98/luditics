@@ -14,16 +14,19 @@ import { ScreenOrientation } from "@ionic-native/screen-orientation";
 })
 export class SelectGroupPage {
 
-  idGroup : number = 0;
+  idGroup : number;
   groups : Array<Group> = [];
   group : Group;
   tabsPage : any = TabsPage;
+  bool : boolean = false;
 
   constructor(public navCtrl: NavController, 
      public navParams: NavParams,
      private groupProvider : GroupProvider,
      private screenO : ScreenOrientation) {
+
     this.getGroups(1);
+    this.idGroup = 0;
   }
 
   getGroups(idTeacher : number){
@@ -43,7 +46,8 @@ export class SelectGroupPage {
 
       if(this.group.grupo__id == this.idGroup) break;
     }
-    this.navCtrl.setRoot(this.tabsPage,{"group": this.group});
+
+    this.navCtrl.push(this.tabsPage,{"group": this.group, "nav": this.navCtrl});
   }
 
   ionViewCanEnter(){

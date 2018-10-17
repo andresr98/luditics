@@ -14,3 +14,38 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+  .group-style{
+    background-color:#C0CCDA;
+    font-weight: bold;
+    text-align: center;
+    padding-top: .5rem;
+    padding-bottom: .5rem; 
+  }
+
+  .welcome{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFF
+  }
+
+  .welcome-title{
+    //max-width: 75%;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #424242;
+  }
+
+  .teacher-syle{
+    font-weight: bold;
+    color: #47525E;
+  }
+
+  .information{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}

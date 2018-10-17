@@ -29,6 +29,7 @@ export class TabsPage {
     private navParams : NavParams) {
 
     this.params.group = this.navParams.get("group");
+    this.params.nav = this.navParams.get("nav");
   }
 
   ionViewCanEnter(){
