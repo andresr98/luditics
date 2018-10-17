@@ -73,7 +73,14 @@ export class UbicationPage {
   }
 
   changeSpot(student1:Student, student2:Student) {
+    this.student=student1;
+    this.studentAux=student2;
 
+    this.rowAux=this.student.grupoxestudiante__fila;
+    this.colAux=this.student.grupoxestudiante__columna;
+
+    this.studentProvider.updateStudent(this.group, this.student.id,this.rowAux,this.colAux);
+    this.studentProvider.updateStudent(this.group, this.studentAux.id,this.studentAux.grupoxestudiante__fila,this.studentAux.grupoxestudiante__columna);
   }
 
   asignUndefined(rw:number, cl:number, student2:Student) {

@@ -22,4 +22,5 @@ export class StudentProvider {
   updateStudent(id_group:number, id_student: number, row:number,col:number){
     return  this.http.put<any>(API+"/grupoxestudiantes",{"id_grupo":id_group, "id_estudiante":id_student,"fila":row,"columna":col});
   }
+
 }
