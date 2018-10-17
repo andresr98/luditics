@@ -4,7 +4,7 @@
       <h3>Seguimiento de {{student.nombres}} {{student.apellidos}}</h3>
     </ion-title>
     <ion-buttons end >
-      <button *ngIf="behavioralDatas==0 || cognitiveDatas==0" (click)="insertCategoryData()" outline ion-button>
+      <button outline ion-button *ngIf="behavioralDatas==0 || cognitiveDatas==0" (click)="insertCategoryData()">
           Crear seguimiento diario
       </button>
     </ion-buttons>

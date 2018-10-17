@@ -8,6 +8,7 @@ import { AssistancePage } from "../assistance/assistance";
 
 //Importación de componentes nativos
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import { UbicationPage } from "../ubication/ubication";
 
 
 @IonicPage()
@@ -19,6 +20,7 @@ export class TabsPage {
   //Se asignan a una variable para bindarse a la página
   homePage = HomePage;
   assistancePage = AssistancePage;
+  ubicationPage = UbicationPage;
 
   constructor(public navCtrl: NavController, private screenO : ScreenOrientation) {
   }
