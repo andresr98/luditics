@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>ubication</ion-title>
+    <ion-title>Ubicación</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -20,9 +20,9 @@
         <ion-col class="student-container" col-auto col-sm *ngFor="let student of row">
           <ion-card>
             <div *ngIf="student; else emptyStudent">
-              {{student.nombres}} {{student.apellidos}} {{student.grupoxestudiante__fila}} {{student.grupoxestudiante__columna}}
+              {{student.nombres}} {{student.apellidos}}<br>Fila: {{student.grupoxestudiante__fila}} -  Col: {{student.grupoxestudiante__columna}}
             </div>
-            <ng-template #emptyStudent>vacio</ng-template>
+            <ng-template #emptyStudent>Puesto Disponible</ng-template>
           </ion-card>
         </ion-col>
       </ion-row>
