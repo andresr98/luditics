@@ -16,13 +16,13 @@
 <ion-content padding>
   <div style="margin: 20px;">
     <ion-grid>
-      <ion-row *ngFor="let row of list">
-        <ion-col class="student-container" col-auto col-sm *ngFor="let student of row">
-          <ion-card>
+      <ion-row *ngFor="let row of list; let rw = index">
+        <ion-col class="student-container" col-auto col-sm *ngFor="let student of row; let cl=index">
+          <ion-card (tap)="tapEvent($event, student,rw,cl)">
             <div *ngIf="student; else emptyStudent">
               {{student.nombres}} {{student.apellidos}}<br>Fila: {{student.grupoxestudiante__fila}} -  Col: {{student.grupoxestudiante__columna}}
             </div>
-            <ng-template #emptyStudent>Puesto Disponible</ng-template>
+            <ng-template #emptyStudent>Puesto Disponible </ng-template>
           </ion-card>
         </ion-col>
       </ion-row>

@@ -18,9 +18,12 @@ import { ScreenOrientation } from "@ionic-native/screen-orientation";
 export class UbicationPage {
   list: Student[][] = [];
   student: Student;
+  studentAux: Student;
   counterTaps: number = 0;
   changed: boolean = false;
   group: number = 2;
+  rowAux:number;
+  colAux:number;
 
   constructor(
     public navCtrl: NavController,
@@ -55,20 +58,6 @@ export class UbicationPage {
     );
   }
 
-  /* sortStudentsByIndex(data: Student[]): Student[][] {
-    return data.reduce<Student[][]>((accumulator, student, index) => {
-      const row = Math.floor(index / 5);
-      const column = index % 5;
-
-      if (isNil(accumulator[row])) {
-        accumulator[row] = [];
-      }
-
-      accumulator[row][column] = student;
-      return accumulator;
-    }, []);
-  } */
-
   sortStudents(data: Student[]): Student[][] {
     return data.reduce<Student[][]>((accumulator, student, index) => {
       const row = student.grupoxestudiante__fila;
@@ -83,31 +72,65 @@ export class UbicationPage {
     }, []);
   }
 
+  changeSpot(student1:Student, student2:Student) {
 
-  // sortStudentsByIndex(data: Student[]): Student[][] {
-  //   return data.reduce<Student[][]>((accumulator, student, index) => {
-  //     const row = Math.floor(index / 5);
-  //     const column = index % 5;
+  }
 
-  //     if (isNil(accumulator[row])) {
-  //       accumulator[row] = [];
-  //     }
-  //     student.grupoxestudiante__fila = row;
-  //     student.grupoxestudiante__columna = column;
+  asignUndefined(rw:number, cl:number, student2:Student) {
 
-  //     this.studentProvider.updateStudent(2,student.id,student.grupoxestudiante__fila,student.grupoxestudiante__columna).subscribe(
-  //       data => {
-  //         console.log("Se insertó el estudiante "+student.id);
-  //       },
-  //       error=>{
-  //         "Verifique su conexión a internet. No se puede acceder al servidor";
-  //       }
-  //     );
-  //     console.log("id_student: "+student.id+". fila: "+student.grupoxestudiante__fila+". col: "+student.grupoxestudiante__columna);
-  //     accumulator[row][column] = student;
-  //     return accumulator;
-  //   }, []);
-  // }
+  }
+
+  tapEvent(event, student: Student, rw: number, cl: number) {
+    switch (this.counterTaps) {
+      case 0: {
+        this.student = student;
+        this.counterTaps = 1;
+        this.rowAux=rw;
+        this.colAux=cl;
+        event.preventDefault();
+        break;
+      }
+      case 1: {
+        this.studentAux = student;
+        if (this.student == undefined && this.studentAux == undefined) {
+          console.log("Se seleccionaron 2 vacíos");
+        }
+        else if (this.student == undefined && this.studentAux != undefined) {
+          this.asignUndefined(this.rowAux,this.colAux,this.studentAux);
+          console.log("Vacios: f: " + this.rowAux + " c: " + this.colAux + "Estudiante: f:"
+            + this.studentAux.grupoxestudiante__fila + " c:" + this.studentAux.grupoxestudiante__columna);
+        }
+        else if (this.studentAux == undefined && this.student != undefined) {
+          this.asignUndefined(this.rowAux,this.colAux,this.studentAux);
+
+          console.log("Vacios: f: " + this.rowAux + " c: " + this.colAux + "Estudiante: f:"
+            + this.student.grupoxestudiante__fila + " c:" + this.student.grupoxestudiante__columna);
+
+        }
+        else if (this.student != undefined && this.studentAux != undefined) {
+          if (this.student.grupoxestudiante__fila === this.studentAux.grupoxestudiante__fila &&
+            this.student.grupoxestudiante__columna === this.studentAux.grupoxestudiante__columna) {
+            console.log("Se seleccionó el mismo estudiante");
+          }
+          else{
+            console.log("Se seleccionaron 2 estudiantes diferentes.")
+          this.changeSpot(this.student,this.studentAux);
+          }
+        }
+        this.counterTaps = 0;
+        event.preventDefault();
+        break;
+      }
+      default: {
+        this.counterTaps = 0;
+        event.preventDefault();
+        break;
+      }
+    }
+    event.preventDefault();
+    return
+  }
+
 
   ionViewCanEnter() {
     //this.screenO.lock('landscape');
