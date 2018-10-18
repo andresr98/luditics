@@ -1,19 +1,25 @@
 //Componente de Ionic
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController,
+  LoadingController
+} from "ionic-angular";
 import { isNil } from "lodash";
 
 //Importación de providers y modelos
-import { Student } from '../../models/Student';
-import { StudentProvider } from '../../providers/student/student'
+import { Student } from "../../models/Student";
+import { StudentProvider } from "../../providers/student/student";
 
 //Importación de componentes nativos
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
 
 @IonicPage()
 @Component({
-  selector: 'page-ubication',
-  templateUrl: 'ubication.html',
+  selector: "page-ubication",
+  templateUrl: "ubication.html"
 })
 export class UbicationPage {
   list: Student[][] = [];
@@ -21,9 +27,9 @@ export class UbicationPage {
   studentAux: Student;
   counterTaps: number = 0;
   group: number = 2;
-  rowAux:number;
-  colAux:number;
-  changed: boolean=false;
+  rowAux: number;
+  colAux: number;
+  changed: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -73,47 +79,55 @@ export class UbicationPage {
     }, []);
   }
 
-  changeSpot(student1:Student, student2:Student) {
-    this.student=student1;
-    this.studentAux=student2;
+  changeSpot(student1: Student, student2: Student) {
+    this.student = student1;
+    this.studentAux = student2;
 
-    this.rowAux=this.student.grupoxestudiante__fila;
-    this.colAux=this.student.grupoxestudiante__columna;
+    this.rowAux = this.student.grupoxestudiante__fila;
+    this.colAux = this.student.grupoxestudiante__columna;
 
-    this.student.changed=true;
-    this.studentAux.changed=true;
-
+    this.student.changed = true;
+    this.studentAux.changed = true;
   }
 
-  asignUndefined(rw:number, cl:number, student:Student) {
-    this.student=student;
+  asignUndefined(rw: number, cl: number, student: Student) {
+    this.student = student;
 
-    this.student.grupoxestudiante__fila=rw;
-    this.student.grupoxestudiante__columna=cl;
+    this.student.grupoxestudiante__fila = rw;
+    this.student.grupoxestudiante__columna = cl;
 
-    this.student.changed=true;
+    this.student.changed = true;
   }
 
-  updateUbications(){
+  updateUbications() {
     var loading = this.loadingCtrl.create({
       content: "Actualizando la asistencia..."
     });
     loading.present();
     this.list.forEach(row => {
       row.forEach(element => {
-        if(element.changed && element!=undefined){
-          this.studentProvider.updateStudent(this.group,element.id,element.grupoxestudiante__fila,element.grupoxestudiante__columna).subscribe(
-              data=>{
-            },
-            error => {
-              this.showMessage("Verifique su conexión a internet. No se puede actualizar la asistencia");
-              loading.dismissAll();
-            });
+        if (element.changed && element != undefined) {
+          this.studentProvider
+            .updateStudent(
+              this.group,
+              element.id,
+              element.grupoxestudiante__fila,
+              element.grupoxestudiante__columna
+            )
+            .subscribe(
+              data => {},
+              error => {
+                this.showMessage(
+                  "Verifique su conexión a internet. No se puede actualizar la asistencia"
+                );
+                loading.dismissAll();
+              }
+            );
         }
-      }); 
+      });
     });
     //this.sortStudents(this.list);
-    loading.dismiss()
+    loading.dismiss();
     this.changed = false;
   }
 
@@ -121,9 +135,10 @@ export class UbicationPage {
     switch (this.counterTaps) {
       case 0: {
         this.student = student;
+        student.ubicationClass = "selected";
         this.counterTaps = 1;
-        this.rowAux=rw;
-        this.colAux=cl;
+        this.rowAux = rw;
+        this.colAux = cl;
         event.preventDefault();
         break;
       }
@@ -131,34 +146,48 @@ export class UbicationPage {
         this.studentAux = student;
         if (this.student == undefined && this.studentAux == undefined) {
           console.log("Se seleccionaron 2 vacíos");
-        }
-        else if (this.student == undefined && this.studentAux != undefined) {
-          this.asignUndefined(this.rowAux,this.colAux,this.studentAux);
-          this.changed=true;
-          console.log("Vacios: f: " + this.rowAux + " c: " + this.colAux + "Estudiante: f:"
-            + this.studentAux.grupoxestudiante__fila + " c:" + this.studentAux.grupoxestudiante__columna);
-        }
-        else if (this.studentAux == undefined && this.student != undefined) {
-          this.asignUndefined(this.rowAux,this.colAux,this.student);
-          this.changed=true;
-          console.log("Vacios: f: " + this.rowAux + " c: " + this.colAux + "Estudiante: f:"
-            + this.student.grupoxestudiante__fila + " c:" + this.student.grupoxestudiante__columna);
-
-        }
-        else if (this.student != undefined && this.studentAux != undefined) {
-          if (this.student.grupoxestudiante__fila === this.studentAux.grupoxestudiante__fila &&
-            this.student.grupoxestudiante__columna === this.studentAux.grupoxestudiante__columna) {
+        } else if (this.student == undefined && this.studentAux != undefined) {
+          this.asignUndefined(this.rowAux, this.colAux, this.studentAux);
+          this.changed = true;
+          console.log(
+            "Vacios: f: " +
+              this.rowAux +
+              " c: " +
+              this.colAux +
+              "Estudiante: f:" +
+              this.studentAux.grupoxestudiante__fila +
+              " c:" +
+              this.studentAux.grupoxestudiante__columna
+          );
+        } else if (this.studentAux == undefined && this.student != undefined) {
+          this.asignUndefined(this.rowAux, this.colAux, this.student);
+          this.changed = true;
+          console.log(
+            "Vacios: f: " +
+              this.rowAux +
+              " c: " +
+              this.colAux +
+              "Estudiante: f:" +
+              this.student.grupoxestudiante__fila +
+              " c:" +
+              this.student.grupoxestudiante__columna
+          );
+        } else if (this.student != undefined && this.studentAux != undefined) {
+          if (
+            this.student.grupoxestudiante__fila ===
+              this.studentAux.grupoxestudiante__fila &&
+            this.student.grupoxestudiante__columna ===
+              this.studentAux.grupoxestudiante__columna
+          ) {
             console.log("Se seleccionó el mismo estudiante");
-          }
-          else{
-            console.log("Se seleccionaron 2 estudiantes diferentes.")
-          this.changeSpot(this.student,this.studentAux);
-          this.changed=true;
-          
+          } else {
+            console.log("Se seleccionaron 2 estudiantes diferentes.");
+            this.changeSpot(this.student, this.studentAux);
+            this.changed = true;
           }
         }
         this.counterTaps = 0;
-        
+
         event.preventDefault();
         break;
       }
@@ -169,9 +198,8 @@ export class UbicationPage {
       }
     }
     event.preventDefault();
-    return
+    return;
   }
-
 
   ionViewCanEnter() {
     //this.screenO.lock('landscape');
@@ -185,6 +213,4 @@ export class UbicationPage {
     });
     toast.present();
   }
-
-
 }
