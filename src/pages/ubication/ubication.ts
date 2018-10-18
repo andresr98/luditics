@@ -139,7 +139,7 @@ export class UbicationPage {
             + this.studentAux.grupoxestudiante__fila + " c:" + this.studentAux.grupoxestudiante__columna);
         }
         else if (this.studentAux == undefined && this.student != undefined) {
-          this.asignUndefined(this.rowAux,this.colAux,this.studentAux);
+          this.asignUndefined(this.rowAux,this.colAux,this.student);
           this.changed=true;
           console.log("Vacios: f: " + this.rowAux + " c: " + this.colAux + "Estudiante: f:"
             + this.student.grupoxestudiante__fila + " c:" + this.student.grupoxestudiante__columna);
