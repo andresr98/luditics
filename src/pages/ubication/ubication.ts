@@ -20,10 +20,10 @@ export class UbicationPage {
   student: Student;
   studentAux: Student;
   counterTaps: number = 0;
-  changed: boolean = false;
   group: number = 2;
   rowAux:number;
   colAux:number;
+  changed: boolean=false;
 
   constructor(
     public navCtrl: NavController,
@@ -46,6 +46,7 @@ export class UbicationPage {
         if (data.status == 200) {
           loading.dismissAll();
           this.list = this.sortStudents(data.entity);
+          //console.log(/*this.list*/data.entity);
           console.log(this.list);
         }
       },
@@ -79,12 +80,41 @@ export class UbicationPage {
     this.rowAux=this.student.grupoxestudiante__fila;
     this.colAux=this.student.grupoxestudiante__columna;
 
-    this.studentProvider.updateStudent(this.group, this.student.id,this.rowAux,this.colAux);
-    this.studentProvider.updateStudent(this.group, this.studentAux.id,this.studentAux.grupoxestudiante__fila,this.studentAux.grupoxestudiante__columna);
+    this.student.changed=true;
+    this.studentAux.changed=true;
+
   }
 
-  asignUndefined(rw:number, cl:number, student2:Student) {
+  asignUndefined(rw:number, cl:number, student:Student) {
+    this.student=student;
 
+    this.student.grupoxestudiante__fila=rw;
+    this.student.grupoxestudiante__columna=cl;
+
+    this.student.changed=true;
+  }
+
+  updateUbications(){
+    var loading = this.loadingCtrl.create({
+      content: "Actualizando la asistencia..."
+    });
+    loading.present();
+    this.list.forEach(row => {
+      row.forEach(element => {
+        if(element.changed && element!=undefined){
+          this.studentProvider.updateStudent(this.group,element.id,element.grupoxestudiante__fila,element.grupoxestudiante__columna).subscribe(
+              data=>{
+            },
+            error => {
+              this.showMessage("Verifique su conexión a internet. No se puede actualizar la asistencia");
+              loading.dismissAll();
+            });
+        }
+      }); 
+    });
+    //this.sortStudents(this.list);
+    loading.dismiss()
+    this.changed = false;
   }
 
   tapEvent(event, student: Student, rw: number, cl: number) {
@@ -104,12 +134,13 @@ export class UbicationPage {
         }
         else if (this.student == undefined && this.studentAux != undefined) {
           this.asignUndefined(this.rowAux,this.colAux,this.studentAux);
+          this.changed=true;
           console.log("Vacios: f: " + this.rowAux + " c: " + this.colAux + "Estudiante: f:"
             + this.studentAux.grupoxestudiante__fila + " c:" + this.studentAux.grupoxestudiante__columna);
         }
         else if (this.studentAux == undefined && this.student != undefined) {
           this.asignUndefined(this.rowAux,this.colAux,this.studentAux);
-
+          this.changed=true;
           console.log("Vacios: f: " + this.rowAux + " c: " + this.colAux + "Estudiante: f:"
             + this.student.grupoxestudiante__fila + " c:" + this.student.grupoxestudiante__columna);
 
@@ -122,9 +153,12 @@ export class UbicationPage {
           else{
             console.log("Se seleccionaron 2 estudiantes diferentes.")
           this.changeSpot(this.student,this.studentAux);
+          this.changed=true;
+          
           }
         }
         this.counterTaps = 0;
+        
         event.preventDefault();
         break;
       }

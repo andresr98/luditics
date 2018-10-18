@@ -7,4 +7,5 @@ export interface Student{
     grupoxestudiante__columna: number;
     sexo_biologico: number;
     descripcion: string;
+    changed:boolean;
   }
