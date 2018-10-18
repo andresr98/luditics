@@ -132,10 +132,10 @@ export class UbicationPage {
   }
 
   tapEvent(event, student: Student, rw: number, cl: number) {
+    student.ubicationClass = "selected";
     switch (this.counterTaps) {
       case 0: {
         this.student = student;
-        student.ubicationClass = "selected";
         this.counterTaps = 1;
         this.rowAux = rw;
         this.colAux = cl;

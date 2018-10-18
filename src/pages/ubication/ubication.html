@@ -18,8 +18,8 @@
     <ion-grid>
       <ion-row *ngFor="let row of list; let rw = index">
         <ion-col class="student-container" col-auto col-sm *ngFor="let student of row; let cl=index">
-          <ion-card class="{{student.ubicationClass}} itemView" (tap)="tapEvent($event, student,rw,cl)">
-            <div *ngIf="student; else emptyStudent">
+          <ion-card class="itemView" (tap)="tapEvent($event, student,rw,cl)">
+            <div class="{{student.ubicationClass}}" *ngIf="student; else emptyStudent">
               {{student.nombres}} {{student.apellidos}}<br>Fila: {{student.grupoxestudiante__fila+1}} - Col:
               {{student.grupoxestudiante__columna+1}}
             </div>
