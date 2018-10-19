@@ -12,6 +12,10 @@ export class StudentProvider {
   }
   
   getStudentsByGroup(group: number){
-    return this.http.post<any>(API + "/estudiantes/", {"grupo": group});
+    return this.http.get<any>(API + "/estudiantes?id_grupo="+group);
+  }
+
+  updateStudent(id_group:number, id_student: number, row:number,col:number){
+    return  this.http.put<any>(API+"/grupoxestudiantes",{"id_grupo":id_group, "id_estudiante":id_student,"fila":row,"columna":col});
   }
 }

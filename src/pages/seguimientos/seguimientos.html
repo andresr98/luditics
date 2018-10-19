@@ -3,18 +3,20 @@
     <ion-title>
       <h3>Seguimiento de {{student.nombres}} {{student.apellidos}}</h3>
     </ion-title>
-    <ion-buttons end >
-      <button *ngIf="behavioralDatas==0 || cognitiveDatas==0" (click)="insertCategoryData()" outline ion-button>
-          Crear seguimiento diario
-      </button>
-    </ion-buttons>
-    
   </ion-navbar>
 </ion-header>
 
 <!--En esta sección se cargan los segmentos que se utilizaran-->
 <ion-content>
-  <ion-toolbar no-border-top>
+  <div *ngIf="behavioralDatas==0 || cognitiveDatas==0" class="information">
+    <h3>No se encuentran datos diarios</h3>
+    <button (click)="insertCategoryData()" ion-button>
+        Crear seguimiento diario
+    </button>
+  </div>
+
+
+  <ion-toolbar no-border-top *ngIf="behavioralDatas!=0 || cognitiveDatas!=0">
     <!--Se binda con una variable para cambiar sus valores-->
     <ion-segment [(ngModel)]="type">
       <ion-segment-button value="Comportamiento">
@@ -29,7 +31,7 @@
   <!-- Aquí se encuentra la programación del segmento Comportamental-->
 
   <!--Se binda a la misma variable que los segmentos-->
-  <div [ngSwitch]="type">
+  <div [ngSwitch]="type" *ngIf="behavioralDatas!=0 || cognitiveDatas!=0">
     <!--Se indica el valor al que debe cambiar para mostart los datos al dar
         click al boton-->
     <ion-list *ngSwitchCase="'Comportamiento'">
