@@ -15,6 +15,7 @@ import { StudentProvider } from "../../providers/student/student";
 
 //Importación de componentes nativos
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import { Group } from "../../models/Group";
 
 @IonicPage()
 @Component({
@@ -26,7 +27,7 @@ export class UbicationPage {
   student: Student;
   studentAux: Student;
   counterTaps: number = 0;
-  group: number = 2;
+  group : Group;
   rowAux: number;
   colAux: number;
   changed: boolean = false;
@@ -40,7 +41,8 @@ export class UbicationPage {
     private toastCtrl: ToastController,
     private screenO: ScreenOrientation
   ) {
-    this.getStudentsByGroup(2);
+    this.group = this.navParams.data.group;
+    this.getStudentsByGroup(this.group.grupo__id);
   }
 
   getStudentsByGroup(group: number) {
@@ -53,9 +55,9 @@ export class UbicationPage {
         if (data.status == 200) {
           loading.dismissAll();
           let a = this.sortStudents(data.entity);
-          this.list = this.setEmptyStudent(a);
-          //console.log(/*this.list*/data.entity);
-          console.log(this.list);
+          if(a.length > 0){
+            this.list = this.setEmptyStudent(a);
+          }
         }
       },
       error => {
@@ -120,7 +122,7 @@ export class UbicationPage {
         if (element.changed && element.id != undefined) {
           this.studentProvider
             .updateStudent(
-              this.group,
+              this.group.grupo__id,
               element.id,
               element.grupoxestudiante__fila,
               element.grupoxestudiante__columna
@@ -137,7 +139,6 @@ export class UbicationPage {
         }
       });
     });
-    //this.sortStudents(this.list);
     loading.dismiss();
     this.changed = false;
   }
@@ -156,71 +157,6 @@ export class UbicationPage {
       }
       case 1: {
         this.studentAux = student;
-        /* if (this.student == undefined && this.studentAux == undefined) {
-          console.log(this.studentAux);
-        } else if (this.student == undefined && this.studentAux != undefined) {
-          this.asignUndefined(this.rowAux, this.colAux, this.student);
-          this.changed = true;
-          console.log(this.studentAux);
-
-          let flag = this.list[this.student.grupoxestudiante__fila][
-            this.student.grupoxestudiante__columna
-          ];
-          this.list[this.student.grupoxestudiante__fila][
-            this.student.grupoxestudiante__columna
-          ] = this.list[this.studentAux.grupoxestudiante__fila][
-            this.studentAux.grupoxestudiante__columna
-          ];
-          this.list[this.studentAux.grupoxestudiante__fila][
-            this.studentAux.grupoxestudiante__columna
-          ] = flag;
-          this.student.ubicationClass = "";
-          this.studentAux.ubicationClass = "";
-        } else if (this.studentAux == undefined && this.student != undefined) {
-          this.asignUndefined(this.rowAux, this.colAux, this.studentAux);
-          this.changed = true;
-          console.log(this.studentAux);
-          let flag = this.list[this.student.grupoxestudiante__fila][
-            this.student.grupoxestudiante__columna
-          ];
-          this.list[this.student.grupoxestudiante__fila][
-            this.student.grupoxestudiante__columna
-          ] = this.list[this.studentAux.grupoxestudiante__fila][
-            this.studentAux.grupoxestudiante__columna
-          ];
-          this.list[this.studentAux.grupoxestudiante__fila][
-            this.studentAux.grupoxestudiante__columna
-          ] = flag;
-          this.student.ubicationClass = "";
-          this.studentAux.ubicationClass = "";
-        } else if (this.student != undefined && this.studentAux != undefined) {
-          if (
-            this.student.grupoxestudiante__fila ===
-              this.studentAux.grupoxestudiante__fila &&
-            this.student.grupoxestudiante__columna ===
-              this.studentAux.grupoxestudiante__columna
-          ) {
-            console.log(this.studentAux);
-          } else {
-            console.log(this.studentAux);
-            //this.changeSpot(this.student, this.studentAux);
-            this.changed = true;
-            let flag = this.list[this.student.grupoxestudiante__fila][
-              this.student.grupoxestudiante__columna
-            ];
-            this.list[this.student.grupoxestudiante__fila][
-              this.student.grupoxestudiante__columna
-            ] = this.list[this.studentAux.grupoxestudiante__fila][
-              this.studentAux.grupoxestudiante__columna
-            ];
-            this.list[this.studentAux.grupoxestudiante__fila][
-              this.studentAux.grupoxestudiante__columna
-            ] = flag;
-            this.student.ubicationClass = "";
-            this.studentAux.ubicationClass = "";
-          }
-        }*/
-
         this.asignUndefined(rw, cl, this.studentAux);
         this.counterTaps = 0;
         this.changed = true;
