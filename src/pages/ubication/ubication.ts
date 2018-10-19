@@ -30,6 +30,7 @@ export class UbicationPage {
   rowAux: number;
   colAux: number;
   changed: boolean = false;
+  emptyStudent: any = {};
 
   constructor(
     public navCtrl: NavController,
@@ -51,7 +52,8 @@ export class UbicationPage {
       data => {
         if (data.status == 200) {
           loading.dismissAll();
-          this.list = this.sortStudents(data.entity);
+          let a = this.sortStudents(data.entity);
+          this.list = this.setEmptyStudent(a);
           //console.log(/*this.list*/data.entity);
           console.log(this.list);
         }
@@ -73,30 +75,39 @@ export class UbicationPage {
       if (isNil(accumulator[row])) {
         accumulator[row] = new Array(5);
       }
-
       accumulator[row][column] = student;
       return accumulator;
     }, []);
   }
 
-  changeSpot(student1: Student, student2: Student) {
+  setEmptyStudent(data: Student[][]) {
+    let rows = data.length;
+    let columns = data[0].length;
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < columns; j++) {
+        if (data[i][j] == undefined) {
+          this.emptyStudent = { empty: true };
+          data[i][j] = this.emptyStudent;
+        }
+      }
+    }
+    return data;
+  }
+
+  /* changeSpot(student1: Student, student2: Student) {
     this.student = student1;
     this.studentAux = student2;
 
     this.rowAux = this.student.grupoxestudiante__fila;
     this.colAux = this.student.grupoxestudiante__columna;
-
+    //declarar locales estas variables
     this.student.changed = true;
     this.studentAux.changed = true;
-  }
+  } */
 
   asignUndefined(rw: number, cl: number, student: Student) {
-    this.student = student;
-
-    this.student.grupoxestudiante__fila = rw;
-    this.student.grupoxestudiante__columna = cl;
-
-    this.student.changed = true;
+    student.grupoxestudiante__fila = rw;
+    student.grupoxestudiante__columna = cl;
   }
 
   updateUbications() {
@@ -106,7 +117,7 @@ export class UbicationPage {
     loading.present();
     this.list.forEach(row => {
       row.forEach(element => {
-        if (element.changed && element != undefined) {
+        if (element.changed && element.id != undefined) {
           this.studentProvider
             .updateStudent(
               this.group,
@@ -136,6 +147,7 @@ export class UbicationPage {
     switch (this.counterTaps) {
       case 0: {
         this.student = student;
+        this.asignUndefined(rw, cl, this.student);
         this.counterTaps = 1;
         this.rowAux = rw;
         this.colAux = cl;
@@ -144,34 +156,43 @@ export class UbicationPage {
       }
       case 1: {
         this.studentAux = student;
-        if (this.student == undefined && this.studentAux == undefined) {
-          console.log("Se seleccionaron 2 vacíos");
+        /* if (this.student == undefined && this.studentAux == undefined) {
+          console.log(this.studentAux);
         } else if (this.student == undefined && this.studentAux != undefined) {
-          this.asignUndefined(this.rowAux, this.colAux, this.studentAux);
-          this.changed = true;
-          console.log(
-            "Vacios: f: " +
-              this.rowAux +
-              " c: " +
-              this.colAux +
-              "Estudiante: f:" +
-              this.studentAux.grupoxestudiante__fila +
-              " c:" +
-              this.studentAux.grupoxestudiante__columna
-          );
-        } else if (this.studentAux == undefined && this.student != undefined) {
           this.asignUndefined(this.rowAux, this.colAux, this.student);
           this.changed = true;
-          console.log(
-            "Vacios: f: " +
-              this.rowAux +
-              " c: " +
-              this.colAux +
-              "Estudiante: f:" +
-              this.student.grupoxestudiante__fila +
-              " c:" +
-              this.student.grupoxestudiante__columna
-          );
+          console.log(this.studentAux);
+
+          let flag = this.list[this.student.grupoxestudiante__fila][
+            this.student.grupoxestudiante__columna
+          ];
+          this.list[this.student.grupoxestudiante__fila][
+            this.student.grupoxestudiante__columna
+          ] = this.list[this.studentAux.grupoxestudiante__fila][
+            this.studentAux.grupoxestudiante__columna
+          ];
+          this.list[this.studentAux.grupoxestudiante__fila][
+            this.studentAux.grupoxestudiante__columna
+          ] = flag;
+          this.student.ubicationClass = "";
+          this.studentAux.ubicationClass = "";
+        } else if (this.studentAux == undefined && this.student != undefined) {
+          this.asignUndefined(this.rowAux, this.colAux, this.studentAux);
+          this.changed = true;
+          console.log(this.studentAux);
+          let flag = this.list[this.student.grupoxestudiante__fila][
+            this.student.grupoxestudiante__columna
+          ];
+          this.list[this.student.grupoxestudiante__fila][
+            this.student.grupoxestudiante__columna
+          ] = this.list[this.studentAux.grupoxestudiante__fila][
+            this.studentAux.grupoxestudiante__columna
+          ];
+          this.list[this.studentAux.grupoxestudiante__fila][
+            this.studentAux.grupoxestudiante__columna
+          ] = flag;
+          this.student.ubicationClass = "";
+          this.studentAux.ubicationClass = "";
         } else if (this.student != undefined && this.studentAux != undefined) {
           if (
             this.student.grupoxestudiante__fila ===
@@ -179,16 +200,50 @@ export class UbicationPage {
             this.student.grupoxestudiante__columna ===
               this.studentAux.grupoxestudiante__columna
           ) {
-            console.log("Se seleccionó el mismo estudiante");
+            console.log(this.studentAux);
           } else {
-            console.log("Se seleccionaron 2 estudiantes diferentes.");
-            this.changeSpot(this.student, this.studentAux);
+            console.log(this.studentAux);
+            //this.changeSpot(this.student, this.studentAux);
             this.changed = true;
+            let flag = this.list[this.student.grupoxestudiante__fila][
+              this.student.grupoxestudiante__columna
+            ];
+            this.list[this.student.grupoxestudiante__fila][
+              this.student.grupoxestudiante__columna
+            ] = this.list[this.studentAux.grupoxestudiante__fila][
+              this.studentAux.grupoxestudiante__columna
+            ];
+            this.list[this.studentAux.grupoxestudiante__fila][
+              this.studentAux.grupoxestudiante__columna
+            ] = flag;
+            this.student.ubicationClass = "";
+            this.studentAux.ubicationClass = "";
           }
-        }
-        this.counterTaps = 0;
+        }*/
 
+        this.asignUndefined(rw, cl, this.studentAux);
+        this.counterTaps = 0;
+        this.changed = true;
+        let flag = this.list[this.student.grupoxestudiante__fila][
+          this.student.grupoxestudiante__columna
+        ];
+        this.list[this.student.grupoxestudiante__fila][
+          this.student.grupoxestudiante__columna
+        ] = this.list[this.studentAux.grupoxestudiante__fila][
+          this.studentAux.grupoxestudiante__columna
+        ];
+        this.list[this.studentAux.grupoxestudiante__fila][
+          this.studentAux.grupoxestudiante__columna
+        ] = flag;
+        this.student.ubicationClass = "";
+        this.studentAux.ubicationClass = "";
         event.preventDefault();
+        this.studentAux.changed = true;
+        this.student.changed = true;
+        this.student.grupoxestudiante__fila = this.studentAux.grupoxestudiante__fila;
+        this.student.grupoxestudiante__columna = this.studentAux.grupoxestudiante__columna;
+        this.studentAux.grupoxestudiante__fila = this.rowAux;
+        this.studentAux.grupoxestudiante__columna = this.colAux;
         break;
       }
       default: {
