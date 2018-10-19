@@ -10,6 +10,8 @@ import {SettingsPage} from '../settings/settings'
 //Importación de componentes nativos
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { Group } from "../../models/Group";
+import { UbicationPage } from "../ubication/ubication";
+
 
 
 @IonicPage()
@@ -22,6 +24,7 @@ export class TabsPage {
   homePage = HomePage;
   assistancePage = AssistancePage;
   settingsPage = SettingsPage;
+  ubicationPage = UbicationPage;
 
   params : any = {};
 

@@ -18,12 +18,12 @@ export class AssistanceProvider {
     );
   }
 
-  updateAssistances(idGroup: number, idStudent : number , date : string , assitance : number){
+  updateAssistances(idGroup: number, idStudent : number , date : string , assistance : number){
     return this.http.put<any>(API + "asistencias/", {
       "id_grupo": idGroup,
       "id_estudiante" : idStudent,
       "fecha": date,
-      "asistencia": assitance
+      "asistencia": assistance
     });
   }
 }
