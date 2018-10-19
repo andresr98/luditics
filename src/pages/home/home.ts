@@ -1,5 +1,5 @@
 //Importación de componentes ionic
-import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Component} from "@angular/core";
 import {
   NavController,
   NavParams,
