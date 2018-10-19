@@ -2,6 +2,7 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import {
   NavController,
+  NavParams,
   ToastController,
   LoadingController
 } from "ionic-angular";
@@ -16,6 +17,7 @@ import { ScreenOrientation } from "@ionic-native/screen-orientation";
 //Importación de modelos y providers.
 import { StudentProvider } from "../../providers/student/student";
 import { Student } from "../../models/Student";
+import { Group } from "../../models/Group";
 
 @Component({
   selector: "page-home",
@@ -24,22 +26,29 @@ import { Student } from "../../models/Student";
 export class HomePage {
   //Se crea la cuadricula de estudiantes.
   list: Student[][] = [];
+  group: Group;
 
   /*Se inyectan las dependencias de: Controlador de vistas
      *Controlador de orientación de pantalla
      *Provider para obtener los estudiantes desde el back */
   constructor(public navCtrl: NavController,
-              private screenO: ScreenOrientation,
-              private studentProvider: StudentProvider,
-              private toastCtrl : ToastController,
-              private loadingCtrl: LoadingController) {
+    private screenO: ScreenOrientation,
+    private studentProvider: StudentProvider,
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
+    private navParams: NavParams) {
 
     //Mostrar información de carga y traer los estudiantes de la base de datos
+    this.group = this.navParams.data.group;
+    this.getStudents(this.group.grupo__id);
+  }
+
+  getStudents(idGroup : number) {
     var loading = this.loadingCtrl.create({
       content: "Cargando Estudiantes..."
     });
     loading.present();
-    this.studentProvider.getStudentsByGroup(2).subscribe(
+    this.studentProvider.getStudentsByGroup(idGroup).subscribe(
       data => {
         //Data es una variable que contiene:
         /**data.status = es el valor HTTP de respuesta
@@ -60,7 +69,7 @@ export class HomePage {
     );
   }
 
-  ionViewCanEnter(){
+  ionViewCanEnter() {
     //this.screenO.lock('landscape');
   }
 

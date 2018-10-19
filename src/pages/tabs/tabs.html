@@ -1,6 +1,6 @@
-<ion-tabs>
-  <ion-tab [root]="homePage" tabTitle="Seguimiento" tabIcon="stats"></ion-tab>
-  <ion-tab [root]="assistancePage" tabTitle="Asistencia" tabIcon="clipboard"></ion-tab>
+<ion-tabs selectedIndex="0">
+  <ion-tab [root]="homePage" [rootParams]="params" tabTitle="Seguimiento" tabIcon="stats"></ion-tab>
+  <ion-tab [root]="assistancePage" [rootParams]="params" tabTitle="Asistencia" tabIcon="clipboard"></ion-tab>
   <ion-tab [root]="ubicationPage" tabTitle="Ubicación" tabIcon="hand"></ion-tab>
-  <ion-tab tabTitle="Configurar" tabIcon="settings"></ion-tab>
+  <ion-tab [root]="settingsPage" [rootParams]="params" tabTitle="Ajustes" tabIcon="settings"></ion-tab>
 </ion-tabs>

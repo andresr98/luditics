@@ -1,0 +1,30 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Configuración Luditics Administración</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list radio-group [(ngModel)]="idGroup">
+        <ion-list-header>
+          Grupos
+        </ion-list-header>
+
+        <ion-item *ngFor="let group of groups">
+            <ion-label>{{group.grupo__grado}} - {{group.grupo__consecutivo}}</ion-label>
+            <ion-radio value={{group.grupo__id}}></ion-radio>
+        </ion-item>
+
+        <ion-item *ngIf="groups.length == 0">
+            <ion-label>No tiene grupos a cargo</ion-label>
+        </ion-item>
+    </ion-list>
+
+    <button ion-button (click) = "sendValues()" [disabled]="idGroup==0">
+      Continuar
+    </button>
+</ion-content>

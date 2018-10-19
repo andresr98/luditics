@@ -1,15 +1,24 @@
---><ion-header>
-  <ion-navbar>
-    <ion-title>Luditics Asistencia</ion-title>
-    <ion-buttons *ngIf="list.length == 0" end>
-      <button ion-button outline (click)="insertAssistances()">
-        Insertar asistencias
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+<ion-header padding>
+  <div class="welcome">
+    <div class="welcome-title">Luditics Seguimiento </div>
+    <div>
+      <div class="teacher-syle">
+        Hola Profesor!
+      </div>
+      <div class="group-style">
+        {{group.grupo__grado}} - {{group.grupo__consecutivo}}
+      </div>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content padding>
+
+  <div class="information" *ngIf="list == 0">
+    <h3>No se encuentran asistencias en el sistema.</h3>
+    <button ion-button (click) = "insertAssistances()"> Generar asistencia diaria.</button>
+  </div>
+
   <div style="margin: 20px;">
     <ion-grid>
       <ion-row *ngFor="let row of list">

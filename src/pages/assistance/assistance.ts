@@ -8,6 +8,7 @@ import { AssistanceProvider } from "../../providers/assistance/assistance";
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
 
 import { Assistance } from "../../models/Assistance";
+import { Group } from "../../models/Group";
 
 @IonicPage()
 @Component({
@@ -20,6 +21,7 @@ export class AssistancePage {
   formatDate: string;
   counterTaps : number = 0;
   changed : boolean = false;
+  group : Group;
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +33,8 @@ export class AssistancePage {
   ) {
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
-    this.getAssistances(2, this.formatDate);
+    this.group = this.navParams.data.group;
+    this.getAssistances(this.group.grupo__id, this.formatDate);
   }
 
   ionViewCanEnter(){
@@ -42,7 +45,7 @@ export class AssistancePage {
       content: "Cargando Asistencia..."
     });
     loading.present();
-    this.assistanceProvider.getAssistances(2, date).subscribe(
+    this.assistanceProvider.getAssistances(idGroup, date).subscribe(
       data => {
         this.list = this.sortStudentsByIndex(data.entity);
         this.list.forEach(fila => {
@@ -129,7 +132,7 @@ export class AssistancePage {
     this.list.forEach(row => {
       row.forEach(element => {
         if(element.changed){
-          this.assistanceProvider.updateAssistances(2,element.grupoxestudiante__estudiante_id__id,
+          this.assistanceProvider.updateAssistances(this.group.grupo__id,element.grupoxestudiante__estudiante_id__id,
             this.formatDate,element.asistencia).subscribe(
               data=>{
             },
@@ -148,11 +151,11 @@ export class AssistancePage {
     var loading = this.loadingCtrl.create({ content: "Insertando asistencias a la base de datos..." });
     loading.present();
 
-    this.assistanceProvider.insertAssistances(2,this.formatDate).subscribe(
+    this.assistanceProvider.insertAssistances(this.group.grupo__id,this.formatDate).subscribe(
       data => {
         if (data.status == 201) {
           loading.dismissAll();
-          this.getAssistances(2,this.formatDate);
+          this.getAssistances(this.group.grupo__id,this.formatDate);
       } 
     },
     error => {
