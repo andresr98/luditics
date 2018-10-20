@@ -112,6 +112,7 @@ export class UbicationPage {
     loading.present();
     this.list.forEach(row => {
       row.forEach(element => {
+        element.ubicationClass="";
         if (element.changed && element.id != undefined) {
           this.studentProvider
             .updateStudent(
@@ -154,18 +155,15 @@ export class UbicationPage {
         this.counterTaps = 0;
         this.changed = true;
         let flag = this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna
-        ];
+          this.student.grupoxestudiante__columna];
         this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna
-        ] = this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna
-        ];
+          this.student.grupoxestudiante__columna] 
+          = this.list[this.studentAux.grupoxestudiante__fila][
+          this.studentAux.grupoxestudiante__columna];
         this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna
-        ] = flag;
-        this.student.ubicationClass = "";
-        this.studentAux.ubicationClass = "";
+          this.studentAux.grupoxestudiante__columna] = flag;
+        this.student.ubicationClass = "changed";
+        this.studentAux.ubicationClass = "changed";
         event.preventDefault();
         this.studentAux.changed = true;
         this.student.changed = true;
