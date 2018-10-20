@@ -27,7 +27,7 @@ export class HomePage {
   //Se crea la cuadricula de estudiantes.
   list: Student[][] = [];
   group: Group;
-  conectionError : boolean;
+  connectionError : boolean;
   noStudents : boolean;
 
   /*Se inyectan las dependencias de: Controlador de vistas
@@ -64,7 +64,7 @@ export class HomePage {
         if(this.list.length == 0){
           this.noStudents = true;
         }
-        this.conectionError = false;
+        this.connectionError = false;
       },
       //En caso de pérdida de conexión a internet
       error => {
@@ -72,7 +72,7 @@ export class HomePage {
         this.showMessage(
           "Verifique su conexión a internet. No se puede acceder al servidor"
         );
-        this.conectionError = true;
+        this.connectionError = true;
       }
     );
   }
@@ -82,7 +82,7 @@ export class HomePage {
   }
   ionViewCanEnter() {
     //this.screenO.lock('landscape');
-    this.conectionError = false;
+    this.connectionError = false;
     this.noStudents = false;
   }
 

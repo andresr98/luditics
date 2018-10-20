@@ -19,7 +19,7 @@ export class SelectGroupPage {
   group : Group;
   tabsPage : any = TabsPage;
   bool : boolean = false;
-  conectionError : boolean;
+  connectionError : boolean;
 
   constructor(public navCtrl: NavController, 
      public navParams: NavParams,
@@ -38,10 +38,10 @@ export class SelectGroupPage {
       if(data.status == 200){
         this.groups = data.entity
       }
-      this.conectionError = false;
+      this.connectionError = false;
     },
     error => {
-      this.conectionError = true;
+      this.connectionError = true;
     });
   }
 
@@ -57,6 +57,6 @@ export class SelectGroupPage {
 
   ionViewCanEnter(){
     //this.screenO.lock('landscape');
-    this.conectionError = false;  
+    this.connectionError = false;  
   }
 }

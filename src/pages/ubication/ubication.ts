@@ -32,7 +32,7 @@ export class UbicationPage {
   colAux: number;
   changed: boolean = false;
   emptyStudent: any = {};
-  conectionError : boolean;
+  connectionError : boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -61,14 +61,14 @@ export class UbicationPage {
           }
         }
 
-        this.conectionError = false;
+        this.connectionError = false;
       },
       error => {
         loading.dismissAll();
         this.showMessage(
           "Verifique su conexión a internet. No se puede acceder al servidor"
         );
-        this.conectionError = true;
+        this.connectionError = true;
       }
     );
   }
@@ -191,7 +191,7 @@ export class UbicationPage {
 
   ionViewCanEnter() {
     //this.screenO.lock('landscape');
-    this.conectionError = false;
+    this.connectionError = false;
   }
 
   showMessage(message: string) {
