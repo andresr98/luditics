@@ -105,7 +105,8 @@ export class HomePage {
   sendValues(student) {
     //Push(página, parametros (opcional))
     this.navCtrl.push(SeguimientosPage, {
-      student: student
+      student: student,
+      group :this.group
     });
   }
 
