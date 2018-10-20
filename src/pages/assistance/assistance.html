@@ -1,6 +1,6 @@
 <ion-header padding>
   <div class="welcome">
-    <div class="welcome-title">Luditics Seguimiento </div>
+    <div class="welcome-title">Luditics Asistencia </div>
     <div>
       <div class="teacher-syle">
         Hola Profesor!
@@ -14,9 +14,14 @@
 
 <ion-content padding>
 
-  <div class="information" *ngIf="list == 0">
-    <h3>No se encuentran asistencias en el sistema.</h3>
+  <div class="information" *ngIf="list == 0 && connectionError == false">
+    <h3>No se ha generado la asistencia diaria</h3>
     <button ion-button (click) = "insertAssistances()"> Generar asistencia diaria.</button>
+  </div>
+
+  <div class="information" *ngIf="connectionError">
+    <h3 style="text-align: center">Error de conexión. Intentalo nuevamente</h3>
+    <button ion-button (click) = "retry()"> Reintentar</button>
   </div>
 
   <div style="margin: 20px;">

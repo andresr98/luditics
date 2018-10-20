@@ -22,6 +22,7 @@ export class AssistancePage {
   counterTaps : number = 0;
   changed : boolean = false;
   group : Group;
+  connectionError : boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -39,6 +40,11 @@ export class AssistancePage {
 
   ionViewCanEnter(){
     //this.screenO.lock('landscape');
+    this.connectionError = false;
+  }
+
+  retry(){
+    this.getAssistances(this.group.grupo__id, this.formatDate);
   }
   getAssistances(idGroup : number, date :string){
     var loading = this.loadingCtrl.create({
@@ -58,12 +64,14 @@ export class AssistancePage {
           });
         });
         loading.dismissAll();
+        this.connectionError = false;
       },
       error => {
         loading.dismissAll();
         this.showMessage(
           "Verifique su conexión a internet. No se puede acceder al servidor"
         );
+        this.connectionError = true;
       }
     );
   }
