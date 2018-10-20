@@ -9,7 +9,7 @@
     <div class="welcome-title">Luditics Ubicación </div>
     <div>
       <div class="teacher-syle">
-        Hola Profesor!
+        ¡Hola Mónica!
       </div>
       <div class="group-style">
         {{group.grupo__grado}} - {{group.grupo__consecutivo}}
@@ -31,11 +31,10 @@
         <ion-col class="student-container" col-auto col-sm *ngFor="let student of row; let cl=index">
           <ion-card class="{{student.ubicationClass}} itemView" (tap)="tapEvent($event, student,rw,cl)">
             <div class="{{student.ubicationClass}}" *ngIf="student.empty != true; else emptyStudent">
-              {{student.nombres}} {{student.apellidos}}<br>Fila: {{student.grupoxestudiante__fila+1}} - Col:
-              {{student.grupoxestudiante__columna+1}}
+              {{student.nombres}} {{student.apellidos}}
             </div>
             <ng-template #emptyStudent>
-              <div class="{{student.ubicationClass}}">---</div>
+              <div class="{{student.ubicationClass}}">Puesto disponible</div>
             </ng-template>
           </ion-card>
         </ion-col>

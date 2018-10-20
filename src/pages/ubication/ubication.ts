@@ -107,11 +107,12 @@ export class UbicationPage {
 
   updateUbications() {
     var loading = this.loadingCtrl.create({
-      content: "Actualizando la asistencia..."
+      content: "Actualizando las ubicaciones..."
     });
     loading.present();
     this.list.forEach(row => {
       row.forEach(element => {
+        element.ubicationClass="";
         if (element.changed && element.id != undefined) {
           this.studentProvider
             .updateStudent(
@@ -124,7 +125,7 @@ export class UbicationPage {
               data => {},
               error => {
                 this.showMessage(
-                  "Verifique su conexión a internet. No se puede actualizar la asistencia"
+                  "Verifique su conexión a internet. No se pueden actualizar las ubicaciones"
                 );
                 loading.dismissAll();
               }
@@ -154,18 +155,15 @@ export class UbicationPage {
         this.counterTaps = 0;
         this.changed = true;
         let flag = this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna
-        ];
+          this.student.grupoxestudiante__columna];
         this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna
-        ] = this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna
-        ];
+          this.student.grupoxestudiante__columna] 
+          = this.list[this.studentAux.grupoxestudiante__fila][
+          this.studentAux.grupoxestudiante__columna];
         this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna
-        ] = flag;
-        this.student.ubicationClass = "";
-        this.studentAux.ubicationClass = "";
+          this.studentAux.grupoxestudiante__columna] = flag;
+        this.student.ubicationClass = "changed";
+        this.studentAux.ubicationClass = "changed";
         event.preventDefault();
         this.studentAux.changed = true;
         this.student.changed = true;

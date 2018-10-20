@@ -1,8 +1,44 @@
 page-ubication {
   .selected {
     background-color: #ffba5c;
-    width: 100%;
-    //width: calc(20% - 20px);
+    margin: 0 10px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+    padding: 10px 5px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-style: inherit;
+    font-variant: inherit;
+    line-height: 1;
+    font-weight: bold;
+    font-size: 10pt;
+  }
+
+  .changed{
+    background-color: #81B209;
+    margin: 0 10px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+    padding: 10px 5px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-style: inherit;
+    font-variant: inherit;
+    line-height: 1;
+    font-weight: bold;
+    font-size: 10pt;
+  }
+
+  .emptyStudent{
+    background-color: #C5CFCF;
     margin: 0 10px;
     height: 60px;
     display: flex;
