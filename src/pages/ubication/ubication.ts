@@ -107,7 +107,7 @@ export class UbicationPage {
 
   updateUbications() {
     var loading = this.loadingCtrl.create({
-      content: "Actualizando la asistencia..."
+      content: "Actualizando las ubicaciones..."
     });
     loading.present();
     this.list.forEach(row => {
@@ -125,7 +125,7 @@ export class UbicationPage {
               data => {},
               error => {
                 this.showMessage(
-                  "Verifique su conexión a internet. No se puede actualizar la asistencia"
+                  "Verifique su conexión a internet. No se pueden actualizar las ubicaciones"
                 );
                 loading.dismissAll();
               }
