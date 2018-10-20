@@ -27,6 +27,8 @@ export class HomePage {
   //Se crea la cuadricula de estudiantes.
   list: Student[][] = [];
   group: Group;
+  connectionError : boolean;
+  noStudents : boolean;
 
   /*Se inyectan las dependencias de: Controlador de vistas
      *Controlador de orientación de pantalla
@@ -58,6 +60,11 @@ export class HomePage {
         //Se cierra el mensaje de carga
         loading.dismissAll();
         this.list = this.sortStudentsByIndex(data.entity);
+
+        if(this.list.length == 0){
+          this.noStudents = true;
+        }
+        this.connectionError = false;
       },
       //En caso de pérdida de conexión a internet
       error => {
@@ -65,12 +72,18 @@ export class HomePage {
         this.showMessage(
           "Verifique su conexión a internet. No se puede acceder al servidor"
         );
+        this.connectionError = true;
       }
     );
   }
-
+  
+  retry(){
+    this.getStudents(this.group.grupo__id);
+  }
   ionViewCanEnter() {
     //this.screenO.lock('landscape');
+    this.connectionError = false;
+    this.noStudents = false;
   }
 
   //Se ordenan los estudiantes por fila y columnas. Según orden del profesor
