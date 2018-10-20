@@ -10,6 +10,7 @@ import { FollowUp } from '../../models/FollowUp'
 
 //Importación de componentes nativos
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import { Group } from '../../models/Group';
 
 @IonicPage()
 @Component({
@@ -29,6 +30,7 @@ export class SeguimientosPage {
   };
   images: string[] = [];
   loading: any;
+  group : Group;
 
   /*Se inyectan las dependencias de: 
        *Controlador de vistas
@@ -53,6 +55,7 @@ export class SeguimientosPage {
     if (this.student === undefined) {
       return false;
     }
+    this.group = this.navParams.get("group");
     //this.screenO.lock('landscape');
     //Se formatea la fecha a  YYYY-MM-DD, para enviarla a la base de datos
     let date = new Date().toLocaleDateString().split("/");
@@ -107,7 +110,7 @@ export class SeguimientosPage {
 
     this.loading = this.loadingCtrl.create({ content: "Insertando datos a la base de datos..." });
     this.loading.present();
-    this.followUpProvider.insertCategoryData(2,
+    this.followUpProvider.insertCategoryData(this.group.grupo__id,
       this.formatDate).subscribe(
         data => {
         if (data.status == 201) {
