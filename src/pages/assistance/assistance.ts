@@ -123,6 +123,7 @@ export class AssistancePage {
     }, []);
   }
 
+
   showMessage(message: string) {
     let toast = this.toastCtrl.create({
       message: message,
