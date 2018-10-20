@@ -27,4 +27,9 @@
     <button ion-button (click) = "sendValues()" [disabled]="idGroup==0">
       Continuar
     </button>
+
+    <div class="information" style="height: 50%" *ngIf="conectionError">
+      <h3 style="text-align: center">Error de conexión. Intentalo nuevamente</h3>
+      <button ion-button (click)="retry()">Reintentar</button>
+    </div>
 </ion-content>

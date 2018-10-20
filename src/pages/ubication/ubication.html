@@ -20,6 +20,11 @@
 
 
 <ion-content padding>
+  <div class="information" *ngIf="conectionError">
+    <h3 style="text-align: center">Error de conexión. Intentalo nuevamente</h3>
+    <button ion-button (click)="retry()">Reintentar</button>
+  </div>
+
   <div style="margin: 20px;">
     <ion-grid>
       <ion-row *ngFor="let row of list; let rw = index">
@@ -41,7 +46,7 @@
 
 <ion-footer>
   <div class="footer" *ngIf="changed">
-    <h6>Enviar actualización Ubicación</h6>
+    <h6>Enviar actualización de Ubicación</h6>
     <ion-buttons end>
       <button ion-button (click)="updateUbications()"> Actualizar </button>
     </ion-buttons>

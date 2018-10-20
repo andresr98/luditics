@@ -32,6 +32,7 @@ export class UbicationPage {
   colAux: number;
   changed: boolean = false;
   emptyStudent: any = {};
+  conectionError : boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -59,12 +60,15 @@ export class UbicationPage {
             this.list = this.setEmptyStudent(a);
           }
         }
+
+        this.conectionError = false;
       },
       error => {
         loading.dismissAll();
         this.showMessage(
           "Verifique su conexión a internet. No se puede acceder al servidor"
         );
+        this.conectionError = true;
       }
     );
   }
@@ -95,17 +99,6 @@ export class UbicationPage {
     }
     return data;
   }
-
-  /* changeSpot(student1: Student, student2: Student) {
-    this.student = student1;
-    this.studentAux = student2;
-
-    this.rowAux = this.student.grupoxestudiante__fila;
-    this.colAux = this.student.grupoxestudiante__columna;
-    //declarar locales estas variables
-    this.student.changed = true;
-    this.studentAux.changed = true;
-  } */
 
   asignUndefined(rw: number, cl: number, student: Student) {
     student.grupoxestudiante__fila = rw;
@@ -192,8 +185,13 @@ export class UbicationPage {
     return;
   }
 
+  retry(){
+    this.getStudentsByGroup(this.group.grupo__id);
+  }
+
   ionViewCanEnter() {
     //this.screenO.lock('landscape');
+    this.conectionError = false;
   }
 
   showMessage(message: string) {

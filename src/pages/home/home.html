@@ -30,4 +30,13 @@
       </ion-row>
     </ion-grid>
   </div>
+
+  <div class="information" *ngIf="conectionError">
+    <h3 style="text-align: center">Error de conexión. Intentalo nuevamente</h3>
+    <button ion-button (click)="retry()">Reintentar</button>
+  </div>
+
+  <div class="information" *ngIf="noStudents">
+    <h3 style="text-align: center">El grupo ha evaluar no tiene estudiantes registrados</h3>
+  </div>
 </ion-content>

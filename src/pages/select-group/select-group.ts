@@ -19,6 +19,7 @@ export class SelectGroupPage {
   group : Group;
   tabsPage : any = TabsPage;
   bool : boolean = false;
+  conectionError : boolean;
 
   constructor(public navCtrl: NavController, 
      public navParams: NavParams,
@@ -29,14 +30,18 @@ export class SelectGroupPage {
     this.idGroup = 0;
   }
 
+  retry(){
+    this.getGroups(1);
+  }
   getGroups(idTeacher : number){
     this.groupProvider.getGroups(idTeacher).subscribe(data => {
       if(data.status == 200){
         this.groups = data.entity
       }
+      this.conectionError = false;
     },
     error => {
-      console.log("No traje grupos");
+      this.conectionError = true;
     });
   }
 
@@ -52,5 +57,6 @@ export class SelectGroupPage {
 
   ionViewCanEnter(){
     //this.screenO.lock('landscape');
+    this.conectionError = false;  
   }
 }
