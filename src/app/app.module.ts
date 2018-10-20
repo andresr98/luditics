@@ -16,23 +16,28 @@ import { HomePage } from "../pages/home/home";
 import { SeguimientosPage } from "../pages/seguimientos/seguimientos";
 import { TabsPage } from "../pages/tabs/tabs";
 import { AssistancePage } from "../pages/assistance/assistance";
-import {SelectGroupPage} from '../pages/select-group/select-group'
-import {SettingsPage} from '../pages/settings/settings'
+import { SelectGroupPage } from "../pages/select-group/select-group";
+import { SettingsPage } from "../pages/settings/settings";
 import { UbicationPage } from "../pages/ubication/ubication";
 
 //Importación de servicios.
 import { StudentProvider } from "../providers/student/student";
-import { FollowUpProvider } from "../providers/follow-up/follow-up";
-import { AssistanceProvider } from '../providers/assistance/assistance';
-import { GroupProvider } from '../providers/group/group';
+import { GroupProvider } from "../providers/group/group";
 
-let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage, SelectGroupPage, SettingsPage, UbicationPage];
+let pages = [
+  MyApp,
+  HomePage,
+  SeguimientosPage,
+  TabsPage,
+  AssistancePage,
+  SelectGroupPage,
+  SettingsPage,
+  UbicationPage
+];
 
 @NgModule({
   declarations: pages,
-  imports: [BrowserModule, 
-    HttpClientModule, 
-    IonicModule.forRoot(MyApp)],
+  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(MyApp)],
   bootstrap: [IonicApp],
   entryComponents: pages,
   providers: [
@@ -41,8 +46,6 @@ let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage, Select
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     StudentProvider,
-    FollowUpProvider,
-    AssistanceProvider,
     GroupProvider
   ]
 })
