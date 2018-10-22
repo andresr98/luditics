@@ -7,6 +7,8 @@ import {
   ToastController,
   LoadingController
 } from "ionic-angular";
+import { UtilitiesProvider } from "../../providers/utilities/utilities";
+
 import { isNil } from "lodash";
 
 //Importación de provider
@@ -35,6 +37,7 @@ export class AssistancePage {
     private studentProvider: StudentProvider,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
+    private utilitiesProvider: UtilitiesProvider,
     private screenO: ScreenOrientation
   ) {
     let date = new Date().toLocaleDateString().split("/");
@@ -53,7 +56,13 @@ export class AssistancePage {
     loading.present();
     this.studentProvider.getAssistances(idGroup, date).subscribe(
       data => {
-        this.list = this.sortStudentsByIndex(data.entity);
+        if (data.status == 200) {
+          loading.dismissAll();
+          let a = this.utilitiesProvider.sortStudents(data.entity);
+          /* if (a.length > 0) {
+            this.list = this.utilitiesProvider.setEmptyStudent(a);
+          } */
+        }
         this.list.forEach(fila => {
           fila.forEach(element => {
             if (element.asistencia == 1) element.asistenciaClass = "onTime";

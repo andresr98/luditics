@@ -8,6 +8,7 @@ import {
   LoadingController
 } from "ionic-angular";
 import { isNil } from "lodash";
+import { UtilitiesProvider } from "../../providers/utilities/utilities";
 
 //Importación de providers y modelos
 import { Student } from "../../models/Student";
@@ -27,7 +28,7 @@ export class UbicationPage {
   student: Student;
   studentAux: Student;
   counterTaps: number = 0;
-  group : Group;
+  group: Group;
   rowAux: number;
   colAux: number;
   changed: boolean = false;
@@ -39,6 +40,7 @@ export class UbicationPage {
     private studentProvider: StudentProvider,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
+    private utilitiesProvider: UtilitiesProvider,
     private screenO: ScreenOrientation
   ) {
     this.group = this.navParams.data.group;
@@ -54,9 +56,9 @@ export class UbicationPage {
       data => {
         if (data.status == 200) {
           loading.dismissAll();
-          let a = this.sortStudents(data.entity);
-          if(a.length > 0){
-            this.list = this.setEmptyStudent(a);
+          let a = this.utilitiesProvider.sortStudents(data.entity);
+          if (a.length > 0) {
+            this.list = this.utilitiesProvider.setEmptyStudent(a);
           }
         }
       },
@@ -69,7 +71,7 @@ export class UbicationPage {
     );
   }
 
-  sortStudents(data: Student[]): Student[][] {
+  /* sortStudents(data: Student[]): Student[][] {
     return data.reduce<Student[][]>((accumulator, student, index) => {
       const row = student.grupoxestudiante__fila;
       const column = student.grupoxestudiante__columna;
@@ -94,7 +96,7 @@ export class UbicationPage {
       }
     }
     return data;
-  }
+  } */
 
   /* changeSpot(student1: Student, student2: Student) {
     this.student = student1;

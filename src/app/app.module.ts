@@ -23,6 +23,7 @@ import { UbicationPage } from "../pages/ubication/ubication";
 //Importación de servicios.
 import { StudentProvider } from "../providers/student/student";
 import { GroupProvider } from "../providers/group/group";
+import { UtilitiesProvider } from '../providers/utilities/utilities';
 
 let pages = [
   MyApp,
@@ -46,7 +47,8 @@ let pages = [
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     StudentProvider,
-    GroupProvider
+    GroupProvider,
+    UtilitiesProvider
   ]
 })
 export class AppModule {}

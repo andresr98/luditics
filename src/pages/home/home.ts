@@ -1,11 +1,13 @@
 //Importación de componentes ionic
-import { Component} from "@angular/core";
+import { Component } from "@angular/core";
 import {
   NavController,
   NavParams,
   ToastController,
   LoadingController
 } from "ionic-angular";
+import { UtilitiesProvider } from "../../providers/utilities/utilities";
+
 import { isNil } from "lodash";
 
 //Importación de paginas
@@ -31,19 +33,21 @@ export class HomePage {
   /*Se inyectan las dependencias de: Controlador de vistas
      *Controlador de orientación de pantalla
      *Provider para obtener los estudiantes desde el back */
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     private screenO: ScreenOrientation,
     private studentProvider: StudentProvider,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private navParams: NavParams) {
-
+    private navParams: NavParams,
+    private utilitiesProvider: UtilitiesProvider
+  ) {
     //Mostrar información de carga y traer los estudiantes de la base de datos
     this.group = this.navParams.data.group;
     this.getStudents(this.group.grupo__id);
   }
 
-  getStudents(idGroup : number) {
+  getStudents(idGroup: number) {
     var loading = this.loadingCtrl.create({
       content: "Cargando Estudiantes..."
     });
@@ -57,7 +61,10 @@ export class HomePage {
          ***/
         //Se cierra el mensaje de carga
         loading.dismissAll();
-        this.list = this.sortStudentsByIndex(data.entity);
+        let a = this.utilitiesProvider.sortStudents(data.entity);
+        if (a.length > 0) {
+          this.list = this.utilitiesProvider.setEmptyStudent(a);
+        }
       },
       //En caso de pérdida de conexión a internet
       error => {
