@@ -2,7 +2,8 @@ page-ubication {
   .selected {
     background-color: #ffba5c;
     margin: 0 10px;
-    height: 60px;
+    height: inherit;
+    width: inherit;
     display: flex;
     align-items: center;
     white-space: normal;
