@@ -9,4 +9,5 @@ export interface Student {
   descripcion: string;
   changed: boolean;
   ubicationClass: String;
+  empty : boolean;
 }

@@ -7,11 +7,13 @@ import {
   ToastController,
   LoadingController
 } from "ionic-angular";
-import { isNil } from "lodash";
+
+import { TabsPage } from "../tabs/tabs";
 
 //Importación de providers y modelos
 import { Student } from "../../models/Student";
 import { StudentProvider } from "../../providers/student/student";
+import { UtilitiesProvider } from "../../providers/utilities/utilities";
 
 //Importación de componentes nativos
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
@@ -27,12 +29,13 @@ export class UbicationPage {
   student: Student;
   studentAux: Student;
   counterTaps: number = 0;
-  group : Group;
+  group: Group;
   rowAux: number;
   colAux: number;
   changed: boolean = false;
   emptyStudent: any = {};
-  connectionError : boolean;
+  connectionError: boolean;
+  tabsPage: any = TabsPage;
 
   constructor(
     public navCtrl: NavController,
@@ -40,9 +43,11 @@ export class UbicationPage {
     private studentProvider: StudentProvider,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private screenO: ScreenOrientation
+    private screenO: ScreenOrientation,
+    private utilitiesProvider: UtilitiesProvider
   ) {
     this.group = this.navParams.data.group;
+    this.navCtrl = this.navParams.data.nav;
     this.getStudentsByGroup(this.group.grupo__id);
   }
 
@@ -53,14 +58,21 @@ export class UbicationPage {
     loading.present();
     this.studentProvider.getStudentsByGroup(group).subscribe(
       data => {
-        if (data.status == 200) {
+        let sortStudents = this.utilitiesProvider.sortStudents(data.entity);
+
+        if (sortStudents.length > 0) {
+          this.list = this.utilitiesProvider.setEmptyStudent(sortStudents);
           loading.dismissAll();
-          let a = this.sortStudents(data.entity);
-          if(a.length > 0){
-            this.list = this.setEmptyStudent(a);
-          }
         }
 
+        this.list.forEach(fila => {
+          fila.forEach(element => {
+
+            if(element.empty){
+              element.ubicationClass = "emptyStudent"
+            }
+          });
+        });
         this.connectionError = false;
       },
       error => {
@@ -73,46 +85,20 @@ export class UbicationPage {
     );
   }
 
-  sortStudents(data: Student[]): Student[][] {
-    return data.reduce<Student[][]>((accumulator, student, index) => {
-      const row = student.grupoxestudiante__fila;
-      const column = student.grupoxestudiante__columna;
-
-      if (isNil(accumulator[row])) {
-        accumulator[row] = new Array(5);
-      }
-      accumulator[row][column] = student;
-      return accumulator;
-    }, []);
-  }
-
-  setEmptyStudent(data: Student[][]) {
-    let rows = data.length;
-    let columns = data[0].length;
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < columns; j++) {
-        if (data[i][j] == undefined) {
-          this.emptyStudent = { empty: true };
-          data[i][j] = this.emptyStudent;
-        }
-      }
-    }
-    return data;
-  }
-
   asignUndefined(rw: number, cl: number, student: Student) {
     student.grupoxestudiante__fila = rw;
     student.grupoxestudiante__columna = cl;
   }
 
   updateUbications() {
+    var size = this.list.length;
     var loading = this.loadingCtrl.create({
       content: "Actualizando las ubicaciones..."
     });
     loading.present();
     this.list.forEach(row => {
       row.forEach(element => {
-        element.ubicationClass="";
+        element.ubicationClass = "";
         if (element.changed && element.id != undefined) {
           this.studentProvider
             .updateStudent(
@@ -122,7 +108,7 @@ export class UbicationPage {
               element.grupoxestudiante__columna
             )
             .subscribe(
-              data => {},
+              data => { },
               error => {
                 this.showMessage(
                   "Verifique su conexión a internet. No se pueden actualizar las ubicaciones"
@@ -132,6 +118,11 @@ export class UbicationPage {
             );
         }
       });
+      size--;
+      if (size === 0) {
+        this.navCtrl.pop();
+        this.navCtrl.push(this.tabsPage, { "group": this.group, "nav": this.navCtrl });
+      }
     });
     loading.dismiss();
     this.changed = false;
@@ -157,7 +148,7 @@ export class UbicationPage {
         let flag = this.list[this.student.grupoxestudiante__fila][
           this.student.grupoxestudiante__columna];
         this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna] 
+          this.student.grupoxestudiante__columna]
           = this.list[this.studentAux.grupoxestudiante__fila][
           this.studentAux.grupoxestudiante__columna];
         this.list[this.studentAux.grupoxestudiante__fila][
@@ -183,7 +174,7 @@ export class UbicationPage {
     return;
   }
 
-  retry(){
+  retry() {
     this.getStudentsByGroup(this.group.grupo__id);
   }
 

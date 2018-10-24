@@ -6,7 +6,6 @@ import {
   ToastController,
   LoadingController
 } from "ionic-angular";
-import { isNil } from "lodash";
 
 //Importación de paginas
 import { SeguimientosPage } from "../seguimientos/seguimientos";
@@ -18,6 +17,7 @@ import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { StudentProvider } from "../../providers/student/student";
 import { Student } from "../../models/Student";
 import { Group } from "../../models/Group";
+import { UtilitiesProvider } from "../../providers/utilities/utilities";
 
 @Component({
   selector: "page-home",
@@ -38,7 +38,8 @@ export class HomePage {
     private studentProvider: StudentProvider,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private navParams: NavParams) {
+    private navParams: NavParams,
+    private utilitiesProvider: UtilitiesProvider) {
 
     //Mostrar información de carga y traer los estudiantes de la base de datos
     this.group = this.navParams.data.group;
@@ -58,12 +59,16 @@ export class HomePage {
          * data.error = es un error personalizado para ser mostrado al usuario
          ***/
         //Se cierra el mensaje de carga
-        loading.dismissAll();
-        this.list = this.sortStudentsByIndex(data.entity);
+        let sortStududents = this.utilitiesProvider.sortStudents(data.entity);
 
+        if(sortStududents.length > 0){
+          this.list = this.utilitiesProvider.setEmptyStudent(sortStududents);
+        }
+    
         if(this.list.length == 0){
           this.noStudents = true;
         }
+        loading.dismissAll();
         this.connectionError = false;
       },
       //En caso de pérdida de conexión a internet
@@ -84,21 +89,6 @@ export class HomePage {
     //this.screenO.lock('landscape');
     this.connectionError = false;
     this.noStudents = false;
-  }
-
-  //Se ordenan los estudiantes por fila y columnas. Según orden del profesor
-  sortStudentsByIndex(data: Student[]): Student[][] {
-    return data.reduce<Student[][]>((accumulator, student, index) => {
-      const row = Math.floor(index / 5);
-      const column = index % 5;
-
-      if (isNil(accumulator[row])) {
-        accumulator[row] = [];
-      }
-
-      accumulator[row][column] = student;
-      return accumulator;
-    }, []);
   }
 
   //Se envian los valores del estudiante a la pagina de seguimientos.

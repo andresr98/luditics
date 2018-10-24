@@ -1,14 +1,15 @@
 page-ubication {
   .selected {
     background-color: #ffba5c;
-    margin: 0 10px;
+    margin: 0 0px;
     height: 60px;
+    width: 100%;
     display: flex;
     align-items: center;
     white-space: normal;
     text-align: center;
     justify-content: center;
-    padding: 10px 5px;
+    padding: 0;
     border-radius: 5px;
     font-family: inherit;
     font-style: inherit;
@@ -17,17 +18,17 @@ page-ubication {
     font-weight: bold;
     font-size: 10pt;
   }
-
   .changed{
     background-color: #81B209;
-    margin: 0 10px;
+    margin: 0 0px;
     height: 60px;
+    width: 100%;
     display: flex;
     align-items: center;
     white-space: normal;
     text-align: center;
     justify-content: center;
-    padding: 10px 5px;
+    padding: 0;
     border-radius: 5px;
     font-family: inherit;
     font-style: inherit;
@@ -38,27 +39,7 @@ page-ubication {
   }
 
   .emptyStudent{
-    background-color: #C5CFCF;
-    margin: 0 10px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    white-space: normal;
-    text-align: center;
-    justify-content: center;
-    padding: 10px 5px;
-    border-radius: 5px;
-    font-family: inherit;
-    font-style: inherit;
-    font-variant: inherit;
-    line-height: 1;
-    font-weight: bold;
-    font-size: 10pt;
-  }
-
-  .student-container {
-    max-width: 20%;
-    color: white;
+    opacity: .4;
   }
 
   .footer {
@@ -72,8 +53,7 @@ page-ubication {
 
   .itemView {
     width: 100%;
-    //width: calc(20% - 20px);
-    margin: 0 10px;
+    margin: 0;
     height: 60px;
     display: flex;
     align-items: center;
@@ -85,9 +65,10 @@ page-ubication {
     font-family: inherit;
     font-style: inherit;
     font-variant: inherit;
-    background-color: #488aff;
     line-height: 1;
     font-weight: bold;
+    background-color: #488aff;
     font-size: 10pt;
+    color: white;
   }
 }
