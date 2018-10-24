@@ -17,6 +17,7 @@ import { StudentProvider } from "../../providers/student/student";
 //Importación de componentes nativos
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { Group } from "../../models/Group";
+import { TabsPage } from "../tabs/tabs";
 
 @IonicPage()
 @Component({
@@ -33,6 +34,7 @@ export class UbicationPage {
   colAux: number;
   changed: boolean = false;
   emptyStudent: any = {};
+  tabsPage : any = TabsPage;
 
   constructor(
     public navCtrl: NavController,
@@ -44,6 +46,7 @@ export class UbicationPage {
     private screenO: ScreenOrientation
   ) {
     this.group = this.navParams.data.group;
+    this.navCtrl = this.navParams.data.nav;
     this.getStudentsByGroup(this.group.grupo__id);
   }
 
@@ -115,6 +118,8 @@ export class UbicationPage {
   }
 
   updateUbications() {
+
+    var size = this.list.length;
     var loading = this.loadingCtrl.create({
       content: "Actualizando la asistencia..."
     });
@@ -140,6 +145,12 @@ export class UbicationPage {
             );
         }
       });
+      size --;
+
+      if(size === 0){
+        this.navCtrl.pop();
+        this.navCtrl.push(this.tabsPage, {"group": this.group, "nav": this.navCtrl});
+      }
     });
     loading.dismiss();
     this.changed = false;

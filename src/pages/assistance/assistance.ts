@@ -57,22 +57,21 @@ export class AssistancePage {
     this.studentProvider.getAssistances(idGroup, date).subscribe(
       data => {
         if (data.status == 200) {
-          loading.dismissAll();
           let a = this.utilitiesProvider.sortStudents(data.entity);
-          /* if (a.length > 0) {
+          if (a.length > 0) {
             this.list = this.utilitiesProvider.setEmptyStudent(a);
-          } */
+            this.list.forEach(fila => {
+              fila.forEach(element => {
+                if (element.asistencia == 1) element.asistenciaClass = "onTime";
+                else if (element.asistencia == 2) element.asistenciaClass = "late";
+                else if(element.asistencia == 3) element.asistenciaClass = "miss";
+                else element.asistenciaClass = "item-view-empty";
+                element.changed = false;
+              });
+            });
+          }
+          loading.dismissAll();
         }
-        this.list.forEach(fila => {
-          fila.forEach(element => {
-            if (element.asistencia == 1) element.asistenciaClass = "onTime";
-            else if (element.asistencia == 2) element.asistenciaClass = "late";
-            else element.asistenciaClass = "miss";
-
-            element.changed = false;
-          });
-        });
-        loading.dismissAll();
       },
       error => {
         loading.dismissAll();
@@ -146,7 +145,7 @@ export class AssistancePage {
     loading.present();
     this.list.forEach(row => {
       row.forEach(element => {
-        if (element.changed) {
+        if (element.changed && element.id != undefined) {
           this.studentProvider
             .updateAssistances(
               this.group.grupo__id,
@@ -155,7 +154,7 @@ export class AssistancePage {
               element.asistencia
             )
             .subscribe(
-              data => {},
+              data => { },
               error => {
                 this.showMessage(
                   "Verifique su conexión a internet. No se puede actualizar la asistencia"

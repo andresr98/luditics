@@ -11,6 +11,7 @@ export class UtilitiesProvider {
   emptyStudent: any = {};
 
   constructor() {}
+  
   sortStudents(data: any[]): any[][] {
     return data.reduce<any[][]>((accumulator, student, index) => {
       const row = student.grupoxestudiante__fila;
