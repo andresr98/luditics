@@ -1,11 +1,11 @@
 //Componentes de Ionic
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, LoadingController} from "ionic-angular";
-import { isNil } from "lodash";
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from "ionic-angular";
 
 //Importación de provider
 import { AssistanceProvider } from "../../providers/assistance/assistance";
 import { ScreenOrientation } from "@ionic-native/screen-orientation";
+import { UtilitiesProvider } from "../../providers/utilities/utilities";
 
 import { Assistance } from "../../models/Assistance";
 import { Group } from "../../models/Group";
@@ -19,18 +19,19 @@ export class AssistancePage {
   list: Assistance[][] = [];
   assistance: Assistance;
   formatDate: string;
-  counterTaps : number = 0;
-  changed : boolean = false;
-  group : Group;
-  connectionError : boolean;
+  counterTaps: number = 0;
+  changed: boolean = false;
+  group: Group;
+  connectionError: boolean;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private assistanceProvider: AssistanceProvider,
-    private loadingCtrl : LoadingController,
-    private toastCtrl : ToastController,
-    private screenO : ScreenOrientation
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+    private screenO: ScreenOrientation,
+    private utilitiesProvider: UtilitiesProvider
   ) {
     let date = new Date().toLocaleDateString().split("/");
     this.formatDate = date[2] + "-" + date[1] + "-" + date[0];
@@ -38,33 +39,39 @@ export class AssistancePage {
     this.getAssistances(this.group.grupo__id, this.formatDate);
   }
 
-  ionViewCanEnter(){
+  ionViewCanEnter() {
     //this.screenO.lock('landscape');
     this.connectionError = false;
   }
 
-  retry(){
+  retry() {
     this.getAssistances(this.group.grupo__id, this.formatDate);
   }
-  getAssistances(idGroup : number, date :string){
+  getAssistances(idGroup: number, date: string) {
     var loading = this.loadingCtrl.create({
       content: "Cargando Asistencia..."
     });
     loading.present();
     this.assistanceProvider.getAssistances(idGroup, date).subscribe(
       data => {
-        this.list = this.sortStudentsByIndex(data.entity);
-        this.list.forEach(fila => {
-          fila.forEach(element => {
-            if (element.asistencia == 1) element.asistenciaClass = "onTime";
-            else if (element.asistencia == 2) element.asistenciaClass = "late";
-            else element.asistenciaClass = "miss";
 
-            element.changed=false;
+        let sortStudents = this.utilitiesProvider.sortStudents(data.entity)
+        if (sortStudents.length > 0) {
+          this.list = this.utilitiesProvider.setEmptyStudent(sortStudents);
+          this.list.forEach(fila => {
+            fila.forEach(element => {
+              if (element.asistencia == 1) element.asistenciaClass = "onTime";
+              else if (element.asistencia == 2) element.asistenciaClass = "late";
+              else if (element.asistencia == 3) element.asistenciaClass = "miss";
+              else element.asistenciaClass = "item-view-empty"
+
+              element.changed = false;
+            });
           });
-        });
-        loading.dismissAll();
-        this.connectionError = false;
+
+          loading.dismissAll();
+          this.connectionError = false;
+        }
       },
       error => {
         loading.dismissAll();
@@ -89,7 +96,7 @@ export class AssistancePage {
       assistance.asistenciaClass = "late";
     }
     this.changed = true;
-    assistance.changed= true;
+    assistance.changed = true;
     event.preventDefault();
   }
   pressEvent(event, assistance: Assistance) {
@@ -109,21 +116,6 @@ export class AssistancePage {
     event.preventDefault();
   }
 
-  sortStudentsByIndex(data: Assistance[]): Assistance[][] {
-    return data.reduce<Assistance[][]>((accumulator, assistance, index) => {
-      const row = Math.floor(index / 5);
-      const column = index % 5;
-
-      if (isNil(accumulator[row])) {
-        accumulator[row] = [];
-      }
-
-      accumulator[row][column] = assistance;
-      return accumulator;
-    }, []);
-  }
-
-
   showMessage(message: string) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -133,42 +125,42 @@ export class AssistancePage {
     toast.present();
   }
 
-  updateAssistances(){
+  updateAssistances() {
     var loading = this.loadingCtrl.create({
       content: "Actualizando la asistencia..."
     });
     loading.present();
     this.list.forEach(row => {
       row.forEach(element => {
-        if(element.changed){
-          this.assistanceProvider.updateAssistances(this.group.grupo__id,element.grupoxestudiante__estudiante_id__id,
-            this.formatDate,element.asistencia).subscribe(
-              data=>{
-            },
-            error => {
-              this.showMessage("Verifique su conexión a internet. No se puede actualizar la asistencia");
-              loading.dismissAll();
-            });
+        if (element.changed  && element.grupoxestudiante__estudiante_id__id != undefined) {
+          this.assistanceProvider.updateAssistances(this.group.grupo__id, element.grupoxestudiante__estudiante_id__id,
+            this.formatDate, element.asistencia).subscribe(
+              data => {
+              },
+              error => {
+                this.showMessage("Verifique su conexión a internet. No se puede actualizar la asistencia");
+                loading.dismissAll();
+              });
         }
-      }); 
+      });
     });
     loading.dismiss()
     this.changed = false;
   }
 
-  insertAssistances(){
+  insertAssistances() {
     var loading = this.loadingCtrl.create({ content: "Insertando asistencias a la base de datos..." });
     loading.present();
 
-    this.assistanceProvider.insertAssistances(this.group.grupo__id,this.formatDate).subscribe(
+    this.assistanceProvider.insertAssistances(this.group.grupo__id, this.formatDate).subscribe(
       data => {
         if (data.status == 201) {
           loading.dismissAll();
-          this.getAssistances(this.group.grupo__id,this.formatDate);
-      } 
-    },
-    error => {
-      loading.dismissAll();
-    });
+          this.getAssistances(this.group.grupo__id, this.formatDate);
+        }
+      },
+      error => {
+        loading.dismissAll();
+      });
   }
 }

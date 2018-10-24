@@ -25,6 +25,7 @@ import { StudentProvider } from "../providers/student/student";
 import { FollowUpProvider } from "../providers/follow-up/follow-up";
 import { AssistanceProvider } from '../providers/assistance/assistance';
 import { GroupProvider } from '../providers/group/group';
+import { UtilitiesProvider } from '../providers/utilities/utilities';
 
 let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage, SelectGroupPage, SettingsPage, UbicationPage];
 
@@ -43,7 +44,8 @@ let pages = [MyApp, HomePage, SeguimientosPage, TabsPage, AssistancePage, Select
     StudentProvider,
     FollowUpProvider,
     AssistanceProvider,
-    GroupProvider
+    GroupProvider,
+    UtilitiesProvider
   ]
 })
 export class AppModule {}
