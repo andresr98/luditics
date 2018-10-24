@@ -45,13 +45,8 @@ export class SelectGroupPage {
     });
   }
 
-  sendValues(){
-    for(let i = 0; i < this.groups.length; i++){
-      this.group = this.groups[i];
-
-      if(this.group.grupo__id == this.idGroup) break;
-    }
-
+  sendValues(group: Group){
+    this.group = group;
     this.navCtrl.push(this.tabsPage,{"group": this.group, "nav": this.navCtrl});
   }
 
