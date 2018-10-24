@@ -18,7 +18,7 @@ export class UtilitiesProvider {
       const column = student.grupoxestudiante__columna;
 
       if (isNil(accumulator[row])) {
-        accumulator[row] = new Array(5);
+        accumulator[row] = new Array(6);
       }
       accumulator[row][column] = student;
       return accumulator;

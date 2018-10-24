@@ -1,16 +1,17 @@
 page-ubication {
   .selected {
     background-color: #ffba5c;
+    height: 60px;
+    //width: calc(100% - 20px);
     width: 100%;
     //width: calc(20% - 20px);
-    margin: 0 10px;
-    height: 60px;
+    margin: 0 0px;
+    padding: 0;
     display: flex;
     align-items: center;
     white-space: normal;
     text-align: center;
     justify-content: center;
-    padding: 10px 5px;
     border-radius: 5px;
     font-family: inherit;
     font-style: inherit;
@@ -20,11 +21,11 @@ page-ubication {
     font-size: 10pt;
   }
 
-  .student-container {
+  /* .student-container {
     max-width: 20%;
     color: white;
   }
-
+ */
   .footer {
     display: flex;
     justify-content: space-between;
@@ -37,7 +38,7 @@ page-ubication {
   .itemView {
     width: 100%;
     //width: calc(20% - 20px);
-    margin: 0 10px;
+    margin: 0 0px;
     height: 60px;
     display: flex;
     align-items: center;
@@ -53,9 +54,10 @@ page-ubication {
     line-height: 1;
     font-weight: bold;
     font-size: 10pt;
+    color: white;
   }
 
-  .empty{
-    opacity: .4;
+  .empty {
+    opacity: 0.4;
   }
 }

@@ -34,7 +34,7 @@ export class UbicationPage {
   colAux: number;
   changed: boolean = false;
   emptyStudent: any = {};
-  tabsPage : any = TabsPage;
+  tabsPage: any = TabsPage;
 
   constructor(
     public navCtrl: NavController,
@@ -74,51 +74,12 @@ export class UbicationPage {
     );
   }
 
-  /* sortStudents(data: Student[]): Student[][] {
-    return data.reduce<Student[][]>((accumulator, student, index) => {
-      const row = student.grupoxestudiante__fila;
-      const column = student.grupoxestudiante__columna;
-
-      if (isNil(accumulator[row])) {
-        accumulator[row] = new Array(5);
-      }
-      accumulator[row][column] = student;
-      return accumulator;
-    }, []);
-  }
-
-  setEmptyStudent(data: Student[][]) {
-    let rows = data.length;
-    let columns = data[0].length;
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < columns; j++) {
-        if (data[i][j] == undefined) {
-          this.emptyStudent = { empty: true };
-          data[i][j] = this.emptyStudent;
-        }
-      }
-    }
-    return data;
-  } */
-
-  /* changeSpot(student1: Student, student2: Student) {
-    this.student = student1;
-    this.studentAux = student2;
-
-    this.rowAux = this.student.grupoxestudiante__fila;
-    this.colAux = this.student.grupoxestudiante__columna;
-    //declarar locales estas variables
-    this.student.changed = true;
-    this.studentAux.changed = true;
-  } */
-
   asignUndefined(rw: number, cl: number, student: Student) {
     student.grupoxestudiante__fila = rw;
     student.grupoxestudiante__columna = cl;
   }
 
   updateUbications() {
-
     var size = this.list.length;
     var loading = this.loadingCtrl.create({
       content: "Actualizando la asistencia..."
@@ -145,11 +106,14 @@ export class UbicationPage {
             );
         }
       });
-      size --;
+      size--;
 
-      if(size === 0){
+      if (size === 0) {
         this.navCtrl.pop();
-        this.navCtrl.push(this.tabsPage, {"group": this.group, "nav": this.navCtrl});
+        this.navCtrl.push(this.tabsPage, {
+          group: this.group,
+          nav: this.navCtrl
+        });
       }
     });
     loading.dismiss();
