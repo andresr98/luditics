@@ -1,6 +1,12 @@
 //Componentes de Ionic
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ToastController,
+  LoadingController
+} from "ionic-angular";
 
 //Importación de provider
 import { AssistanceProvider } from "../../providers/assistance/assistance";
@@ -54,24 +60,25 @@ export class AssistancePage {
     loading.present();
     this.assistanceProvider.getAssistances(idGroup, date).subscribe(
       data => {
-
-        let sortStudents = this.utilitiesProvider.sortStudents(data.entity)
+        let sortStudents = this.utilitiesProvider.sortStudents(data.entity);
         if (sortStudents.length > 0) {
           this.list = this.utilitiesProvider.setEmptyStudent(sortStudents);
           this.list.forEach(fila => {
             fila.forEach(element => {
               if (element.asistencia == 1) element.asistenciaClass = "onTime";
-              else if (element.asistencia == 2) element.asistenciaClass = "late";
-              else if (element.asistencia == 3) element.asistenciaClass = "miss";
-              else element.asistenciaClass = "item-view-empty"
+              else if (element.asistencia == 2)
+                element.asistenciaClass = "late";
+              else if (element.asistencia == 3)
+                element.asistenciaClass = "miss";
+              else element.asistenciaClass = "item-view-empty";
 
               element.changed = false;
             });
           });
 
-          loading.dismissAll();
           this.connectionError = false;
         }
+        loading.dismissAll();
       },
       error => {
         loading.dismissAll();
@@ -132,35 +139,51 @@ export class AssistancePage {
     loading.present();
     this.list.forEach(row => {
       row.forEach(element => {
-        if (element.changed  && element.grupoxestudiante__estudiante_id__id != undefined) {
-          this.assistanceProvider.updateAssistances(this.group.grupo__id, element.grupoxestudiante__estudiante_id__id,
-            this.formatDate, element.asistencia).subscribe(
-              data => {
-              },
+        if (
+          element.changed &&
+          element.grupoxestudiante__estudiante_id__id != undefined
+        ) {
+          this.assistanceProvider
+            .updateAssistances(
+              this.group.grupo__id,
+              element.grupoxestudiante__estudiante_id__id,
+              this.formatDate,
+              element.asistencia
+            )
+            .subscribe(
+              data => {},
               error => {
-                this.showMessage("Verifique su conexión a internet. No se puede actualizar la asistencia");
+                this.showMessage(
+                  "Verifique su conexión a internet. No se puede actualizar la asistencia"
+                );
                 loading.dismissAll();
-              });
+              }
+            );
         }
       });
     });
-    loading.dismiss()
+    loading.dismiss();
     this.changed = false;
   }
 
   insertAssistances() {
-    var loading = this.loadingCtrl.create({ content: "Insertando asistencias a la base de datos..." });
+    var loading = this.loadingCtrl.create({
+      content: "Insertando asistencias a la base de datos..."
+    });
     loading.present();
 
-    this.assistanceProvider.insertAssistances(this.group.grupo__id, this.formatDate).subscribe(
-      data => {
-        if (data.status == 201) {
+    this.assistanceProvider
+      .insertAssistances(this.group.grupo__id, this.formatDate)
+      .subscribe(
+        data => {
+          if (data.status == 201) {
+            loading.dismissAll();
+            this.getAssistances(this.group.grupo__id, this.formatDate);
+          }
+        },
+        error => {
           loading.dismissAll();
-          this.getAssistances(this.group.grupo__id, this.formatDate);
         }
-      },
-      error => {
-        loading.dismissAll();
-      });
+      );
   }
 }
