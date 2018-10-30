@@ -22,6 +22,9 @@ export class UtilitiesProvider {
   setEmptyStudent(data: any[][]) {
     let rows = data.length;
     let columns = 6;
+    if(rows<7){
+      rows++;
+    }
     for (let i = 0; i < rows; i++) {
       data[i] = data[i] || new Array(6);
       for (let j = 0; j < columns; j++) {
