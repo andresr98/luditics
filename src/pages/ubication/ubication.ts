@@ -139,7 +139,6 @@ export class UbicationPage {
         this.counterTaps = 1;
         this.rowAux = rw;
         this.colAux = cl;
-        console.log(this.student.ubicationClass);
         event.preventDefault();
         break;
       }
