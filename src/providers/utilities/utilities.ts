@@ -1,12 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { isNil } from "lodash";
 
 @Injectable()
 export class UtilitiesProvider {
-
-  emptyStudent : any = {}
-  constructor() {
-  }
+  emptyStudent: any = {};
+  constructor() {}
 
   sortStudents(data: any[]): any[][] {
     return data.reduce<any[][]>((accumulator, student, index) => {
@@ -23,8 +21,9 @@ export class UtilitiesProvider {
 
   setEmptyStudent(data: any[][]) {
     let rows = data.length;
-    let columns = data[0].length;
+    let columns = 6;
     for (let i = 0; i < rows; i++) {
+      data[i] = data[i] || new Array(6);
       for (let j = 0; j < columns; j++) {
         if (data[i][j] == undefined) {
           this.emptyStudent = { empty: true };

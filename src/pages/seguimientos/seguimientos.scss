@@ -8,4 +8,9 @@ page-seguimientos {
     .tabulacionDoble{
         text-indent: 2.5cm;
     }
+
+    .segment-md .segment-button.segment-activated {
+        border-color: #488aff;
+        background-color: gainsboro;
+    }
 }
