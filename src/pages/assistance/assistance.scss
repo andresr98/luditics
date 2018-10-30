@@ -1,14 +1,14 @@
 page-assistance {
   .onTime {
-    background-color: #488aff;
+    background-color: #0088cc;
   }
 
   .late {
-    background-color: #ffba5c;
+    background-color: #ffce8c;
   }
 
   .miss {
-    background-color: #ff5381;
+    background-color: #666666	;
   }
 
   .student-container {
@@ -44,7 +44,7 @@ page-assistance {
   }
 
   .item-view-empty {
-    background-color: #488aff;
+    background-color: #eeeeee;
     opacity: 0.4;
     pointer-events: none;
   }

@@ -1,6 +1,7 @@
 page-ubication {
   .selected {
-    background-color: #ffba5c;
+    background-color: #eeeeee;
+    color: #666666;
     margin: 0 0px;
     height: 60px;
     width: 100%;
@@ -19,7 +20,8 @@ page-ubication {
     font-size: 10pt;
   }
   .changed {
-    background-color: #8aacff;
+    background-color: #b2dbef;
+    color: #666666;
     margin: 0 0px;
     height: 60px;
     width: 100%;
@@ -39,7 +41,7 @@ page-ubication {
   }
 
   .emptyStudent {
-    opacity: 0.4;
+    opacity: 0.2;
   }
 
   .footer {
@@ -67,7 +69,7 @@ page-ubication {
     font-variant: inherit;
     line-height: 1;
     font-weight: bold;
-    background-color: #d077ff;
+    background-color: #666666;
     font-size: 10pt;
     color: white;
   }
