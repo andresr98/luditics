@@ -14,10 +14,11 @@ page-home {
     font-weight: bold;
     font-size: 10pt;
     border-radius: 5px;
-    background-color: #ff9d6d;
+    background-color: #979797;
   }
 
   .largeButton:empty {
     height: 0px;
+    background-color: #eeeeee;
   }
 }
