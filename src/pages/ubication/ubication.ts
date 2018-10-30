@@ -68,7 +68,7 @@ export class UbicationPage {
         this.list.forEach(fila => {
           fila.forEach(element => {
 
-            if(element.empty){
+            if (element.empty) {
               element.ubicationClass = "emptyStudent"
             }
           });
@@ -137,32 +137,43 @@ export class UbicationPage {
         this.counterTaps = 1;
         this.rowAux = rw;
         this.colAux = cl;
+        console.log(this.student.ubicationClass);
         event.preventDefault();
         break;
       }
       case 1: {
         this.studentAux = student;
-        this.asignUndefined(rw, cl, this.studentAux);
-        this.counterTaps = 0;
-        this.changed = true;
-        let flag = this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna];
-        this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna]
-          = this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna];
-        this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna] = flag;
-        this.student.ubicationClass = "changed";
-        this.studentAux.ubicationClass = "changed";
-        event.preventDefault();
-        this.studentAux.changed = true;
-        this.student.changed = true;
-        this.student.grupoxestudiante__fila = this.studentAux.grupoxestudiante__fila;
-        this.student.grupoxestudiante__columna = this.studentAux.grupoxestudiante__columna;
-        this.studentAux.grupoxestudiante__fila = this.rowAux;
-        this.studentAux.grupoxestudiante__columna = this.colAux;
-        break;
+        if (this.studentAux != this.student) {
+          this.asignUndefined(rw, cl, this.studentAux);
+          this.counterTaps = 0;
+          this.changed = true;
+
+          let flag = this.list[this.student.grupoxestudiante__fila][
+            this.student.grupoxestudiante__columna];
+
+          this.list[this.student.grupoxestudiante__fila][
+            this.student.grupoxestudiante__columna]
+            = this.list[this.studentAux.grupoxestudiante__fila][
+            this.studentAux.grupoxestudiante__columna];
+
+          this.list[this.studentAux.grupoxestudiante__fila][
+            this.studentAux.grupoxestudiante__columna] = flag;
+
+          this.student.ubicationClass = "changed";
+          this.studentAux.ubicationClass = "changed";
+          event.preventDefault();
+          this.studentAux.changed = true;
+          this.student.changed = true;
+          this.student.grupoxestudiante__fila = this.studentAux.grupoxestudiante__fila;
+          this.student.grupoxestudiante__columna = this.studentAux.grupoxestudiante__columna;
+          this.studentAux.grupoxestudiante__fila = this.rowAux;
+          this.studentAux.grupoxestudiante__columna = this.colAux;
+          break;
+        }else{
+          this.counterTaps = 0;
+          this.student.ubicationClass="";
+          
+        }
       }
       default: {
         this.counterTaps = 0;
