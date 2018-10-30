@@ -67,9 +67,8 @@ export class UbicationPage {
 
         this.list.forEach(fila => {
           fila.forEach(element => {
-
-            if(element.empty){
-              element.ubicationClass = "emptyStudent"
+            if (element.empty) {
+              element.ubicationClass = "emptyStudent";
             }
           });
         });
@@ -108,7 +107,7 @@ export class UbicationPage {
               element.grupoxestudiante__columna
             )
             .subscribe(
-              data => { },
+              data => {},
               error => {
                 this.showMessage(
                   "Verifique su conexión a internet. No se pueden actualizar las ubicaciones"
@@ -118,14 +117,25 @@ export class UbicationPage {
             );
         }
       });
-      size--;
+      /*size--;
       if (size === 0) {
         this.navCtrl.pop();
-        this.navCtrl.push(this.tabsPage, { "group": this.group, "nav": this.navCtrl });
-      }
+        this.navCtrl.push(this.tabsPage, {
+          group: this.group,
+          nav: this.navCtrl
+        });
+      }*/
     });
-    loading.dismiss();
-    this.changed = false;
+
+    setTimeout(() => {
+      loading.dismiss();
+      this.changed = false;
+      this.navCtrl.pop();
+      this.navCtrl.push(this.tabsPage, {
+        group: this.group,
+        nav: this.navCtrl
+      });
+    }, 2500);
   }
 
   tapEvent(event, student: Student, rw: number, cl: number) {
@@ -146,13 +156,16 @@ export class UbicationPage {
         this.counterTaps = 0;
         this.changed = true;
         let flag = this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna];
+          this.student.grupoxestudiante__columna
+        ];
         this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna]
-          = this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna];
+          this.student.grupoxestudiante__columna
+        ] = this.list[this.studentAux.grupoxestudiante__fila][
+          this.studentAux.grupoxestudiante__columna
+        ];
         this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna] = flag;
+          this.studentAux.grupoxestudiante__columna
+        ] = flag;
         this.student.ubicationClass = "changed";
         this.studentAux.ubicationClass = "changed";
         event.preventDefault();

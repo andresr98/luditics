@@ -34,18 +34,18 @@ page-assistance {
     font-weight: bold;
     font-size: 10pt;
   }
-  .footer{
+  .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: .5rem 5rem;
+    padding: 0.5rem 5rem;
     background-color: #fff;
     width: 100%;
   }
 
-  .item-view-empty{
+  .item-view-empty {
     background-color: #488aff;
-    opacity: .4;
+    opacity: 0.4;
     pointer-events: none;
   }
 }
