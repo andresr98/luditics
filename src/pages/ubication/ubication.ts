@@ -117,17 +117,17 @@ export class UbicationPage {
             );
         }
       });
-      size--;
+      /*size--;
       if (size === 0) {
         this.navCtrl.pop();
         this.navCtrl.push(this.tabsPage, {
           group: this.group,
           nav: this.navCtrl
         });
-      }
+      }*/
     });
 
-    /* setTimeout(() => {
+    setTimeout(() => {
       loading.dismiss();
       this.changed = false;
       this.navCtrl.pop();
@@ -135,7 +135,7 @@ export class UbicationPage {
         group: this.group,
         nav: this.navCtrl
       });
-    }, 2500); */
+    }, 2500);
   }
 
   tapEvent(event, student: Student, rw: number, cl: number) {
