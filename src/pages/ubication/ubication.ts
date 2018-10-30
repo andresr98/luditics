@@ -117,14 +117,6 @@ export class UbicationPage {
             );
         }
       });
-      /*size--;
-      if (size === 0) {
-        this.navCtrl.pop();
-        this.navCtrl.push(this.tabsPage, {
-          group: this.group,
-          nav: this.navCtrl
-        });
-      }*/
     });
 
     setTimeout(() => {
