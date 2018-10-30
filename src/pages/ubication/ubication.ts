@@ -90,7 +90,6 @@ export class UbicationPage {
   }
 
   updateUbications() {
-    var size = this.list.length;
     var loading = this.loadingCtrl.create({
       content: "Actualizando las ubicaciones..."
     });
