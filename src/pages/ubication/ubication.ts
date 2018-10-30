@@ -90,7 +90,6 @@ export class UbicationPage {
   }
 
   updateUbications() {
-    var size = this.list.length;
     var loading = this.loadingCtrl.create({
       content: "Actualizando las ubicaciones..."
     });
@@ -139,7 +138,6 @@ export class UbicationPage {
         this.counterTaps = 1;
         this.rowAux = rw;
         this.colAux = cl;
-        console.log(this.student.ubicationClass);
         event.preventDefault();
         break;
       }
