@@ -139,6 +139,7 @@ export class UbicationPage {
   }
 
   tapEvent(event, student: Student, rw: number, cl: number) {
+    console.log(student)
     student.ubicationClass = "selected";
     switch (this.counterTaps) {
       case 0: {
@@ -178,7 +179,13 @@ export class UbicationPage {
           this.studentAux.grupoxestudiante__columna = this.colAux;
           break;
         }else{
-          this.student.ubicationClass="";
+          if(this.student.empty==true){
+            this.student.ubicationClass="emptyStudent";
+          }else{
+            this.student.ubicationClass="";
+          }
+          
+          
           this.counterTaps=0;
         }
       }
