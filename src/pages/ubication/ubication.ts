@@ -107,7 +107,7 @@ export class UbicationPage {
               element.grupoxestudiante__columna
             )
             .subscribe(
-              data => {},
+              data => { },
               error => {
                 this.showMessage(
                   "Verifique su conexión a internet. No se pueden actualizar las ubicaciones"
@@ -152,30 +152,35 @@ export class UbicationPage {
       }
       case 1: {
         this.studentAux = student;
-        this.asignUndefined(rw, cl, this.studentAux);
-        this.counterTaps = 0;
-        this.changed = true;
-        let flag = this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna
-        ];
-        this.list[this.student.grupoxestudiante__fila][
-          this.student.grupoxestudiante__columna
-        ] = this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna
-        ];
-        this.list[this.studentAux.grupoxestudiante__fila][
-          this.studentAux.grupoxestudiante__columna
-        ] = flag;
-        this.student.ubicationClass = "changed";
-        this.studentAux.ubicationClass = "changed";
-        event.preventDefault();
-        this.studentAux.changed = true;
-        this.student.changed = true;
-        this.student.grupoxestudiante__fila = this.studentAux.grupoxestudiante__fila;
-        this.student.grupoxestudiante__columna = this.studentAux.grupoxestudiante__columna;
-        this.studentAux.grupoxestudiante__fila = this.rowAux;
-        this.studentAux.grupoxestudiante__columna = this.colAux;
-        break;
+        if (this.student != this.studentAux) {
+          this.asignUndefined(rw, cl, this.studentAux);
+          this.counterTaps = 0;
+          this.changed = true;
+          let flag = this.list[this.student.grupoxestudiante__fila][
+            this.student.grupoxestudiante__columna
+          ];
+          this.list[this.student.grupoxestudiante__fila][
+            this.student.grupoxestudiante__columna
+          ] = this.list[this.studentAux.grupoxestudiante__fila][
+            this.studentAux.grupoxestudiante__columna
+            ];
+          this.list[this.studentAux.grupoxestudiante__fila][
+            this.studentAux.grupoxestudiante__columna
+          ] = flag;
+          this.student.ubicationClass = "changed";
+          this.studentAux.ubicationClass = "changed";
+          event.preventDefault();
+          this.studentAux.changed = true;
+          this.student.changed = true;
+          this.student.grupoxestudiante__fila = this.studentAux.grupoxestudiante__fila;
+          this.student.grupoxestudiante__columna = this.studentAux.grupoxestudiante__columna;
+          this.studentAux.grupoxestudiante__fila = this.rowAux;
+          this.studentAux.grupoxestudiante__columna = this.colAux;
+          break;
+        }else{
+          this.student.ubicationClass="";
+          this.counterTaps=0;
+        }
       }
       default: {
         this.counterTaps = 0;

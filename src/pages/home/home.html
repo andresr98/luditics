@@ -22,10 +22,10 @@
       <ion-row *ngFor="let row of list; let i = index">
         <!--<ion-col col-auto col-sm class="student-container">{{i}}</ion-col>-->
         <ion-col class="student-container" col-auto col-sm *ngFor="let student of row">
-          <!--Cada estudiante es representado por un botón, para enviar sus valores de vista a vista-->
-          <button class="largeButton" ion-button (click)="sendValues(student)" [disabled] = "student.empty">
-            {{student.nombres}} {{student.apellidos}}
-          </button>
+          <!--Cada estudiante es representado por una tarjeta, para enviar sus valores de vista a vista-->
+          <ion-card class="{{student.empty}} itemView" (tap)="sendValues($event, student)" >
+            {{student.nombres}} {{student.apellidos}} 
+          </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>

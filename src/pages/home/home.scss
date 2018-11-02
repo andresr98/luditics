@@ -3,22 +3,31 @@ page-home {
     max-width: 20%;
   }
 
-  .largeButton {
+  .itemView {
     width: 100%;
     margin: 0 10px;
     height: 60px;
-    padding: 10px 5px;
     display: flex;
+    align-items: center;
     white-space: normal;
+    text-align: center;
     text-transform: none;
+    justify-content: center;
+    padding: 10px 5px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-style: inherit;
+    font-variant: inherit;
+    color: black;
+    line-height: 1;
     font-weight: bold;
     font-size: 10pt;
-    border-radius: 5px;
     background-color: #979797;
   }
-
-  .largeButton:empty {
-    height: 0px;
+  
+  .true {
     background-color: #eeeeee;
+    opacity: 0.4;
+    pointer-events: none;
   }
 }

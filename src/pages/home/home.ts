@@ -92,12 +92,13 @@ export class HomePage {
   }
 
   //Se envian los valores del estudiante a la pagina de seguimientos.
-  sendValues(student) {
+  sendValues(event, student) {
     //Push(página, parametros (opcional))
     this.navCtrl.push(SeguimientosPage, {
       student: student,
       group :this.group
     });
+    event.preventDefault();
   }
 
   //Mensajes mostrados en estilo toast.
