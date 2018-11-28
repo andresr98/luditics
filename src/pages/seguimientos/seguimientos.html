@@ -51,7 +51,7 @@
       <!--Se llenan los datos según información del Estudiante-->
       <ion-item *ngFor="let data of behavioralDatas; let i = index;" item-start>
         <ion-avatar item-start>
-          <img src="{{images[i]}}">
+          <img src="{{data.categoria__icono}}">
         </ion-avatar>
 
         <h2 class="tabulacion">
@@ -87,7 +87,7 @@
        <!--Se llenan los datos según información del Estudiante de las categorias-->
        <ion-item *ngFor="let data of cognitiveDatas">
          <ion-avatar item-start>
-           <img src="{{data.categoria__icono}}"/>
+           <img src="{{data.categoria__icono}}">
          </ion-avatar>
 
          <h2 class="tabulacion">

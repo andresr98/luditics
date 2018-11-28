@@ -28,7 +28,6 @@ export class SeguimientosPage {
     "behavioral": 1,
     "cognitive": 2
   };
-  images: string[] = [];
   loading: any;
   group : Group;
 
@@ -45,8 +44,6 @@ export class SeguimientosPage {
 
     //Se deja por defecto el valor de comportamiento para mostrar esta lista en primer lugar.
     this.type = "Comportamiento";
-    this.images = ["assets/icon/Aislamiento.png", "assets/icon/Frustracion.png", "assets/icon/Impulsividad.png",
-      "assets/icon/Solidaridad.png", "assets/icon/Armonioso.png"];
   }
 
   //Antes de entrar se trae la información del estudiante por parametro y se obtienen sus seguimientos
